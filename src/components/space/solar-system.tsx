@@ -2,7 +2,8 @@ import { useTheme } from "@/components/theme-provider";
 
 const CX = 450;
 const CY = 110;
-const SUN_X = 196;
+/** The sun sits at the orbit center so the planets truly revolve around it. */
+const SUN_X = CX;
 
 /** The four drawn orbit tracks (rx/ry match the backdrop ellipses below). Inner tracks run faster. */
 const ORBITS = [
@@ -22,14 +23,14 @@ function orbitPath(rx: number, ry: number): string {
 }
 
 const PLANETS = [
-  { name: "Mercury", r: 5.2, fill: "#b7a48c", x: 268, orbit: 0 },
-  { name: "Venus", r: 8.4, fill: "#e2c07a", x: 312, orbit: 0 },
-  { name: "Earth", r: 8.8, fill: "#4f8fce", x: 358, orbit: 1 },
-  { name: "Mars", r: 6.4, fill: "#c45c3e", x: 400, orbit: 1 },
-  { name: "Jupiter", r: 16, fill: "#d9a066", x: 456, orbit: 2 },
-  { name: "Saturn", r: 13.5, fill: "#e6d3a3", x: 520, orbit: 2, rings: true },
-  { name: "Uranus", r: 10, fill: "#7ec8c8", x: 580, orbit: 3 },
-  { name: "Neptune", r: 9.6, fill: "#4b6fd6", x: 632, orbit: 3 },
+  { name: "Mercury", r: 5.2, fill: "#b7a48c", x: 540, orbit: 0 },
+  { name: "Venus", r: 8.4, fill: "#e2c07a", x: 578, orbit: 0 },
+  { name: "Earth", r: 8.8, fill: "#4f8fce", x: 614, orbit: 1 },
+  { name: "Mars", r: 6.4, fill: "#c45c3e", x: 646, orbit: 1 },
+  { name: "Jupiter", r: 16, fill: "#d9a066", x: 684, orbit: 2 },
+  { name: "Saturn", r: 13.5, fill: "#e6d3a3", x: 736, orbit: 2, rings: true },
+  { name: "Uranus", r: 10, fill: "#7ec8c8", x: 778, orbit: 3 },
+  { name: "Neptune", r: 9.6, fill: "#4b6fd6", x: 806, orbit: 3 },
 ] as const;
 
 const RAYS = Array.from({ length: 12 }, (_, i) => i * 30);
