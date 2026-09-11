@@ -5,8 +5,6 @@ import { hexToRgb } from "@/lib/utils";
 
 type ThemeCtx = {
   settings: SiteSettings;
-  lights: "on" | "off";
-  setLights: (next: "on" | "off") => void;
   space: "on" | "off";
   setSpace: (next: "on" | "off") => void;
   motion: "on" | "off";
@@ -19,12 +17,10 @@ const ThemeContext = createContext<ThemeCtx | null>(null);
 
 function applyCssVars(
   settings: SiteSettings,
-  lights: "on" | "off",
   space: "on" | "off",
   motion: "on" | "off",
 ) {
   const root = document.documentElement;
-  root.dataset.lights = lights;
   root.dataset.space = space;
   root.dataset.motion = motion;
   root.style.setProperty("--bg-blur", `${settings.backgroundBlur}px`);
@@ -36,13 +32,11 @@ function applyCssVars(
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SETTINGS);
-  const [lights, setLightsState] = useState<"on" | "off">("on");
   const [space, setSpaceState] = useState<"on" | "off">("on");
   const [motion, setMotionState] = useState<"on" | "off">("on");
 
   useEffect(() => {
-    const storedLights = window.localStorage.getItem("system-space-lights");
-    if (storedLights === "off" || storedLights === "on") setLightsState(storedLights);
+    window.localStorage.removeItem("system-space-lights");
     const storedSpace = window.localStorage.getItem("system-space-space");
     if (storedSpace === "off" || storedSpace === "on") setSpaceState(storedSpace);
     const storedMotion = window.localStorage.getItem("system-space-motion");
@@ -57,17 +51,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    applyCssVars(settings, lights, space, motion);
-  }, [settings, lights, space, motion]);
+    applyCssVars(settings, space, motion);
+  }, [settings, space, motion]);
 
   const value = useMemo<ThemeCtx>(
     () => ({
       settings,
-      lights,
-      setLights: (next) => {
-        setLightsState(next);
-        window.localStorage.setItem("system-space-lights", next);
-      },
       space,
       setSpace: (next) => {
         setSpaceState(next);
@@ -87,7 +76,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       },
       applySettings: setSettings,
     }),
-    [settings, lights, space, motion],
+    [settings, space, motion],
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

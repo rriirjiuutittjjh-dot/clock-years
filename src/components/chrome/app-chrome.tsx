@@ -1,21 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import {
-  Lightbulb,
-  Moon,
-  Pause,
-  Play,
-  Sparkle,
-  Sparkles,
-  Volume2,
-  VolumeX,
-} from "lucide-react";
+import { Pause, Play, Sparkle, Sparkles, Volume2, VolumeX } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { cn } from "@/lib/utils";
 
 export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
-  const { lights, setLights, space, setSpace, motion, setMotion } = useTheme();
+  const { space, setSpace, motion, setMotion } = useTheme();
   const { user, isPending } = useCurrentUserState();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [musicOn, setMusicOn] = useState(true);
@@ -61,17 +52,6 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
       </Link>
 
       <div className="pointer-events-auto flex shrink-0 items-center justify-end gap-2">
-        <button
-          type="button"
-          className="icon-btn glass"
-          onClick={() => setLights(lights === "on" ? "off" : "on")}
-          aria-pressed={lights === "on"}
-          aria-label={lights === "on" ? "Turn lights off" : "Turn lights on"}
-        >
-          {lights === "on" ? <Lightbulb className="size-4" /> : <Moon className="size-4" />}
-          <span className="hidden sm:inline">Lights {lights === "on" ? "on" : "off"}</span>
-        </button>
-
         <button
           type="button"
           className="icon-btn glass"

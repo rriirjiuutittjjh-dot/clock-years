@@ -63,14 +63,8 @@
   --glass-blur: 0px;
   --glass-rgb: 255, 255, 255;
   --glass-alpha: 0.1;
-  --lights-dim: 0;
-  --lights-ms: 0.3s;
   --space-ms: 0.1s;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-html[data-lights="off"] {
-  --lights-dim: 0.9;
 }
 
 .space-root {
@@ -116,8 +110,7 @@ html[data-space="off"] .space-bg {
 .starfield {
   position: absolute;
   inset: 0;
-  opacity: calc(0.55 + var(--lights-dim) * 0.7);
-  transition: opacity var(--lights-ms) var(--ease);
+  opacity: 0.55;
   pointer-events: none;
 }
 
@@ -144,24 +137,14 @@ html[data-space="off"] .space-bg {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: calc(0.22 + (1 - var(--lights-dim)) * 0.12);
-  transition: opacity var(--lights-ms) var(--ease);
+  opacity: 0.34;
 }
 
-.lights-veil {
+/* Soft white lift over the scene background. */
+.scene-wash {
   position: absolute;
   inset: 0;
-  background: rgb(4 2 14 / var(--lights-dim));
-  transition: background var(--lights-ms) var(--ease);
-  pointer-events: none;
-}
-
-/* Soft white lift while lights are on — fades out as the veil comes up. */
-.lights-wash {
-  position: absolute;
-  inset: 0;
-  background: rgb(235 232 255 / calc((1 - var(--lights-dim)) * 0.2));
-  transition: background var(--lights-ms) var(--ease);
+  background: rgb(235 232 255 / 0.2);
   pointer-events: none;
 }
 
@@ -169,8 +152,6 @@ html[data-space="off"] .space-bg {
   position: relative;
   z-index: 2;
   min-height: 100dvh;
-  filter: brightness(calc(1 - var(--lights-dim) * 0.35));
-  transition: filter var(--lights-ms) var(--ease);
 }
 
 .glass {
@@ -399,9 +380,7 @@ select:focus-visible {
   overflow: hidden;
   opacity: 1;
   visibility: visible;
-  filter: brightness(calc(1 - var(--lights-dim) * 0.7));
   transition:
-    filter var(--lights-ms) var(--ease),
     opacity var(--space-ms) var(--ease),
     max-height var(--space-ms) var(--ease),
     visibility var(--space-ms) var(--ease);
@@ -565,7 +544,6 @@ html[data-motion="off"] .sun-rays {
 
 @media (prefers-reduced-motion: reduce) {
   html {
-    --lights-ms: 0.01s;
     --space-ms: 0.01s;
   }
 }
