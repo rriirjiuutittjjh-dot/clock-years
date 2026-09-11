@@ -44,6 +44,8 @@ function usePrefersReducedMotion(): boolean {
   return reduced;
 }
 
+const RAYS = Array.from({ length: 12 }, (_, i) => i * 30);
+
 export function SolarSystem() {
   // SMIL motion can't be switched off from CSS, so reduced-motion renders the
   // classic static lineup instead of the revolving orrery.
@@ -72,6 +74,24 @@ export function SolarSystem() {
           ))}
         </g>
 
+        <g
+          className="sun-rays"
+          stroke="#f0d48a"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          opacity="0.55"
+        >
+          {RAYS.map((deg) => (
+            <line
+              key={deg}
+              x1={SUN_X + 34}
+              y1={CY}
+              x2={SUN_X + 58}
+              y2={CY}
+              transform={`rotate(${deg} ${SUN_X} ${CY})`}
+            />
+          ))}
+        </g>
         <circle className="sun-glow" cx={SUN_X} cy={CY} r="52" fill="url(#sunGlow)" opacity="0.9" />
         <circle cx={SUN_X} cy={CY} r="28" fill="url(#sunCore)" />
         <circle cx={SUN_X - 10} cy={CY - 10} r="7" fill="#fff8dc" opacity="0.45" />

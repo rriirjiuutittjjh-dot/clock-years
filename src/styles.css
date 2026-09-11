@@ -415,6 +415,12 @@ html[data-space="off"] .solar-wrap {
   transform-origin: center;
 }
 
+.sun-rays {
+  animation: drift 60s linear infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
 .celebrate {
   position: fixed;
   inset: 0;
@@ -540,7 +546,8 @@ html[data-space="off"] .solar-wrap {
   .star.pulse,
   .colon,
   .celebrate h1,
-  .sun-glow {
+  .sun-glow,
+  .sun-rays {
     animation: none;
   }
   html {
