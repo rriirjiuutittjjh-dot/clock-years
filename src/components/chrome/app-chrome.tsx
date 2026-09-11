@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import {
   Lightbulb,
-  LightbulbOff,
+  Moon,
   Pause,
   Play,
   Sparkle,
@@ -68,7 +68,7 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
           aria-pressed={lights === "on"}
           aria-label={lights === "on" ? "Turn lights off" : "Turn lights on"}
         >
-          {lights === "on" ? <Lightbulb className="size-4" /> : <LightbulbOff className="size-4" />}
+          {lights === "on" ? <Lightbulb className="size-4" /> : <Moon className="size-4" />}
           <span className="hidden sm:inline">Lights {lights === "on" ? "on" : "off"}</span>
         </button>
 
