@@ -1,12 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { Lightbulb, LightbulbOff, Volume2, VolumeX } from "lucide-react";
+import { Lightbulb, LightbulbOff, Sparkle, Sparkles, Volume2, VolumeX } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { cn } from "@/lib/utils";
 
 export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
-  const { lights, setLights } = useTheme();
+  const { lights, setLights, space, setSpace } = useTheme();
   const { user, isPending } = useCurrentUserState();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [musicOn, setMusicOn] = useState(true);
@@ -61,6 +61,17 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
         >
           {lights === "on" ? <Lightbulb className="size-4" /> : <LightbulbOff className="size-4" />}
           <span className="hidden sm:inline">Lights {lights === "on" ? "on" : "off"}</span>
+        </button>
+
+        <button
+          type="button"
+          className="icon-btn glass"
+          onClick={() => setSpace(space === "on" ? "off" : "on")}
+          aria-pressed={space === "on"}
+          aria-label={space === "on" ? "Turn space off" : "Turn space on"}
+        >
+          {space === "on" ? <Sparkles className="size-4" /> : <Sparkle className="size-4" />}
+          <span className="hidden sm:inline">Space {space === "on" ? "on" : "off"}</span>
         </button>
 
         <button

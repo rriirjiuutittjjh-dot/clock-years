@@ -7,15 +7,18 @@ type ThemeCtx = {
   settings: SiteSettings;
   lights: "on" | "off";
   setLights: (next: "on" | "off") => void;
+  space: "on" | "off";
+  setSpace: (next: "on" | "off") => void;
   refreshSettings: () => Promise<void>;
   applySettings: (next: SiteSettings) => void;
 };
 
 const ThemeContext = createContext<ThemeCtx | null>(null);
 
-function applyCssVars(settings: SiteSettings, lights: "on" | "off") {
+function applyCssVars(settings: SiteSettings, lights: "on" | "off", space: "on" | "off") {
   const root = document.documentElement;
   root.dataset.lights = lights;
+  root.dataset.space = space;
   root.style.setProperty("--bg-blur", `${settings.backgroundBlur}px`);
   root.style.setProperty("--glass-blur", `${settings.glassBlur}px`);
   const { r, g, b } = hexToRgb(settings.glassColor);
@@ -26,18 +29,21 @@ function applyCssVars(settings: SiteSettings, lights: "on" | "off") {
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SETTINGS);
   const [lights, setLightsState] = useState<"on" | "off">("on");
+  const [space, setSpaceState] = useState<"on" | "off">("on");
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("system-space-lights");
-    if (stored === "off" || stored === "on") setLightsState(stored);
+    const storedLights = window.localStorage.getItem("system-space-lights");
+    if (storedLights === "off" || storedLights === "on") setLightsState(storedLights);
+    const storedSpace = window.localStorage.getItem("system-space-space");
+    if (storedSpace === "off" || storedSpace === "on") setSpaceState(storedSpace);
     void getPublicSettings()
       .then(setSettings)
       .catch(() => setSettings(DEFAULT_SETTINGS));
   }, []);
 
   useEffect(() => {
-    applyCssVars(settings, lights);
-  }, [settings, lights]);
+    applyCssVars(settings, lights, space);
+  }, [settings, lights, space]);
 
   const value = useMemo<ThemeCtx>(
     () => ({
@@ -46,6 +52,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       setLights: (next) => {
         setLightsState(next);
         window.localStorage.setItem("system-space-lights", next);
+      },
+      space,
+      setSpace: (next) => {
+        setSpaceState(next);
+        window.localStorage.setItem("system-space-space", next);
       },
       refreshSettings: async () => {
         try {
@@ -56,7 +67,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       },
       applySettings: setSettings,
     }),
-    [settings, lights],
+    [settings, lights, space],
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

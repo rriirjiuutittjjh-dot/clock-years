@@ -65,6 +65,7 @@
   --glass-alpha: 0.1;
   --lights-dim: 0;
   --lights-ms: 0.3s;
+  --space-ms: 0.1s;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -87,6 +88,16 @@ html[data-lights="off"] {
     radial-gradient(120% 80% at 50% -10%, #2a1458 0%, transparent 55%),
     radial-gradient(90% 60% at 80% 110%, #1a0b3d 0%, transparent 50%),
     #12082a;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--space-ms) var(--ease),
+    visibility var(--space-ms) var(--ease);
+}
+
+html[data-space="off"] .space-bg {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .space-bg-custom {
@@ -373,8 +384,22 @@ select:focus-visible {
 .solar-wrap {
   width: min(920px, 100%);
   margin: 0 auto;
+  max-height: 320px;
+  overflow: hidden;
+  opacity: 1;
+  visibility: visible;
   filter: brightness(calc(1 - var(--lights-dim) * 0.45));
-  transition: filter var(--lights-ms) var(--ease);
+  transition:
+    filter var(--lights-ms) var(--ease),
+    opacity var(--space-ms) var(--ease),
+    max-height var(--space-ms) var(--ease),
+    visibility var(--space-ms) var(--ease);
+}
+
+html[data-space="off"] .solar-wrap {
+  opacity: 0;
+  visibility: hidden;
+  max-height: 0;
 }
 
 .solar-svg {
@@ -501,5 +526,6 @@ select:focus-visible {
   }
   html {
     --lights-ms: 0.01s;
+    --space-ms: 0.01s;
   }
 }
