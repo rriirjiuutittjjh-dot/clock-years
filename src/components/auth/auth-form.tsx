@@ -11,6 +11,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -25,6 +26,10 @@ export function AuthForm({ mode }: { mode: Mode }) {
     setError(null);
     if (!authEnabled) {
       setError("Sign-in is disabled.");
+      return;
+    }
+    if (mode === "register" && password !== confirm) {
+      setError("Passwords do not match.");
       return;
     }
     setBusy(true);
@@ -99,6 +104,20 @@ export function AuthForm({ mode }: { mode: Mode }) {
                 placeholder="At least 8 characters"
               />
             </label>
+            {mode === "register" ? (
+              <label className="field">
+                <span>Confirm password</span>
+                <input
+                  type="password"
+                  required
+                  minLength={8}
+                  value={confirm}
+                  onChange={(e) => setConfirm(e.target.value)}
+                  autoComplete="new-password"
+                  placeholder="Repeat your password"
+                />
+              </label>
+            ) : null}
 
             {error ? <p className="text-sm text-rose-300">{error}</p> : null}
 
