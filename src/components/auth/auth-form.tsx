@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
-import { GROK_PROVIDERS, authClient, authEnabled, signIn } from "@/lib/auth/client";
+import { authClient, authEnabled } from "@/lib/auth/client";
 import { AuthArt } from "@/components/auth/auth-art";
 import { SpaceStage } from "@/components/space/space-stage";
 import { AppChrome } from "@/components/chrome/app-chrome";
@@ -106,24 +106,6 @@ export function AuthForm({ mode }: { mode: Mode }) {
               {busy ? "Please wait…" : title}
             </button>
           </form>
-
-          <div className="mt-6 space-y-2">
-            <p className="text-center text-xs tracking-[0.18em] text-muted uppercase">or continue with</p>
-            {authEnabled ? (
-              GROK_PROVIDERS.map((p) => (
-                <button
-                  key={p.providerId}
-                  type="button"
-                  className="btn btn-ghost w-full"
-                  onClick={() => void signIn(p.providerId, { callbackURL: "/dashboard" })}
-                >
-                  Continue with {p.label}
-                </button>
-              ))
-            ) : (
-              <p className="text-sm text-muted">Sign-in is disabled.</p>
-            )}
-          </div>
 
           <p className="mt-6 text-sm text-muted">
             {mode === "login" ? (
