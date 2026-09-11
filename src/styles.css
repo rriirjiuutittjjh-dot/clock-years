@@ -409,6 +409,12 @@ html[data-space="off"] .solar-wrap {
   overflow: visible;
 }
 
+.sun-glow {
+  animation: sunglow 4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
 .celebrate {
   position: fixed;
   inset: 0;
@@ -479,6 +485,18 @@ html[data-space="off"] .solar-wrap {
   }
 }
 
+@keyframes sunglow {
+  0%,
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.12);
+  }
+}
+
 @keyframes pop {
   0% {
     transform: scale(0.96);
@@ -521,7 +539,8 @@ html[data-space="off"] .solar-wrap {
 @media (prefers-reduced-motion: reduce) {
   .star.pulse,
   .colon,
-  .celebrate h1 {
+  .celebrate h1,
+  .sun-glow {
     animation: none;
   }
   html {
