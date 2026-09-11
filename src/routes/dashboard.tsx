@@ -11,8 +11,13 @@ export const Route = createFileRoute("/dashboard")({ component: Dashboard });
 
 function Dashboard() {
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [parts, setParts] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const [pct, setPct] = useState(0);
+  // Render-time snapshot so the server paints the real countdown on first
+  // paint (never 00s); the tick effect below takes over live updates on mount.
+  const [parts, setParts] = useState(() => {
+    const now = new Date();
+    return splitMs(nextNewYear(now).getTime() - now.getTime());
+  });
+  const [pct, setPct] = useState(() => yearProgress(new Date()));
 
   useEffect(() => {
     void getMyProfile()

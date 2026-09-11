@@ -15,18 +15,24 @@ import {
 } from "@/lib/countdown";
 
 export function HomeView() {
-  const targetRef = useRef(new Date(0));
+  // Render-time snapshot: the server paints the REAL countdown on first paint
+  // (never 00s), and the tick effect below takes over live updates on mount.
+  const targetRef = useRef(nextNewYear(new Date()));
   const partyTimer = useRef<number | null>(null);
   const partyStarted = useRef(false);
   const lastSecond = useRef<number | null>(null);
 
-  const [mounted, setMounted] = useState(false);
-  const [parts, setParts] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const [targetLabel, setTargetLabel] = useState("January 1");
-  const [meta, setMeta] = useState("");
-  const [clockNow, setClockNow] = useState("");
-  const [progress, setProgress] = useState(0);
-  const [progressLabel, setProgressLabel] = useState("");
+  const [parts, setParts] = useState(() =>
+    splitMs(targetRef.current.getTime() - Date.now()),
+  );
+  const [targetLabel, setTargetLabel] = useState(() => formatTarget(targetRef.current));
+  const [meta, setMeta] = useState(() => formatMeta(targetRef.current));
+  const [clockNow, setClockNow] = useState(() => formatNow(new Date()));
+  const [progress, setProgress] = useState(() => yearProgress(new Date()));
+  const [progressLabel, setProgressLabel] = useState(() => {
+    const now = new Date();
+    return `${now.getFullYear()} is ${yearProgress(now).toFixed(2)}% complete`;
+  });
   const [party, setParty] = useState(false);
   const [partySub, setPartySub] = useState("");
   const [trueMidnight, setTrueMidnight] = useState(false);
@@ -55,7 +61,6 @@ export function HomeView() {
   }, []);
 
   useEffect(() => {
-    setMounted(true);
     targetRef.current = nextNewYear(new Date());
     describe();
 
@@ -130,7 +135,7 @@ export function HomeView() {
         <SolarSystem />
 
         <div className={`mt-6 w-full transition-opacity duration-300 ${party ? "opacity-0" : "opacity-100"}`}>
-          {mounted ? <CountdownClock parts={parts} /> : <CountdownClock parts={{ days: 0, hours: 0, minutes: 0, seconds: 0 }} />}
+          <CountdownClock parts={parts} />
 
           <p className="mt-8 text-sm text-muted">
             Target: <strong className="font-medium text-ink">{targetLabel}</strong>
