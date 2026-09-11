@@ -70,7 +70,7 @@
 }
 
 html[data-lights="off"] {
-  --lights-dim: 0.72;
+  --lights-dim: 0.9;
 }
 
 .space-root {
@@ -156,10 +156,21 @@ html[data-space="off"] .space-bg {
   pointer-events: none;
 }
 
+/* Soft white lift while lights are on — fades out as the veil comes up. */
+.lights-wash {
+  position: absolute;
+  inset: 0;
+  background: rgb(235 232 255 / calc((1 - var(--lights-dim)) * 0.2));
+  transition: background var(--lights-ms) var(--ease);
+  pointer-events: none;
+}
+
 .space-content {
   position: relative;
   z-index: 2;
   min-height: 100dvh;
+  filter: brightness(calc(1 - var(--lights-dim) * 0.35));
+  transition: filter var(--lights-ms) var(--ease);
 }
 
 .glass {
@@ -388,7 +399,7 @@ select:focus-visible {
   overflow: hidden;
   opacity: 1;
   visibility: visible;
-  filter: brightness(calc(1 - var(--lights-dim) * 0.45));
+  filter: brightness(calc(1 - var(--lights-dim) * 0.7));
   transition:
     filter var(--lights-ms) var(--ease),
     opacity var(--space-ms) var(--ease),

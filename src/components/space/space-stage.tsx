@@ -26,6 +26,7 @@ export function SpaceStage({ children }: { children: ReactNode }) {
           </g>
         </svg>
         <div className="lights-veil" />
+        <div className="lights-wash" />
       </div>
       <div className="space-content">{children}</div>
     </div>
