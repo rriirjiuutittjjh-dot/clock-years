@@ -33,6 +33,7 @@ export function HomeView() {
   const [nextYearLabel, setNextYearLabel] = useState("");
   const [fx, setFx] = useState(false);
   const [sr, setSr] = useState("");
+  const [readyMs, setReadyMs] = useState<number | null>(null);
 
   const describe = useCallback(() => {
     setTargetLabel(formatTarget(targetRef.current));
@@ -87,6 +88,8 @@ export function HomeView() {
     };
 
     tick();
+    // Page-load timer: ms from navigation start to the first live tick.
+    setReadyMs(Math.round(window.performance.now()));
     const interval = window.setInterval(tick, 250);
     return () => {
       window.clearInterval(interval);
@@ -149,6 +152,7 @@ export function HomeView() {
           <div className="mt-6 space-y-2 text-xs tracking-wide text-muted">
             <p>{meta}</p>
             <p>{clockNow ? `Now: ${clockNow}` : ""}</p>
+            {readyMs !== null ? <p>Loaded in {(readyMs / 1000).toFixed(1)}s</p> : null}
           </div>
 
           {!partyStarted.current ? (
