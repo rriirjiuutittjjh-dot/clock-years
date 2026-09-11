@@ -1,12 +1,21 @@
 import { Link } from "@tanstack/react-router";
-import { Lightbulb, LightbulbOff, Sparkle, Sparkles, Volume2, VolumeX } from "lucide-react";
+import {
+  Lightbulb,
+  LightbulbOff,
+  Pause,
+  Play,
+  Sparkle,
+  Sparkles,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { cn } from "@/lib/utils";
 
 export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
-  const { lights, setLights, space, setSpace } = useTheme();
+  const { lights, setLights, space, setSpace, motion, setMotion } = useTheme();
   const { user, isPending } = useCurrentUserState();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [musicOn, setMusicOn] = useState(true);
@@ -72,6 +81,17 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
         >
           {space === "on" ? <Sparkles className="size-4" /> : <Sparkle className="size-4" />}
           <span className="hidden sm:inline">Space {space === "on" ? "on" : "off"}</span>
+        </button>
+
+        <button
+          type="button"
+          className="icon-btn glass"
+          onClick={() => setMotion(motion === "on" ? "off" : "on")}
+          aria-pressed={motion === "on"}
+          aria-label={motion === "on" ? "Turn motion off" : "Turn motion on"}
+        >
+          {motion === "on" ? <Pause className="size-4" /> : <Play className="size-4" />}
+          <span className="hidden sm:inline">Motion {motion === "on" ? "on" : "off"}</span>
         </button>
 
         <button

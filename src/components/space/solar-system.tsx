@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useTheme } from "@/components/theme-provider";
 
 const CX = 450;
 const CY = 110;
@@ -32,24 +32,13 @@ const PLANETS = [
   { name: "Neptune", r: 9.6, fill: "#4b6fd6", x: 632, orbit: 3 },
 ] as const;
 
-function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(query.matches);
-    const onChange = (e: MediaQueryListEvent) => setReduced(e.matches);
-    query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
-  }, []);
-  return reduced;
-}
-
 const RAYS = Array.from({ length: 12 }, (_, i) => i * 30);
 
 export function SolarSystem() {
-  // SMIL motion can't be switched off from CSS, so reduced-motion renders the
+  // SMIL motion can't be switched off from CSS, so motion-off renders the
   // classic static lineup instead of the revolving orrery.
-  const reduced = usePrefersReducedMotion();
+  const { motion } = useTheme();
+  const reduced = motion === "off";
 
   return (
     <div className="solar-wrap" aria-hidden="true">

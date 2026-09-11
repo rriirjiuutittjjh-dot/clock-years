@@ -542,14 +542,17 @@ html[data-space="off"] .solar-wrap {
   }
 }
 
+/* Motion off kills the ambient animations. Driven by the header toggle, which
+   defaults to the OS reduced-motion preference but stays user-overridable. */
+html[data-motion="off"] .star.pulse,
+html[data-motion="off"] .colon,
+html[data-motion="off"] .celebrate h1,
+html[data-motion="off"] .sun-glow,
+html[data-motion="off"] .sun-rays {
+  animation: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .star.pulse,
-  .colon,
-  .celebrate h1,
-  .sun-glow,
-  .sun-rays {
-    animation: none;
-  }
   html {
     --lights-ms: 0.01s;
     --space-ms: 0.01s;
