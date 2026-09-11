@@ -140,14 +140,6 @@ html[data-space="off"] .space-bg {
   opacity: 0.34;
 }
 
-/* Soft white lift over the scene background. */
-.scene-wash {
-  position: absolute;
-  inset: 0;
-  background: rgb(235 232 255 / 0.2);
-  pointer-events: none;
-}
-
 .space-content {
   position: relative;
   z-index: 2;
