@@ -1,4 +1,4 @@
-export const UNITS = ["days", "hours", "minutes", "seconds"] as const;
+export const UNITS = ["years", "days", "hours", "minutes", "seconds"] as const;
 export type Unit = (typeof UNITS)[number];
 
 export function nextNewYear(from: Date) {
@@ -7,8 +7,10 @@ export function nextNewYear(from: Date) {
 
 export function splitMs(ms: number) {
   const total = Math.max(0, Math.floor(ms / 1000));
+  const years = Math.floor(total / 31536000);
   return {
-    days: Math.floor(total / 86400),
+    years,
+    days: Math.floor(total / 86400) - years * 365,
     hours: Math.floor((total / 3600) % 24),
     minutes: Math.floor((total / 60) % 60),
     seconds: total % 60,

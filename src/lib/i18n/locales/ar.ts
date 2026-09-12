@@ -17,13 +17,14 @@ export const ar: Dictionary = {
   },
   countdown: {
     units: {
+      years: "سنوات",
       days: "أيام",
       hours: "ساعات",
       minutes: "دقائق",
       seconds: "ثوانٍ",
     },
-    ariaLabel: (days: number, hours: string, minutes: string, seconds: string) =>
-      `${days} أيام ${hours} ساعات ${minutes} دقائق ${seconds} ثوانٍ`,
+    ariaLabel: (years: number, days: number, hours: string, minutes: string, seconds: string) =>
+      `${years} سنوات ${days} أيام ${hours} ساعات ${minutes} دقائق ${seconds} ثوانٍ`,
   },
   home: {
     target: "الهدف:",

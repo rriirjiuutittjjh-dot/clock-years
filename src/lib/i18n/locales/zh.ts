@@ -17,13 +17,14 @@ export const zh: Dictionary = {
   },
   countdown: {
     units: {
+      years: "年",
       days: "天",
       hours: "小时",
       minutes: "分",
       seconds: "秒",
     },
-    ariaLabel: (days: number, hours: string, minutes: string, seconds: string) =>
-      `${days}天${hours}小时${minutes}分${seconds}秒`,
+    ariaLabel: (years: number, days: number, hours: string, minutes: string, seconds: string) =>
+      `${years}年${days}天${hours}小时${minutes}分${seconds}秒`,
   },
   home: {
     target: "目标：",

@@ -19,13 +19,14 @@ export const en = {
   },
   countdown: {
     units: {
+      years: "Years",
       days: "Days",
       hours: "Hours",
       minutes: "Minutes",
       seconds: "Seconds",
     },
-    ariaLabel: (days: number, hours: string, minutes: string, seconds: string) =>
-      `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`,
+    ariaLabel: (years: number, days: number, hours: string, minutes: string, seconds: string) =>
+      `${years} years ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`,
   },
   home: {
     target: "Target:",

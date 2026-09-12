@@ -12,6 +12,7 @@ export function CountdownClock({ parts, compact = false }: { parts: Parts; compa
       className={`countdown${wide ? " wide" : ""}`}
       role="timer"
       aria-label={t.countdown.ariaLabel(
+        parts.years,
         parts.days,
         pad2(parts.hours),
         pad2(parts.minutes),
