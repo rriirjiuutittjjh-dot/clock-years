@@ -657,6 +657,7 @@ html[data-theme="light"] .planet-row {
 .solar-wrap {
   width: min(920px, 100%);
   margin: 0 auto;
+  animation: fade-in 0.4s var(--ease);
 }
 
 .solar-svg {
@@ -857,6 +858,7 @@ html[data-motion="off"] .sun-rays,
 html[data-motion="off"] .bd-comet,
 html[data-motion="off"] .neb,
 html[data-motion="off"] .dust,
+html[data-motion="off"] .solar-wrap,
 html[data-motion="off"] .num.tick {
   animation: none;
 }

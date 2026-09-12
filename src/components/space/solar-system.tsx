@@ -106,9 +106,11 @@ const RAYS = Array.from({ length: 12 }, (_, i) => i * 30);
 export function SolarSystem() {
   // SMIL motion can't be switched off from CSS, so motion-off renders the
   // classic static lineup instead of the revolving orrery.
-  const { motion } = useTheme();
+  const { motion, space } = useTheme();
   const reduced = motion === "off";
   const [selected, setSelected] = useState<string | null>(null);
+  // Space off hides the whole system-space scene (background fades via CSS).
+  if (space === "off") return null;
 
   return (
     <div className="solar-wrap">
