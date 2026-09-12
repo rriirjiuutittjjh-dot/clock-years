@@ -432,17 +432,10 @@ select:focus-visible {
   animation: blink 2s steps(1, end) infinite;
 }
 
+/* The orrery always paints whole — no height/visibility constraints left to clip it. */
 .solar-wrap {
   width: min(920px, 100%);
   margin: 0 auto;
-  max-height: 320px;
-  overflow: hidden;
-  opacity: 1;
-  visibility: visible;
-  transition:
-    opacity var(--space-ms) var(--ease),
-    max-height var(--space-ms) var(--ease),
-    visibility var(--space-ms) var(--ease);
 }
 
 .solar-svg {

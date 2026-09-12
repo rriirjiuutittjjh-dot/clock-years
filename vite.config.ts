@@ -22,6 +22,42 @@ function hasGlobbedMigrations(root: string): boolean {
 }
 
 /**
+ * Dev-only: forbid ALL caching of transformed assets. Some preview-network
+ * middleboxes cache text/css aggressively and ignore Vite's default
+ * `no-cache`, leaving tabs on stale styles while JS hot-updates — so every
+ * style fix silently "does nothing" until a cache-bypassing refresh.
+ * `no-store` forbids storing at all. Applied at send time (writeHead) so it
+ * wins over any default set later by transform middlewares.
+ */
+function noStorePlugin(): Plugin {
+  const ASSET_RE = /\.(css|js|jsx|mjs|ts|tsx|mts|cts|json|wasm|svg|png|jpe?g|gif|webp|avif|ico|mp3|wav|ogg|woff2?)(\.map)?$/;
+  const PREFIXES = ["/@vite/", "/@id/", "/@fs/", "/@react-refresh", "/node_modules/"];
+  return {
+    name: "app:no-store-dev-assets",
+    apply: "serve",
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const pathOnly = (req.url ?? "").split("?", 1)[0] ?? "";
+        const isAsset =
+          ASSET_RE.test(pathOnly) || PREFIXES.some((p) => pathOnly.startsWith(p));
+        if (isAsset) {
+          const writeHead = res.writeHead.bind(res);
+          res.writeHead = ((...args: unknown[]) => {
+            try {
+              res.setHeader("Cache-Control", "no-store");
+            } catch {
+              /* headers already sent */
+            }
+            return (writeHead as (...a: unknown[]) => unknown)(...args);
+          }) as typeof res.writeHead;
+        }
+        next();
+      });
+    },
+  };
+}
+
+/**
  * Finish PGLite bootstrap during dev-server setup (before traffic). Vite awaits
  * async `configureServer` hooks. Production: `src/lib/db` kicks `ensureDbReady`
  * on import.
@@ -161,6 +197,8 @@ export default defineConfig(({ command, isPreview }) => ({
   },
   resolve: { tsconfigPaths: true },
   plugins: [
+    // First so the header patch installs before any handler can send.
+    noStorePlugin(),
     pgliteBootstrapPlugin(),
     // Before tanstackStart so /auth/popup never falls through to the SPA.
     authPopupPlugin(),
