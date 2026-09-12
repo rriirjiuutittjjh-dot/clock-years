@@ -19,11 +19,7 @@ export const ru: Dictionary = {
     useDark: "Использовать тёмную тему",
     useWhite: "Использовать белую тему",
   },
-  layers: {
-    title: "Слои",
-    orbits: "Орбиты",
-    labels: "Подписи",
-  },
+
   planet: {
     diameter: "Диаметр",
     distance: "Расстояние",

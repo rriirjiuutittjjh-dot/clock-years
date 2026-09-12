@@ -19,11 +19,7 @@ export const tr: Dictionary = {
     useDark: "Koyu temayı kullan",
     useWhite: "Beyaz temayı kullan",
   },
-  layers: {
-    title: "Katmanlar",
-    orbits: "Yörüngeler",
-    labels: "Etiketler",
-  },
+
   planet: {
     diameter: "Çap",
     distance: "Uzaklık",

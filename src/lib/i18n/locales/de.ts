@@ -19,11 +19,7 @@ export const de: Dictionary = {
     useDark: "Dunkles Design verwenden",
     useWhite: "Weißes Design verwenden",
   },
-  layers: {
-    title: "Ebenen",
-    orbits: "Umlaufbahnen",
-    labels: "Beschriftungen",
-  },
+
   planet: {
     diameter: "Durchmesser",
     distance: "Entfernung",

@@ -21,11 +21,7 @@ export const en = {
     useDark: "Use dark theme",
     useWhite: "Use white theme",
   },
-  layers: {
-    title: "Layers",
-    orbits: "Orbits",
-    labels: "Labels",
-  },
+
   planet: {
     diameter: "Diameter",
     distance: "Distance",

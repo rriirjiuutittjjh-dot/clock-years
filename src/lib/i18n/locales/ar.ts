@@ -19,11 +19,7 @@ export const ar: Dictionary = {
     useDark: "استخدام المظهر الداكن",
     useWhite: "استخدام المظهر الأبيض",
   },
-  layers: {
-    title: "الطبقات",
-    orbits: "مدارات",
-    labels: "تسميات",
-  },
+
   planet: {
     diameter: "القطر",
     distance: "المسافة",

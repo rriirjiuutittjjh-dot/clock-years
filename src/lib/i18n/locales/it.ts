@@ -19,11 +19,7 @@ export const it: Dictionary = {
     useDark: "Usa il tema scuro",
     useWhite: "Usa il tema bianco",
   },
-  layers: {
-    title: "Livelli",
-    orbits: "Orbite",
-    labels: "Etichette",
-  },
+
   planet: {
     diameter: "Diametro",
     distance: "Distanza",
