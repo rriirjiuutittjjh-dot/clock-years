@@ -107,13 +107,6 @@ html[data-space="off"] .space-bg {
   display: none;
 }
 
-.starfield {
-  position: absolute;
-  inset: 0;
-  opacity: 0.55;
-  pointer-events: none;
-}
-
 .star {
   position: absolute;
   width: 2px;
@@ -131,13 +124,6 @@ html[data-space="off"] .space-bg {
 
 .star.pulse {
   animation: twinkle 3.6s var(--ease) infinite;
-}
-
-.orbit-rings {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.34;
 }
 
 .space-content {
@@ -555,13 +541,192 @@ select:focus-visible {
   }
 }
 
+/* 3D space backdrop: parallax depth layers (--px/--py from the pointer,
+   scaled per layer by --depth) with independent slow drift inside. */
+.bd {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.bd-layer {
+  position: absolute;
+  inset: -6%;
+  will-change: transform;
+  transform: translate3d(
+    calc(var(--px, 0) * var(--depth, 0) * 1px),
+    calc(var(--py, 0) * var(--depth, 0) * 1px),
+    0
+  );
+  transition: transform 0.35s ease-out;
+}
+
+.bd-drift {
+  position: absolute;
+  inset: 0;
+}
+
+.bd-drift-neb {
+  animation: bd-drift-b 180s ease-in-out infinite alternate;
+}
+
+.bd-drift-far {
+  animation: bd-drift-a 150s ease-in-out infinite alternate;
+}
+
+.bd-drift-mid {
+  animation: bd-drift-b 100s ease-in-out infinite alternate;
+}
+
+.bd-drift-near {
+  animation: bd-drift-a 65s ease-in-out infinite alternate;
+}
+
+@keyframes bd-drift-a {
+  from {
+    transform: translate3d(-2%, -1.2%, 0);
+  }
+  to {
+    transform: translate3d(2%, 1.2%, 0);
+  }
+}
+
+@keyframes bd-drift-b {
+  from {
+    transform: translate3d(2%, 1%, 0);
+  }
+  to {
+    transform: translate3d(-2%, -1%, 0);
+  }
+}
+
+.bd-star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.bd-star.glow {
+  box-shadow: 0 0 6px 1px rgb(216 205 255 / 0.8);
+}
+
+.bd-star.tw {
+  animation: twinkle 3.6s var(--ease) infinite;
+}
+
+.bd-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+}
+
+.bd-blob-a {
+  width: 44vmax;
+  height: 44vmax;
+  left: 6%;
+  top: -12%;
+  background: radial-gradient(circle, rgb(124 58 237 / 0.34), transparent 65%);
+  animation: bd-float-a 26s ease-in-out infinite alternate;
+}
+
+.bd-blob-b {
+  width: 40vmax;
+  height: 40vmax;
+  right: -8%;
+  bottom: -14%;
+  background: radial-gradient(circle, rgb(56 89 199 / 0.3), transparent 65%);
+  animation: bd-float-b 34s ease-in-out infinite alternate;
+}
+
+.bd-blob-c {
+  width: 26vmax;
+  height: 26vmax;
+  right: 12%;
+  top: -6%;
+  background: radial-gradient(circle, rgb(168 85 247 / 0.22), transparent 65%);
+  animation: bd-float-a 21s ease-in-out infinite alternate;
+}
+
+@keyframes bd-float-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4%, 6%, 0) scale(1.12);
+  }
+}
+
+@keyframes bd-float-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.08);
+  }
+  to {
+    transform: translate3d(-5%, -4%, 0) scale(1);
+  }
+}
+
+.bd-comet {
+  position: absolute;
+  width: 130px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #fff, rgb(255 255 255 / 0));
+  opacity: 0;
+}
+
+.bd-comet-a {
+  top: 6%;
+  right: 8%;
+  animation: bd-comet 13s linear infinite;
+}
+
+.bd-comet-b {
+  top: 24%;
+  right: 32%;
+  width: 90px;
+  animation: bd-comet 19s linear infinite;
+  animation-delay: -9s;
+}
+
+@keyframes bd-comet {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-24deg);
+    opacity: 0;
+  }
+  1.5% {
+    opacity: 0.9;
+  }
+  8% {
+    transform: translate3d(-46vmax, 26vmax, 0) rotate(-24deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(-46vmax, 26vmax, 0) rotate(-24deg);
+    opacity: 0;
+  }
+}
+
+.bd-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 90% at 50% 45%,
+    transparent 55%,
+    rgb(4 2 12 / 0.55) 100%
+  );
+}
+
 /* Motion off kills the ambient animations. Driven by the header toggle, which
    defaults to the OS reduced-motion preference but stays user-overridable. */
 html[data-motion="off"] .star.pulse,
 html[data-motion="off"] .colon,
 html[data-motion="off"] .celebrate h1,
 html[data-motion="off"] .sun-glow,
-html[data-motion="off"] .sun-rays {
+html[data-motion="off"] .sun-rays,
+html[data-motion="off"] .bd-drift,
+html[data-motion="off"] .bd-blob,
+html[data-motion="off"] .bd-comet,
+html[data-motion="off"] .bd-star.tw {
   animation: none;
 }
 
