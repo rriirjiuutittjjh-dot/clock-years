@@ -24,8 +24,8 @@ export const it: Dictionary = {
       minutes: "Minuti",
       seconds: "Secondi",
     },
-    ariaLabel: (years: number, days: number, hours: string, minutes: string, seconds: string) =>
-      `${years} anni ${days} giorni ${hours} ore ${minutes} minuti ${seconds} secondi`,
+    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
+      `${years} anni ${months} mesi ${days} giorni ${hours} ore ${minutes} minuti ${seconds} secondi`,
   },
   home: {
     target: "Obiettivo:",

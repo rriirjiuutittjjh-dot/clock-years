@@ -24,8 +24,8 @@ export const zh: Dictionary = {
       minutes: "分",
       seconds: "秒",
     },
-    ariaLabel: (years: number, days: number, hours: string, minutes: string, seconds: string) =>
-      `${years}年${days}天${hours}小时${minutes}分${seconds}秒`,
+    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
+      `${years}年${months}个月${days}天${hours}小时${minutes}分${seconds}秒`,
   },
   home: {
     target: "目标：",

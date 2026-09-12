@@ -26,8 +26,8 @@ export const en = {
       minutes: "Minutes",
       seconds: "Seconds",
     },
-    ariaLabel: (years: number, days: number, hours: string, minutes: string, seconds: string) =>
-      `${years} years ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`,
+    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
+      `${years} years ${months} months ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`,
   },
   home: {
     target: "Target:",

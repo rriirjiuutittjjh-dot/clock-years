@@ -24,8 +24,8 @@ export const tr: Dictionary = {
       minutes: "Dakika",
       seconds: "Saniye",
     },
-    ariaLabel: (years: number, days: number, hours: string, minutes: string, seconds: string) =>
-      `${years} yıl ${days} gün ${hours} saat ${minutes} dakika ${seconds} saniye`,
+    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
+      `${years} yıl ${months} ay ${days} gün ${hours} saat ${minutes} dakika ${seconds} saniye`,
   },
   home: {
     target: "Hedef:",

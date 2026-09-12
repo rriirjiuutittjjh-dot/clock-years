@@ -11,7 +11,7 @@ import {
   formatTarget,
   nextNewYear,
   pad2,
-  splitMs,
+  splitRange,
   yearProgress,
 } from "@/lib/countdown";
 import { useLocale } from "@/lib/i18n";
@@ -40,9 +40,7 @@ export function HomeView() {
   const partyStarted = useRef(false);
   const lastSecond = useRef<number | null>(null);
 
-  const [parts, setParts] = useState(() =>
-    splitMs(targetRef.current.getTime() - Date.now()),
-  );
+  const [parts, setParts] = useState(() => splitRange(new Date(), targetRef.current));
   const [targetLabel, setTargetLabel] = useState(() =>
     formatTarget(targetRef.current, locale),
   );
@@ -77,10 +75,10 @@ export function HomeView() {
       setTrueMidnight(true);
       setPartySub(t.home.partyGo);
       setNextYearLabel(String(year + 1));
-      const midnight = new Date(year, 0, 1).getTime();
+      const midnight = new Date(year, 0, 1);
       if (partyTimer.current) window.clearInterval(partyTimer.current);
       partyTimer.current = window.setInterval(() => {
-        const s = splitMs(Date.now() - midnight);
+        const s = splitRange(midnight, new Date());
         setPartySub(t.home.partyElapsed(s.hours, s.minutes, s.seconds, year));
       }, 1000);
     },
@@ -101,7 +99,7 @@ export function HomeView() {
         }
         return;
       }
-      const p = splitMs(remaining);
+      const p = splitRange(now, targetRef.current);
       const stamp = Math.ceil(remaining / 1000);
       // Hero clock runs at 0.1s; the countdown below only re-renders each second.
       setClockNow(formatNow(now, locale));
