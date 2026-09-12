@@ -31,7 +31,6 @@ export const en = {
     target: "Target:",
     yearComplete: (year: number, pct: string) => `${year} is ${pct}% complete`,
     ringsIn: (when: string, timeZone: string) => `Rings in ${when} · ${timeZone}`,
-    systemSpace: "System Space",
     loadedIn: (seconds: string) => `Loaded in ${seconds}s`,
     previewFinale: "Preview the finale",
     partyTitle: "Happy New Year",

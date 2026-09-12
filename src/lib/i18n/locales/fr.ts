@@ -29,7 +29,6 @@ export const fr: Dictionary = {
     target: "Cible :",
     yearComplete: (year: number, pct: string) => `${year} est à ${pct}%`,
     ringsIn: (when: string, timeZone: string) => `Ça commence le ${when} · ${timeZone}`,
-    systemSpace: "System Space",
     loadedIn: (seconds: string) => `Chargé en ${seconds} s`,
     previewFinale: "Aperçu du final",
     partyTitle: "Bonne année",

@@ -29,7 +29,6 @@ export const ar: Dictionary = {
     target: "الهدف:",
     yearComplete: (year: number, pct: string) => `اكتمل ${pct}% من ${year}`,
     ringsIn: (when: string, timeZone: string) => `يبدأ ${when} · ${timeZone}`,
-    systemSpace: "System Space",
     loadedIn: (seconds: string) => `تم التحميل في ${seconds} ث`,
     previewFinale: "معاينة النهاية",
     partyTitle: "سنة جديدة سعيدة",

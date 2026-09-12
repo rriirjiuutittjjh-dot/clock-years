@@ -5,7 +5,6 @@ import { LanguagePicker } from "@/components/chrome/language-picker";
 import { useTheme } from "@/components/theme-provider";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { useLocale } from "@/lib/i18n";
-import { cn } from "@/lib/utils";
 
 export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
   const { space, setSpace, setMotion } = useTheme();
@@ -55,11 +54,7 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
   const initial = (user?.displayName ?? user?.primaryEmail ?? "M").charAt(0).toUpperCase();
 
   return (
-    <header className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-start justify-between gap-3 p-4 sm:p-5">
-      <Link to="/" className={cn("brand-pill glass pointer-events-auto")}>
-        System Space
-      </Link>
-
+    <header className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-start justify-end gap-3 p-4 sm:p-5">
       <div className="pointer-events-auto flex shrink-0 items-center justify-end gap-2">
         <button
           type="button"

@@ -224,27 +224,6 @@ html[data-space="off"] .space-bg {
   }
 }
 
-.brand-pill {
-  display: inline-flex;
-  align-items: center;
-  height: 44px;
-  padding: 0 1.15rem;
-  border-radius: var(--radius-pill);
-  letter-spacing: 0.28em;
-  font-size: 0.72rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  color: #ece6ff;
-  text-decoration: none;
-  transition:
-    background 0.2s var(--ease),
-    box-shadow 0.2s var(--ease);
-}
-
-.brand-pill:hover {
-  background: rgb(var(--glass-rgb) / calc(var(--glass-alpha) + 0.08));
-}
-
 .icon-btn {
   display: inline-flex;
   align-items: center;
@@ -274,13 +253,11 @@ html[data-space="off"] .space-bg {
 }
 
 .icon-btn:focus:not(:focus-visible),
-.brand-pill:focus:not(:focus-visible),
 .btn:focus:not(:focus-visible) {
   outline: none;
 }
 
 .icon-btn:focus-visible,
-.brand-pill:focus-visible,
 .btn:focus-visible,
 input:focus-visible,
 textarea:focus-visible,

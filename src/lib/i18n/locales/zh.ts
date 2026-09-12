@@ -29,7 +29,6 @@ export const zh: Dictionary = {
     target: "目标：",
     yearComplete: (year: number, pct: string) => `${year} 年已过去 ${pct}%`,
     ringsIn: (when: string, timeZone: string) => `${when} 开始 · ${timeZone}`,
-    systemSpace: "System Space",
     loadedIn: (seconds: string) => `加载用时 ${seconds} 秒`,
     previewFinale: "预览终章",
     partyTitle: "新年快乐",

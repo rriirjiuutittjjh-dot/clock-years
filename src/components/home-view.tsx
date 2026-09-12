@@ -142,9 +142,6 @@ export function HomeView() {
       {fx ? <Fireworks active={fx} /> : null}
 
       <main className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col items-center justify-center px-4 pb-16 pt-24 text-center">
-        <p className="text-xs font-medium tracking-[0.28em] text-muted uppercase">
-          {t.home.systemSpace}
-        </p>
         <p
           className="num mt-2 text-4xl tabular-nums sm:text-5xl"
           role="timer"

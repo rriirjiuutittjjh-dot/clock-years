@@ -29,7 +29,6 @@ export const ru: Dictionary = {
     target: "Цель:",
     yearComplete: (year: number, pct: string) => `${year} год пройден на ${pct}%`,
     ringsIn: (when: string, timeZone: string) => `Начнётся ${when} · ${timeZone}`,
-    systemSpace: "System Space",
     loadedIn: (seconds: string) => `Загружено за ${seconds} с`,
     previewFinale: "Посмотреть финал",
     partyTitle: "С Новым годом",

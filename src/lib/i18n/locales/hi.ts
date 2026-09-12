@@ -29,7 +29,6 @@ export const hi: Dictionary = {
     target: "लक्ष्य:",
     yearComplete: (year: number, pct: string) => `${year} ${pct}% पूरा हुआ`,
     ringsIn: (when: string, timeZone: string) => `${when} को शुरू होगा · ${timeZone}`,
-    systemSpace: "System Space",
     loadedIn: (seconds: string) => `${seconds} सेकंड में लोड हुआ`,
     previewFinale: "फिनाले देखें",
     partyTitle: "नया साल मुबारक",

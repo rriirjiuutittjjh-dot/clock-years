@@ -29,7 +29,6 @@ export const tr: Dictionary = {
     target: "Hedef:",
     yearComplete: (year: number, pct: string) => `${year} %${pct} tamamlandı`,
     ringsIn: (when: string, timeZone: string) => `${when} başlıyor · ${timeZone}`,
-    systemSpace: "System Space",
     loadedIn: (seconds: string) => `${seconds} sn'de yüklendi`,
     previewFinale: "Finali önizle",
     partyTitle: "Mutlu Yıllar",
