@@ -68,6 +68,11 @@ export const ru: Dictionary = {
     namePlaceholder: "Ваше имя",
     email: "Почта",
     emailPlaceholder: "you@orbit.mail",
+    identifier: "Адрес или имя пользователя",
+    identifierPlaceholder: "Адрес или имя",
+    username: "Имя пользователя",
+    usernamePlaceholder: "Буквы, цифры, _",
+    usernameInvalid: "3–30 символов: буквы, цифры, подчёркивание.",
     password: "Пароль",
     passwordPlaceholder: "Минимум 8 символов",
     confirmPassword: "Подтвердите пароль",
@@ -172,5 +177,6 @@ export const ru: Dictionary = {
     imageTooLarge: "Изображение профиля слишком большое.",
     backgroundTooLarge: "Фоновое изображение слишком большое.",
     invalidCredentials: "Неверный адрес или пароль.",
+    usernameTaken: "Это имя пользователя занято.",
   },
 };

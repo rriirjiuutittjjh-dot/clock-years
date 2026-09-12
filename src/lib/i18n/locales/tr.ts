@@ -68,6 +68,11 @@ export const tr: Dictionary = {
     namePlaceholder: "Adın",
     email: "E-posta",
     emailPlaceholder: "you@orbit.mail",
+    identifier: "E-posta veya kullanıcı adı",
+    identifierPlaceholder: "E-posta veya kullanıcı adı",
+    username: "Kullanıcı adı",
+    usernamePlaceholder: "Harf, rakam, _",
+    usernameInvalid: "3-30 karakter: harf, rakam, alt çizgi.",
     password: "Şifre",
     passwordPlaceholder: "En az 8 karakter",
     confirmPassword: "Şifreyi onayla",
@@ -173,5 +178,6 @@ export const tr: Dictionary = {
     imageTooLarge: "Profil resmi çok büyük.",
     backgroundTooLarge: "Arka plan resmi çok büyük.",
     invalidCredentials: "E-posta veya parola yanlış.",
+    usernameTaken: "Bu kullanıcı adı alınmış.",
   },
 };

@@ -68,6 +68,11 @@ export const zh: Dictionary = {
     namePlaceholder: "你的名字",
     email: "邮箱",
     emailPlaceholder: "you@orbit.mail",
+    identifier: "邮箱或用户名",
+    identifierPlaceholder: "邮箱或用户名",
+    username: "用户名",
+    usernamePlaceholder: "字母、数字、下划线",
+    usernameInvalid: "3-30 个字符：字母、数字、下划线。",
     password: "密码",
     passwordPlaceholder: "至少 8 个字符",
     confirmPassword: "确认密码",
@@ -171,5 +176,6 @@ export const zh: Dictionary = {
     imageTooLarge: "头像图片太大。",
     backgroundTooLarge: "背景图片太大。",
     invalidCredentials: "邮箱或密码错误。",
+    usernameTaken: "该用户名已被占用。",
   },
 };

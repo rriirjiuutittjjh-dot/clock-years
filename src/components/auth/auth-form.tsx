@@ -18,7 +18,12 @@ type AuthErrorShape = { code?: unknown; message?: unknown; status?: unknown; sta
  */
 function authErrorMessage(
   err: unknown,
-  t: { alreadyMember: string; loginLink: string; errors: { invalidCredentials: string } },
+  t: {
+    alreadyMember: string;
+    loginLink: string;
+    usernameInvalid: string;
+    errors: { invalidCredentials: string; usernameTaken: string };
+  },
   fallback: string,
 ): string {
   if (err && typeof err === "object") {
@@ -26,7 +31,11 @@ function authErrorMessage(
     const code = typeof e.code === "string" ? e.code : "";
     const message = typeof e.message === "string" && e.message.length > 0 ? e.message : "";
     if (code.includes("ALREADY_EXISTS")) return `${t.alreadyMember} ${t.loginLink}`;
-    if (code === "INVALID_EMAIL_OR_PASSWORD") return t.errors.invalidCredentials;
+    if (code === "INVALID_EMAIL_OR_PASSWORD" || code === "INVALID_USERNAME_OR_PASSWORD")
+      return t.errors.invalidCredentials;
+    if (code === "USERNAME_IS_ALREADY_TAKEN") return t.errors.usernameTaken;
+    if (code === "USERNAME_TOO_SHORT" || code === "USERNAME_TOO_LONG" || code === "INVALID_USERNAME")
+      return t.usernameInvalid;
     if (message && code) return code === message ? message : `${message} (${code})`;
     if (message) return message;
     if (code) return `${fallback} (${code})`;
@@ -41,6 +50,7 @@ function authErrorMessage(
 export function AuthForm({ mode }: { mode: Mode }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -61,21 +71,27 @@ export function AuthForm({ mode }: { mode: Mode }) {
       setError(t.auth.passwordsNoMatch);
       return;
     }
+    const cleanUsername = username.trim();
+    if (mode === "register" && !/^[A-Za-z0-9_]{3,30}$/.test(cleanUsername)) {
+      setError(t.auth.usernameInvalid);
+      return;
+    }
     setBusy(true);
     try {
       if (mode === "register") {
         const { error: err } = await authClient.signUp.email({
           email: email.trim(),
           password,
-          name: name.trim() || email.split("@")[0] || "Member",
+          name: name.trim() || cleanUsername || email.split("@")[0] || "Member",
+          username: cleanUsername,
         });
         if (err)
           throw new Error(authErrorMessage(err, { ...t.auth, errors: t.errors }, t.auth.couldNotRegister));
       } else {
-        const { error: err } = await authClient.signIn.email({
-          email: email.trim(),
-          password,
-        });
+        const identifier = email.trim();
+        const { error: err } = identifier.includes("@")
+          ? await authClient.signIn.email({ email: identifier, password })
+          : await authClient.signIn.username({ username: identifier, password });
         if (err)
           throw new Error(authErrorMessage(err, { ...t.auth, errors: t.errors }, t.auth.couldNotLogIn));
       }
@@ -113,15 +129,29 @@ export function AuthForm({ mode }: { mode: Mode }) {
                 />
               </label>
             ) : null}
+            {mode === "register" ? (
+              <label className="field">
+                <span>{t.auth.username}</span>
+                <input
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  autoComplete="username"
+                  minLength={3}
+                  maxLength={30}
+                  placeholder={t.auth.usernamePlaceholder}
+                  required
+                />
+              </label>
+            ) : null}
             <label className="field">
-              <span>{t.auth.email}</span>
+              <span>{mode === "login" ? t.auth.identifier : t.auth.email}</span>
               <input
-                type="email"
+                type={mode === "login" ? "text" : "email"}
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                autoComplete="email"
-                placeholder={t.auth.emailPlaceholder}
+                autoComplete={mode === "login" ? "username" : "email"}
+                placeholder={mode === "login" ? t.auth.identifierPlaceholder : t.auth.emailPlaceholder}
               />
             </label>
             <label className="field">

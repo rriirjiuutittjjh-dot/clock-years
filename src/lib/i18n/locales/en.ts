@@ -70,6 +70,11 @@ export const en = {
     namePlaceholder: "Your name",
     email: "Email",
     emailPlaceholder: "you@orbit.mail",
+    identifier: "Email or username",
+    identifierPlaceholder: "you@orbit.mail or username",
+    username: "Username",
+    usernamePlaceholder: "Letters, numbers, _",
+    usernameInvalid: "3–30 characters: letters, numbers, underscore.",
     password: "Password",
     passwordPlaceholder: "At least 8 characters",
     confirmPassword: "Confirm password",
@@ -173,5 +178,6 @@ export const en = {
     imageTooLarge: "Profile image is too large.",
     backgroundTooLarge: "Background image is too large.",
     invalidCredentials: "Wrong email or password.",
+    usernameTaken: "That username is taken.",
   },
 };

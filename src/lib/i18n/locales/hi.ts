@@ -68,6 +68,11 @@ export const hi: Dictionary = {
     namePlaceholder: "आपका नाम",
     email: "ईमेल",
     emailPlaceholder: "you@orbit.mail",
+    identifier: "ईमेल या उपयोगकर्ता नाम",
+    identifierPlaceholder: "ईमेल या उपयोगकर्ता नाम",
+    username: "उपयोगकर्ता नाम",
+    usernamePlaceholder: "अक्षर, अंक, _",
+    usernameInvalid: "3–30 अक्षर: अक्षर, अंक, अंडरस्कोर।",
     password: "पासवर्ड",
     passwordPlaceholder: "कम से कम 8 अक्षर",
     confirmPassword: "पासवर्ड की पुष्टि करें",
@@ -172,5 +177,6 @@ export const hi: Dictionary = {
     imageTooLarge: "प्रोफ़ाइल छवि बहुत बड़ी है।",
     backgroundTooLarge: "पृष्ठभूमि छवि बहुत बड़ी है।",
     invalidCredentials: "ईमेल या पासवर्ड गलत है।",
+    usernameTaken: "यह उपयोगकर्ता नाम लिया गया है।",
   },
 };

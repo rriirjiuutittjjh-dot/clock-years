@@ -68,6 +68,11 @@ export const ar: Dictionary = {
     namePlaceholder: "اسمك",
     email: "البريد الإلكتروني",
     emailPlaceholder: "you@orbit.mail",
+    identifier: "البريد الإلكتروني أو اسم المستخدم",
+    identifierPlaceholder: "البريد أو اسم المستخدم",
+    username: "اسم المستخدم",
+    usernamePlaceholder: "حروف وأرقام و _",
+    usernameInvalid: "3-30 حرفًا: حروف وأرقام وشرطة سفلية.",
     password: "كلمة المرور",
     passwordPlaceholder: "8 أحرف على الأقل",
     confirmPassword: "تأكيد كلمة المرور",
@@ -171,5 +176,6 @@ export const ar: Dictionary = {
     imageTooLarge: "صورة الملف الشخصي كبيرة جدًا.",
     backgroundTooLarge: "صورة الخلفية كبيرة جدًا.",
     invalidCredentials: "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+    usernameTaken: "اسم المستخدم مأخوذ.",
   },
 };

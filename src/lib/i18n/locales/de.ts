@@ -68,6 +68,11 @@ export const de: Dictionary = {
     namePlaceholder: "Dein Name",
     email: "E-Mail",
     emailPlaceholder: "you@orbit.mail",
+    identifier: "E-Mail oder Benutzername",
+    identifierPlaceholder: "E-Mail oder Benutzername",
+    username: "Benutzername",
+    usernamePlaceholder: "Buchstaben, Zahlen, _",
+    usernameInvalid: "3–30 Zeichen: Buchstaben, Zahlen, Unterstrich.",
     password: "Passwort",
     passwordPlaceholder: "Mindestens 8 Zeichen",
     confirmPassword: "Passwort bestätigen",
@@ -173,5 +178,6 @@ export const de: Dictionary = {
     imageTooLarge: "Das Profilbild ist zu groß.",
     backgroundTooLarge: "Das Hintergrundbild ist zu groß.",
     invalidCredentials: "Falsche E-Mail oder falsches Passwort.",
+    usernameTaken: "Dieser Benutzername ist vergeben.",
   },
 };

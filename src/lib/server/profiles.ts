@@ -56,13 +56,13 @@ async function ensureProfile(userId: string): Promise<Profile> {
     return asProfile(existing[0]);
   }
 
-  const authRows = await sql<{ name: string; email: string; image: string | null }>`
-    select name, email, image from "user" where id = ${userId}
+  const authRows = await sql<{ name: string; email: string; image: string | null; username: string | null }>`
+    select name, email, image, username from "user" where id = ${userId}
   `;
   const auth = authRows[0];
   const owners = await sql<{ n: number }>`select count(*)::int as n from profiles where role = 'owner'`;
   const role: Role = (owners[0]?.n ?? 0) === 0 || isAdminEmail(auth?.email) ? "owner" : "member";
-  const displayName = auth?.name?.trim() || auth?.email?.split("@")[0] || "Member";
+  const displayName = auth?.name?.trim() || auth?.username || auth?.email?.split("@")[0] || "Member";
   const avatar = auth?.image ?? null;
 
   await sql`
