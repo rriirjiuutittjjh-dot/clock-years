@@ -5,7 +5,6 @@ import { Fireworks } from "@/components/space/fireworks";
 import { SolarSystem } from "@/components/space/solar-system";
 import { SpaceStage } from "@/components/space/space-stage";
 import {
-  daysInYear,
   formatMetaParts,
   formatNow,
   formatTarget,
@@ -15,21 +14,6 @@ import {
   yearProgress,
 } from "@/lib/countdown";
 import { useLocale } from "@/lib/i18n";
-
-/** Full-year equivalents: 1 year = 12 months = 365/366 days = … */
-function yearTotals(year: number) {
-  const days = daysInYear(year);
-  const hours = days * 24;
-  const minutes = hours * 60;
-  return [
-    { key: "years", value: 1 },
-    { key: "months", value: 12 },
-    { key: "days", value: days },
-    { key: "hours", value: hours },
-    { key: "minutes", value: minutes },
-    { key: "seconds", value: minutes * 60 },
-  ] as const;
-}
 
 export function HomeView() {
   const { t, locale } = useLocale();
@@ -190,17 +174,6 @@ export function HomeView() {
           <div className="mt-6 space-y-2 text-xs tracking-wide text-muted">
             <p>{meta}</p>
             {readyMs !== null ? <p>{t.home.loadedIn((readyMs / 1000).toFixed(1))}</p> : null}
-          </div>
-
-          <div className="mt-6 flex flex-wrap items-baseline justify-center gap-x-5 gap-y-2">
-            {yearTotals(targetRef.current.getFullYear() - 1).map((s) => (
-              <div key={s.key} className="flex items-baseline gap-1.5">
-                <span className="stat-num">
-                  {new Intl.NumberFormat(locale).format(s.value)}
-                </span>
-                <span className="stat-name">{t.countdown.units[s.key]}</span>
-              </div>
-            ))}
           </div>
 
           {!partyStarted.current ? (
