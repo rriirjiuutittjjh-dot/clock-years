@@ -107,6 +107,15 @@ const STARS = Array.from({ length: 70 }, (_, i) => {
   };
 });
 
+/** Darken a hex color by factor f for moon shadow sides. */
+function shade(hex: string, f: number): string {
+  const n = parseInt(hex.slice(1), 16);
+  const r = Math.round(((n >> 16) & 255) * f);
+  const g = Math.round(((n >> 8) & 255) * f);
+  const b = Math.round((n & 255) * f);
+  return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, "0")}`;
+}
+
 const RAYS = Array.from({ length: 12 }, (_, i) => i * 30);
 
 export function SolarSystem() {
@@ -149,6 +158,21 @@ export function SolarSystem() {
               <stop offset="100%" stopColor={p.c2} />
             </radialGradient>
           ))}
+          {Object.entries(MOONS).flatMap(([planet, moons]) =>
+            (moons ?? []).map((m) => (
+              <radialGradient
+                key={`${planet}-${m.name}`}
+                id={`mskin-${planet}-${m.name}`}
+                cx="35%"
+                cy="30%"
+                r="80%"
+              >
+                <stop offset="0%" stopColor={m.fill} />
+                <stop offset="60%" stopColor={m.fill} />
+                <stop offset="100%" stopColor={shade(m.fill, 0.5)} />
+              </radialGradient>
+            )),
+          )}
         </defs>
 
         <ellipse cx={CX} cy={CY} rx="445" ry="108" fill="url(#nebula)" />
@@ -270,7 +294,7 @@ export function SolarSystem() {
                         />
                       )}
                       <title>{m.name}</title>
-                      <circle className="moon-dot" r={m.r} fill={m.fill} />
+                      <circle className="moon-dot" r={m.r} fill={`url(#mskin-${p.name}-${m.name})`} />
                     </g>
                   </g>
                 );
@@ -303,6 +327,7 @@ export function SolarSystem() {
         </g>
         <circle className="sun-glow" cx={SUN_X} cy={CY} r="52" fill="url(#sunGlow)" opacity="0.9" />
         <circle cx={SUN_X} cy={CY} r="28" fill="url(#sunCore)" />
+        <circle cx={SUN_X - 4} cy={CY - 5} r="15" fill="#fffdf4" opacity="0.85" />
         <circle cx={SUN_X - 10} cy={CY - 10} r="7" fill="#fff8dc" opacity="0.45" />
       </svg>
       {selected ? <PlanetView name={selected} onClose={() => setSelected(null)} /> : null}

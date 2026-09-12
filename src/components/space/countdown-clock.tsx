@@ -1,11 +1,22 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { pad2, UNITS, type Unit } from "@/lib/countdown";
 import { useLocale } from "@/lib/i18n";
 
-type Parts = Record<Unit, number>;
+type Parts = Record<Unit, number> & { tenths: number };
+
+function unitText(unit: Unit, parts: Parts, tenthsLive: boolean): string {
+  if (unit === "days") return String(parts.days).padStart(2, "0");
+  if (unit === "seconds") return `${pad2(parts.seconds)}.${tenthsLive ? parts.tenths : 0}`;
+  return pad2(parts[unit]);
+}
 
 export function CountdownClock({ parts, compact = false }: { parts: Parts; compact?: boolean }) {
   const { t } = useLocale();
+  // Tenths render after mount so SSR and first paint always match.
+  const [tenthsLive, setTenthsLive] = useState(false);
+  useEffect(() => {
+    setTenthsLive(true);
+  }, []);
   const wide = parts.days >= 100;
   return (
     <div
@@ -32,7 +43,7 @@ export function CountdownClock({ parts, compact = false }: { parts: Parts; compa
               className={unit === "seconds" ? "num tick" : "num"}
               key={unit === "seconds" ? parts.seconds : unit}
             >
-              {unit === "days" ? String(parts.days).padStart(2, "0") : pad2(parts[unit])}
+              {unitText(unit, parts, tenthsLive)}
             </div>
             <div className="unit-label">{t.countdown.units[unit]}</div>
           </div>

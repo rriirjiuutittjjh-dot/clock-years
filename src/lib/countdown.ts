@@ -36,7 +36,7 @@ function addMonthsClamped(date: Date, months: number) {
  * the exact day/time remainder. Past ranges clamp to zero.
  */
 export function splitRange(from: Date, to: Date) {
-  const zero = { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 };
+  const zero = { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0, tenths: 0 };
   if (to.getTime() <= from.getTime()) return zero;
   let years = to.getFullYear() - from.getFullYear();
   if (addYearsClamped(from, years).getTime() > to.getTime()) years -= 1;
@@ -49,7 +49,8 @@ export function splitRange(from: Date, to: Date) {
     months -= 1;
     anchor = addMonthsClamped(yearAnchor, months);
   }
-  const total = Math.floor((to.getTime() - anchor.getTime()) / 1000);
+  const ms = to.getTime() - anchor.getTime();
+  const total = Math.floor(ms / 1000);
   return {
     years,
     months,
@@ -57,6 +58,7 @@ export function splitRange(from: Date, to: Date) {
     hours: Math.floor((total / 3600) % 24),
     minutes: Math.floor((total / 60) % 60),
     seconds: total % 60,
+    tenths: Math.floor((ms % 1000) / 100),
   };
 }
 

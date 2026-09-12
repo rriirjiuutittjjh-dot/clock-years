@@ -85,25 +85,25 @@ export function HomeView() {
       }
       const p = splitRange(now, targetRef.current);
       const stamp = Math.ceil(remaining / 1000);
-      // Hero clock runs at 0.1s; the countdown below only re-renders each second.
+      // Clock + countdown run at 0.1s; labels, progress and title update each second.
       setClockNow(formatNow(now, locale));
+      setParts(p);
       if (stamp !== lastSecond.current) {
         lastSecond.current = stamp;
-        setParts(p);
         const pct = yearProgress(now);
         setProgress(pct);
         setProgressLabel(t.home.yearComplete(now.getFullYear(), pct.toFixed(2)));
         if (p.seconds === 0) {
           setSr(t.home.srCountdown(p.days, p.hours, p.minutes, targetRef.current.getFullYear()));
         }
-        document.title = `${p.days}d ${pad2(p.hours)}:${pad2(p.minutes)}:${pad2(p.seconds)} · System Space`;
+        document.title = `${p.months}mo ${p.days}d ${pad2(p.hours)}:${pad2(p.minutes)}:${pad2(p.seconds)} · System Space`;
       }
     };
 
     tick();
     // Page-load timer: ms from navigation start to the first live tick.
     setReadyMs(Math.round(window.performance.now()));
-    const interval = window.setInterval(tick, 250);
+    const interval = window.setInterval(tick, 100);
     return () => {
       window.clearInterval(interval);
       if (partyTimer.current) window.clearInterval(partyTimer.current);

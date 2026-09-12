@@ -31,7 +31,7 @@ function Dashboard() {
       setPct(yearProgress(now));
     };
     tick();
-    const id = window.setInterval(tick, 1000);
+    const id = window.setInterval(tick, 100);
     return () => window.clearInterval(id);
   }, []);
 
