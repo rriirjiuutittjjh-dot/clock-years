@@ -4,6 +4,7 @@ import { CountdownClock } from "@/components/space/countdown-clock";
 import { Fireworks } from "@/components/space/fireworks";
 import { SolarSystem } from "@/components/space/solar-system";
 import { SpaceStage } from "@/components/space/space-stage";
+import { SpeedrunPanel } from "@/components/space/speedrun-clock";
 import {
   formatMetaParts,
   formatNow,
@@ -168,6 +169,8 @@ export function HomeView() {
             <p>{clockNow ? t.home.now(clockNow) : ""}</p>
             {readyMs !== null ? <p>{t.home.loadedIn((readyMs / 1000).toFixed(1))}</p> : null}
           </div>
+
+          <SpeedrunPanel />
 
           {!partyStarted.current ? (
             <button type="button" className="btn btn-ghost mt-6" onClick={onPreview}>

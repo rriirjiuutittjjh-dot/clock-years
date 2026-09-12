@@ -54,3 +54,13 @@ export function formatNow(now: Date, locale?: string) {
     hour12: true,
   }).format(now);
 }
+
+/** Speedrun stopwatch readout: HH:MM:SS.mmm */
+export function formatStopwatch(ms: number) {
+  const total = Math.max(0, Math.floor(ms));
+  const hours = Math.floor(total / 3_600_000);
+  const minutes = Math.floor((total / 60_000) % 60);
+  const seconds = Math.floor((total / 1000) % 60);
+  const millis = total % 1000;
+  return `${pad2(hours)}:${pad2(minutes)}:${pad2(seconds)}.${String(millis).padStart(3, "0")}`;
+}
