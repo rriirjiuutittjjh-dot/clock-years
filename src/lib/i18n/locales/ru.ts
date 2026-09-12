@@ -19,6 +19,14 @@ export const ru: Dictionary = {
     useDark: "Использовать тёмную тему",
     useWhite: "Использовать белую тему",
   },
+  planet: {
+    diameter: "Диаметр",
+    distance: "Расстояние",
+    day: "День",
+    year: "Год",
+    moons: "Луны",
+    close: "Закрыть",
+  },
   countdown: {
     units: {
       years: "Лет",

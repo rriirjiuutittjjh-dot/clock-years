@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { PlanetView } from "@/components/space/planet-view";
 import { useTheme } from "@/components/theme-provider";
 
 const CX = 450;
@@ -27,7 +29,7 @@ function orbitPath(rx: number, ry: number): string {
  * radial gradients so every body reads round. Static lineup spreads the
  * full 900 width with the sun in line at center.
  */
-const PLANETS = [
+export const PLANETS = [
   { name: "Mercury", r: 5.2, c1: "#e0bda0", c2: "#7a5a44", x: 60, orbit: 0 },
   { name: "Venus", r: 8.4, c1: "#ffe9ad", c2: "#d18a3c", x: 150, orbit: 0 },
   { name: "Earth", r: 8.8, c1: "#7dd3fc", c2: "#1d4ed8", x: 240, orbit: 1 },
@@ -112,10 +114,11 @@ export function SolarSystem() {
   // classic static lineup instead of the revolving orrery.
   const { motion } = useTheme();
   const reduced = motion === "off";
+  const [selected, setSelected] = useState<string | null>(null);
 
   return (
-    <div className="solar-wrap" aria-hidden="true">
-      <svg className="solar-svg" viewBox="0 0 900 220" role="img">
+    <div className="solar-wrap">
+      <svg className="solar-svg" viewBox="0 0 900 220">
         <title>Solar system</title>
         <defs>
           <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
@@ -176,7 +179,21 @@ export function SolarSystem() {
           const begin = `-${((i % 2) * track.dur) / 2}s`;
           const moons = MOONS[p.name] ?? [];
           return (
-            <g key={p.name} transform={reduced ? `translate(${p.x} ${CY})` : undefined}>
+            <g
+              key={p.name}
+              transform={reduced ? `translate(${p.x} ${CY})` : undefined}
+              className="planet-btn"
+              role="button"
+              tabIndex={0}
+              aria-label={p.name}
+              onClick={() => setSelected(p.name)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setSelected(p.name);
+                }
+              }}
+            >
               {reduced ? null : (
                 <animateMotion
                   dur={`${track.dur}s`}
@@ -288,6 +305,7 @@ export function SolarSystem() {
         <circle cx={SUN_X} cy={CY} r="28" fill="url(#sunCore)" />
         <circle cx={SUN_X - 10} cy={CY - 10} r="7" fill="#fff8dc" opacity="0.45" />
       </svg>
+      {selected ? <PlanetView name={selected} onClose={() => setSelected(null)} /> : null}
     </div>
   );
 }

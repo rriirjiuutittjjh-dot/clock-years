@@ -19,6 +19,14 @@ export const zh: Dictionary = {
     useDark: "使用深色主题",
     useWhite: "使用白色主题",
   },
+  planet: {
+    diameter: "直径",
+    distance: "距离",
+    day: "一天",
+    year: "一年",
+    moons: "卫星",
+    close: "关闭",
+  },
   countdown: {
     units: {
       years: "年",

@@ -19,6 +19,14 @@ export const hi: Dictionary = {
     useDark: "डार्क थीम इस्तेमाल करें",
     useWhite: "सफ़ेद थीम इस्तेमाल करें",
   },
+  planet: {
+    diameter: "व्यास",
+    distance: "दूरी",
+    day: "दिन",
+    year: "वर्ष",
+    moons: "चंद्रमा",
+    close: "बंद करें",
+  },
   countdown: {
     units: {
       years: "वर्ष",

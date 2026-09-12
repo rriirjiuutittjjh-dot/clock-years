@@ -19,6 +19,14 @@ export const ar: Dictionary = {
     useDark: "استخدام المظهر الداكن",
     useWhite: "استخدام المظهر الأبيض",
   },
+  planet: {
+    diameter: "القطر",
+    distance: "المسافة",
+    day: "اليوم",
+    year: "السنة",
+    moons: "أقمار",
+    close: "إغلاق",
+  },
   countdown: {
     units: {
       years: "سنوات",

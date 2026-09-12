@@ -19,6 +19,14 @@ export const it: Dictionary = {
     useDark: "Usa il tema scuro",
     useWhite: "Usa il tema bianco",
   },
+  planet: {
+    diameter: "Diametro",
+    distance: "Distanza",
+    day: "Giorno",
+    year: "Anno",
+    moons: "Lune",
+    close: "Chiudi",
+  },
   countdown: {
     units: {
       years: "Anni",

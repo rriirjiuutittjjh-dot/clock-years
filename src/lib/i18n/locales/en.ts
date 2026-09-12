@@ -21,6 +21,14 @@ export const en = {
     useDark: "Use dark theme",
     useWhite: "Use white theme",
   },
+  planet: {
+    diameter: "Diameter",
+    distance: "Distance",
+    day: "Day",
+    year: "Year",
+    moons: "Moons",
+    close: "Close",
+  },
   countdown: {
     units: {
       years: "Years",

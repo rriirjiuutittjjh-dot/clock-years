@@ -19,6 +19,14 @@ export const de: Dictionary = {
     useDark: "Dunkles Design verwenden",
     useWhite: "Weißes Design verwenden",
   },
+  planet: {
+    diameter: "Durchmesser",
+    distance: "Entfernung",
+    day: "Tag",
+    year: "Jahr",
+    moons: "Monde",
+    close: "Schließen",
+  },
   countdown: {
     units: {
       years: "Jahre",

@@ -19,6 +19,14 @@ export const tr: Dictionary = {
     useDark: "Koyu temayı kullan",
     useWhite: "Beyaz temayı kullan",
   },
+  planet: {
+    diameter: "Çap",
+    distance: "Uzaklık",
+    day: "Gün",
+    year: "Yıl",
+    moons: "Uydular",
+    close: "Kapat",
+  },
   countdown: {
     units: {
       years: "Yıl",

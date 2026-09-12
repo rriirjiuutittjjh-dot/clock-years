@@ -555,6 +555,123 @@ select:focus-visible {
   }
 }
 
+/* Clickable planets glow on hover/focus. */
+.planet-btn {
+  cursor: pointer;
+  outline: none;
+}
+
+.planet-btn:hover,
+.planet-btn:focus-visible {
+  filter: brightness(1.18) drop-shadow(0 0 10px rgb(255 209 102 / 0.45));
+}
+
+/* Planet detail view. */
+.planet-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(4 2 12 / 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: fade-in 0.25s var(--ease);
+}
+
+html[data-theme="light"] .planet-modal {
+  background: rgb(36 29 78 / 0.35);
+}
+
+.planet-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: min(22rem, 100%);
+  border-radius: 28px;
+  padding: 1.75rem 1.5rem 1.5rem;
+  background: rgb(18 8 42 / 0.94);
+  box-shadow:
+    0 12px 40px rgb(0 0 0 / 0.5),
+    0 0 0 1px rgb(255 255 255 / 0.12);
+  animation: pop 0.35s var(--ease) both;
+}
+
+html[data-theme="light"] .planet-card {
+  background: rgb(255 255 255 / 0.96);
+  box-shadow:
+    0 12px 40px rgb(36 29 78 / 0.18),
+    0 0 0 1px rgb(36 29 78 / 0.1);
+}
+
+.planet-close {
+  position: absolute;
+  top: 0.75rem;
+  inset-inline-end: 0.75rem;
+}
+
+.planet-orb {
+  width: 96px;
+  height: 96px;
+}
+
+html[data-theme="light"] .planet-orb ellipse {
+  stroke: #a89468;
+}
+
+.planet-title {
+  margin: 0.25rem 0 0.75rem;
+  font-size: 1.35rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.planet-rows {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+}
+
+.planet-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.25rem;
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+}
+
+html[data-theme="light"] .planet-row {
+  border-color: rgb(36 29 78 / 0.12);
+}
+
+.planet-row dt {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.planet-row dd {
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .colon {
   font-size: 0.62em;
   font-weight: 600;
