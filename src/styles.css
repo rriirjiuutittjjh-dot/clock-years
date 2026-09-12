@@ -855,6 +855,8 @@ html[data-motion="off"] .celebrate h1,
 html[data-motion="off"] .sun-glow,
 html[data-motion="off"] .sun-rays,
 html[data-motion="off"] .bd-comet,
+html[data-motion="off"] .neb,
+html[data-motion="off"] .dust,
 html[data-motion="off"] .num.tick {
   animation: none;
 }
@@ -901,4 +903,97 @@ html[data-theme="light"] .warp-star {
 
 html[data-motion="off"] .warp-field {
   display: none;
+}
+
+/* 4D depth planes: each trails the smoothed mouse (--mx/--my) at its own depth. */
+.warp-field {
+  transform: translate3d(calc(var(--mx, 0) * 14px), calc(var(--my, 0) * 14px), 0);
+  will-change: transform;
+}
+
+.neb-wrap {
+  position: absolute;
+  inset: -6%;
+  transform: translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 10px), 0);
+  will-change: transform;
+}
+
+.neb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+}
+
+.neb-a {
+  width: 44vmax;
+  height: 44vmax;
+  left: 4%;
+  top: -14%;
+  background: radial-gradient(circle, rgb(124 58 237 / 0.32), transparent 65%);
+  animation: neb-float-a 27s ease-in-out infinite alternate;
+}
+
+.neb-b {
+  width: 40vmax;
+  height: 40vmax;
+  right: -10%;
+  bottom: -16%;
+  background: radial-gradient(circle, rgb(56 89 199 / 0.3), transparent 65%);
+  animation: neb-float-b 34s ease-in-out infinite alternate;
+}
+
+.neb-c {
+  width: 24vmax;
+  height: 24vmax;
+  right: 14%;
+  top: -4%;
+  background: radial-gradient(circle, rgb(219 112 147 / 0.22), transparent 65%);
+  animation: neb-float-a 21s ease-in-out infinite alternate;
+}
+
+@keyframes neb-float-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4%, 6%, 0) scale(1.12);
+  }
+}
+
+@keyframes neb-float-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.08);
+  }
+  to {
+    transform: translate3d(-5%, -4%, 0) scale(1);
+  }
+}
+
+.dust-wrap {
+  position: absolute;
+  inset: -8%;
+  transform: translate3d(calc(var(--mx, 0) * 26px), calc(var(--my, 0) * 26px), 0);
+  will-change: transform;
+}
+
+.dust {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px 2px rgb(216 205 255 / 0.7);
+  animation: dust-float 7s ease-in-out infinite alternate;
+}
+
+@keyframes dust-float {
+  from {
+    transform: translate3d(-8px, -6px, 0);
+  }
+  to {
+    transform: translate3d(8px, 6px, 0);
+  }
+}
+
+html[data-theme="light"] .dust {
+  background: #57519b;
+  box-shadow: 0 0 8px 2px rgb(90 80 180 / 0.5);
 }
