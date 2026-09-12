@@ -14,6 +14,10 @@ export const tr: Dictionary = {
     logIn: "Giriş yap",
     register: "Kaydol",
     language: "Dil",
+    dark: "Koyu",
+    white: "Beyaz",
+    useDark: "Koyu temayı kullan",
+    useWhite: "Beyaz temayı kullan",
   },
   countdown: {
     units: {

@@ -14,6 +14,10 @@ export const ru: Dictionary = {
     logIn: "Войти",
     register: "Регистрация",
     language: "Язык",
+    dark: "Тёмная",
+    white: "Белая",
+    useDark: "Использовать тёмную тему",
+    useWhite: "Использовать белую тему",
   },
   countdown: {
     units: {

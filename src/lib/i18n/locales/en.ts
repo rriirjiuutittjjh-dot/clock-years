@@ -16,6 +16,10 @@ export const en = {
     logIn: "Log in",
     register: "Register",
     language: "Language",
+    dark: "Dark",
+    white: "White",
+    useDark: "Use dark theme",
+    useWhite: "Use white theme",
   },
   countdown: {
     units: {

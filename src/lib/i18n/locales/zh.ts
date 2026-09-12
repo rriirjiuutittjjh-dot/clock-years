@@ -14,6 +14,10 @@ export const zh: Dictionary = {
     logIn: "登录",
     register: "注册",
     language: "语言",
+    dark: "深色",
+    white: "白色",
+    useDark: "使用深色主题",
+    useWhite: "使用白色主题",
   },
   countdown: {
     units: {

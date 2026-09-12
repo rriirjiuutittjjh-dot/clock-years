@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Sparkle, Sparkles, Volume2, VolumeX } from "lucide-react";
+import { Moon, Sparkle, Sparkles, Sun, Volume2, VolumeX } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { LanguagePicker } from "@/components/chrome/language-picker";
 import { useTheme } from "@/components/theme-provider";
@@ -7,7 +7,7 @@ import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { useLocale } from "@/lib/i18n";
 
 export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
-  const { space, setSpace, setMotion } = useTheme();
+  const { space, setSpace, setMotion, theme, setTheme } = useTheme();
   const { user, isPending } = useCurrentUserState();
   const { t } = useLocale();
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -35,6 +35,10 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
     const next = space === "on" ? "off" : "on";
     setSpace(next);
     setMotion(next);
+  };
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   const toggleMusic = () => {
@@ -65,6 +69,17 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
         >
           {space === "on" ? <Sparkles className="size-4" /> : <Sparkle className="size-4" />}
           <span className="hidden sm:inline">{space === "on" ? t.chrome.spaceOn : t.chrome.spaceOff}</span>
+        </button>
+
+        <button
+          type="button"
+          className="icon-btn glass"
+          onClick={toggleTheme}
+          aria-pressed={theme === "light"}
+          aria-label={theme === "dark" ? t.chrome.useWhite : t.chrome.useDark}
+        >
+          {theme === "dark" ? <Moon className="size-4" /> : <Sun className="size-4" />}
+          <span className="hidden sm:inline">{theme === "dark" ? t.chrome.dark : t.chrome.white}</span>
         </button>
 
         <button

@@ -9,6 +9,8 @@ type ThemeCtx = {
   setSpace: (next: "on" | "off") => void;
   motion: "on" | "off";
   setMotion: (next: "on" | "off") => void;
+  theme: "dark" | "light";
+  setTheme: (next: "dark" | "light") => void;
   refreshSettings: () => Promise<void>;
   applySettings: (next: SiteSettings) => void;
 };
@@ -19,10 +21,12 @@ function applyCssVars(
   settings: SiteSettings,
   space: "on" | "off",
   motion: "on" | "off",
+  theme: "dark" | "light",
 ) {
   const root = document.documentElement;
   root.dataset.space = space;
   root.dataset.motion = motion;
+  root.dataset.theme = theme;
   root.style.setProperty("--bg-blur", `${settings.backgroundBlur}px`);
   root.style.setProperty("--glass-blur", `${settings.glassBlur}px`);
   const { r, g, b } = hexToRgb(settings.glassColor);
@@ -34,6 +38,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SETTINGS);
   const [space, setSpaceState] = useState<"on" | "off">("on");
   const [motion, setMotionState] = useState<"on" | "off">("on");
+  const [theme, setThemeState] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
     window.localStorage.removeItem("system-space-lights");
@@ -45,14 +50,20 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     } else if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setMotionState("off");
     }
+    const storedTheme = window.localStorage.getItem("system-space-theme");
+    if (storedTheme === "light" || storedTheme === "dark") {
+      setThemeState(storedTheme);
+    } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+      setThemeState("light");
+    }
     void getPublicSettings()
       .then(setSettings)
       .catch(() => setSettings(DEFAULT_SETTINGS));
   }, []);
 
   useEffect(() => {
-    applyCssVars(settings, space, motion);
-  }, [settings, space, motion]);
+    applyCssVars(settings, space, motion, theme);
+  }, [settings, space, motion, theme]);
 
   const value = useMemo<ThemeCtx>(
     () => ({
@@ -67,6 +78,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         setMotionState(next);
         window.localStorage.setItem("system-space-motion", next);
       },
+      theme,
+      setTheme: (next) => {
+        setThemeState(next);
+        window.localStorage.setItem("system-space-theme", next);
+      },
       refreshSettings: async () => {
         try {
           setSettings(await getPublicSettings());
@@ -76,7 +92,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       },
       applySettings: setSettings,
     }),
-    [settings, space, motion],
+    [settings, space, motion, theme],
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

@@ -14,6 +14,10 @@ export const ar: Dictionary = {
     logIn: "تسجيل الدخول",
     register: "إنشاء حساب",
     language: "اللغة",
+    dark: "داكن",
+    white: "أبيض",
+    useDark: "استخدام المظهر الداكن",
+    useWhite: "استخدام المظهر الأبيض",
   },
   countdown: {
     units: {
