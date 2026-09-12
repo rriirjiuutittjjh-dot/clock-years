@@ -55,6 +55,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       setThemeState(storedTheme);
     } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
       setThemeState("light");
+    } else if (storedSpace === "off") {
+      // Migration: space-off used to mean white mode; keep that look.
+      setThemeState("light");
     }
     void getPublicSettings()
       .then(setSettings)
