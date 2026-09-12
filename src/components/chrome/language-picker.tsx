@@ -39,24 +39,25 @@ export function LanguagePicker() {
       </button>
 
       {open ? (
-        <div className="lang-menu glass" role="menu" aria-label={t.chrome.language}>
+        <ul className="lang-menu glass" role="menu" aria-label={t.chrome.language}>
           {LOCALES.map((l) => (
-            <button
-              key={l}
-              type="button"
-              role="menuitemradio"
-              aria-checked={l === locale}
-              className={`lang-option${l === locale ? " current" : ""}`}
-              onClick={() => {
-                setLocale(l);
-                setOpen(false);
-              }}
-            >
-              <span>{LOCALE_NAMES[l]}</span>
-              {l === locale ? <Check className="size-4 shrink-0" aria-hidden="true" /> : null}
-            </button>
+            <li key={l} role="none">
+              <button
+                type="button"
+                role="menuitemradio"
+                aria-checked={l === locale}
+                className={`lang-option${l === locale ? " current" : ""}`}
+                onClick={() => {
+                  setLocale(l);
+                  setOpen(false);
+                }}
+              >
+                <span>{LOCALE_NAMES[l]}</span>
+                {l === locale ? <Check className="size-4 shrink-0" aria-hidden="true" /> : null}
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
       ) : null}
     </div>
   );

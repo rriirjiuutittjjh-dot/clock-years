@@ -172,8 +172,15 @@ html[data-space="off"] .space-bg {
   min-width: 15rem;
   max-height: 60vh;
   overflow-y: auto;
+  margin: 0;
   padding: 0.4rem;
   border-radius: 18px;
+  list-style: none;
+}
+
+.lang-menu > li {
+  list-style: none;
+  min-width: 0;
 }
 
 .lang-option {
@@ -181,6 +188,7 @@ html[data-space="off"] .space-bg {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  width: 100%;
   padding: 0.55rem 0.7rem;
   border-radius: 12px;
   font-size: 0.85rem;

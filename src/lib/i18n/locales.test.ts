@@ -8,11 +8,25 @@ import { fr } from "./locales/fr.ts";
 import { hi } from "./locales/hi.ts";
 import { it as itLocale } from "./locales/it.ts";
 import { pt } from "./locales/pt.ts";
+import { ptBR } from "./locales/pt-BR.ts";
 import { ru } from "./locales/ru.ts";
 import { tr } from "./locales/tr.ts";
 import { zh } from "./locales/zh.ts";
 
-const locales: Record<string, unknown> = { ar, de, en, es, fr, hi, it: itLocale, pt, ru, tr, zh };
+const locales: Record<string, unknown> = {
+  ar,
+  de,
+  en,
+  es,
+  fr,
+  hi,
+  it: itLocale,
+  pt,
+  "pt-BR": ptBR,
+  ru,
+  tr,
+  zh,
+};
 
 /** Every leaf path plus its kind ("string" | "function" | "object"). */
 function shape(value: unknown, path = ""): Map<string, string> {
