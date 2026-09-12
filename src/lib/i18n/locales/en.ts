@@ -25,7 +25,6 @@ export const en = {
     title: "Layers",
     orbits: "Orbits",
     labels: "Labels",
-    stars: "Stars",
   },
   planet: {
     diameter: "Diameter",

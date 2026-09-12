@@ -23,7 +23,6 @@ export const tr: Dictionary = {
     title: "Katmanlar",
     orbits: "Yörüngeler",
     labels: "Etiketler",
-    stars: "Yıldızlar",
   },
   planet: {
     diameter: "Çap",

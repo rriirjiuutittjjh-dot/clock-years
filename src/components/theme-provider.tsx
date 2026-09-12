@@ -7,10 +7,9 @@ export type SpaceLayers = {
   orbits: boolean;
   moons: boolean;
   labels: boolean;
-  stars: boolean;
 };
 
-const DEFAULT_LAYERS: SpaceLayers = { orbits: true, moons: true, labels: true, stars: true };
+const DEFAULT_LAYERS: SpaceLayers = { orbits: true, moons: true, labels: true };
 
 type ThemeCtx = {
   settings: SiteSettings;
@@ -42,7 +41,6 @@ function applyCssVars(
   root.dataset.orbits = layers.orbits ? "on" : "off";
   root.dataset.moons = layers.moons ? "on" : "off";
   root.dataset.labels = layers.labels ? "on" : "off";
-  root.dataset.stars = layers.stars ? "on" : "off";
   root.style.setProperty("--bg-blur", `${settings.backgroundBlur}px`);
   root.style.setProperty("--glass-blur", `${settings.glassBlur}px`);
   const { r, g, b } = hexToRgb(settings.glassColor);

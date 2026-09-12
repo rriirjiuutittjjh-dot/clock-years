@@ -29,7 +29,6 @@ export function SpaceLayersMenu() {
     { key: "orbits", label: t.layers.orbits },
     { key: "moons", label: t.planet.moons },
     { key: "labels", label: t.layers.labels },
-    { key: "stars", label: t.layers.stars },
   ] as const;
 
   return (

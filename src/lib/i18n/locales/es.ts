@@ -23,7 +23,6 @@ export const es: Dictionary = {
     title: "Capas",
     orbits: "Órbitas",
     labels: "Etiquetas",
-    stars: "Estrellas",
   },
   planet: {
     diameter: "Diámetro",

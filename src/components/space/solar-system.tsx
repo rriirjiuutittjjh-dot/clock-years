@@ -92,21 +92,6 @@ function moonPath(rx: number): string {
   );
 }
 
-/** Deterministic starfield (SSR-safe: no Math.random, positions never shift). */
-const STARS = Array.from({ length: 70 }, (_, i) => {
-  const s1 = Math.sin(i * 127.1 + 311.7) * 43758.5453;
-  const r1 = s1 - Math.floor(s1);
-  const s2 = Math.sin(i * 269.5 + 183.3) * 28001.8384;
-  const r2 = s2 - Math.floor(s2);
-  return {
-    x: +((r1 * 900).toFixed(1)),
-    y: +((r2 * 220).toFixed(1)),
-    r: +((0.6 + r2 * 1.1).toFixed(2)),
-    o: +((0.3 + r1 * 0.6).toFixed(2)),
-    d: +((r1 * 3.6).toFixed(2)),
-  };
-});
-
 /** Darken a hex color by factor f for moon shadow sides. */
 function shade(hex: string, f: number): string {
   const n = parseInt(hex.slice(1), 16);
@@ -176,20 +161,6 @@ export function SolarSystem() {
         </defs>
 
         <ellipse cx={CX} cy={CY} rx="445" ry="108" fill="url(#nebula)" />
-
-        <g className="sv-stars" fill="#e8e2ff">
-          {STARS.map((s, i) => (
-            <circle
-              key={i}
-              className="star pulse"
-              cx={s.x}
-              cy={s.y}
-              r={s.r}
-              opacity={s.o}
-              style={{ animationDelay: `${s.d}s` }}
-            />
-          ))}
-        </g>
 
         <g className="orbit-track" fill="none" stroke="rgba(196,181,253,0.30)" strokeWidth="1">
           {ORBITS.map((o) => (

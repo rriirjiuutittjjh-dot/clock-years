@@ -23,7 +23,6 @@ export const ar: Dictionary = {
     title: "الطبقات",
     orbits: "مدارات",
     labels: "تسميات",
-    stars: "نجوم",
   },
   planet: {
     diameter: "القطر",

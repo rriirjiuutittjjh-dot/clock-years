@@ -23,7 +23,6 @@ export const fr: Dictionary = {
     title: "Calques",
     orbits: "Orbites",
     labels: "Étiquettes",
-    stars: "Étoiles",
   },
   planet: {
     diameter: "Diamètre",

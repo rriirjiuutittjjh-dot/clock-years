@@ -23,7 +23,6 @@ export const ru: Dictionary = {
     title: "Слои",
     orbits: "Орбиты",
     labels: "Подписи",
-    stars: "Звёзды",
   },
   planet: {
     diameter: "Диаметр",

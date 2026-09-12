@@ -23,7 +23,6 @@ export const zh: Dictionary = {
     title: "图层",
     orbits: "轨道",
     labels: "标签",
-    stars: "星星",
   },
   planet: {
     diameter: "直径",

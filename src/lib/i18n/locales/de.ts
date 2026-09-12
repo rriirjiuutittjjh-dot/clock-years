@@ -23,7 +23,6 @@ export const de: Dictionary = {
     title: "Ebenen",
     orbits: "Umlaufbahnen",
     labels: "Beschriftungen",
-    stars: "Sterne",
   },
   planet: {
     diameter: "Durchmesser",

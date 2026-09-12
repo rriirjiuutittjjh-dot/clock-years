@@ -208,9 +208,7 @@ html[data-theme="light"] .solar-svg [fill="none"] {
   stroke: rgb(100 90 180 / 0.5);
 }
 
-html[data-theme="light"] .solar-svg g[fill="#e8e2ff"] {
-  fill: #6a639c;
-}
+
 
 html[data-theme="light"] .solar-svg .moon-dot {
   fill: #77719e;
@@ -227,25 +225,6 @@ html[data-theme="light"] .solar-svg .moon-dot {
 
 .space-bg-custom[hidden] {
   display: none;
-}
-
-.star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  background: #fff;
-  opacity: 0.7;
-}
-
-.star.dim {
-  opacity: 0.28;
-  width: 1px;
-  height: 1px;
-}
-
-.star.pulse {
-  animation: twinkle 3.6s var(--ease) infinite;
 }
 
 .space-content {
@@ -667,8 +646,7 @@ html[data-theme="light"] .planet-row {
 /* Orrery layer visibility, driven by the Layers menu (all on by default). */
 html[data-orbits="off"] .solar-svg .orbit-track,
 html[data-moons="off"] .solar-svg .moon-sys,
-html[data-labels="off"] .solar-svg .planet-name,
-html[data-stars="off"] .solar-svg .sv-stars {
+html[data-labels="off"] .solar-svg .planet-name {
   display: none;
 }
 
@@ -762,16 +740,6 @@ html[data-stars="off"] .solar-svg .sv-stars {
   50%,
   100% {
     opacity: 0.22;
-  }
-}
-
-@keyframes twinkle {
-  0%,
-  100% {
-    opacity: 0.25;
-  }
-  50% {
-    opacity: 1;
   }
 }
 
@@ -887,7 +855,6 @@ html[data-stars="off"] .solar-svg .sv-stars {
 
 /* Motion off kills the ambient animations. Driven by the header toggle, which
    defaults to the OS reduced-motion preference but stays user-overridable. */
-html[data-motion="off"] .star.pulse,
 html[data-motion="off"] .colon,
 html[data-motion="off"] .celebrate h1,
 html[data-motion="off"] .sun-glow,
@@ -901,4 +868,42 @@ html[data-motion="off"] .num.tick {
   html {
     --space-ms: 0.01s;
   }
+}
+
+/* 3D warp background: streaks stream outward from the vanishing point. */
+.warp-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.warp-star {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  background: #fff;
+  animation: warp-fly 3s linear infinite;
+}
+
+@keyframes warp-fly {
+  0% {
+    transform: rotate(var(--a)) translateX(0) scaleX(1);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(var(--a)) translateX(var(--d)) scaleX(7);
+    opacity: 0;
+  }
+}
+
+html[data-theme="light"] .warp-star {
+  background: #57519b;
+}
+
+html[data-motion="off"] .warp-field {
+  display: none;
 }

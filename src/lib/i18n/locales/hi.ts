@@ -23,7 +23,6 @@ export const hi: Dictionary = {
     title: "परतें",
     orbits: "कक्षाएँ",
     labels: "लेबल",
-    stars: "तारे",
   },
   planet: {
     diameter: "व्यास",
