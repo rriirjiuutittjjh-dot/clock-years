@@ -33,6 +33,58 @@ const PLANETS = [
   { name: "Neptune", r: 9.6, fill: "#4b6fd6", x: 806, orbit: 3 },
 ] as const;
 
+type Moon = { name: string; rx: number; r: number; fill: string };
+
+/** The moons of each planet (Mercury and Venus have none). rx clears the planet body. */
+const MOONS: Partial<Record<string, Moon[]>> = {
+  Earth: [{ name: "Moon", rx: 14, r: 2.6, fill: "#d8d8e0" }],
+  Mars: [
+    { name: "Phobos", rx: 10.5, r: 1.7, fill: "#b9a89a" },
+    { name: "Deimos", rx: 14, r: 1.4, fill: "#9d9088" },
+  ],
+  Jupiter: [
+    { name: "Io", rx: 21, r: 2.4, fill: "#e8d47a" },
+    { name: "Europa", rx: 24.5, r: 2, fill: "#dfe4ea" },
+    { name: "Ganymede", rx: 28, r: 2.8, fill: "#b0a89c" },
+    { name: "Callisto", rx: 31.5, r: 2.5, fill: "#8f8a80" },
+  ],
+  Saturn: [
+    { name: "Mimas", rx: 27, r: 1.5, fill: "#cfc8b8" },
+    { name: "Enceladus", rx: 30, r: 1.7, fill: "#e8f0f2" },
+    { name: "Tethys", rx: 33, r: 1.9, fill: "#d5d2c6" },
+    { name: "Dione", rx: 36, r: 1.8, fill: "#c2beb0" },
+    { name: "Rhea", rx: 39, r: 2.2, fill: "#b5b0a2" },
+    { name: "Titan", rx: 42, r: 2.8, fill: "#e0a94e" },
+    { name: "Hyperion", rx: 45, r: 1.4, fill: "#a89a88" },
+    { name: "Iapetus", rx: 48, r: 2, fill: "#8a8578" },
+  ],
+  Uranus: [
+    { name: "Puck", rx: 14, r: 1.4, fill: "#9aa0a8" },
+    { name: "Miranda", rx: 17, r: 1.6, fill: "#b9beb9" },
+    { name: "Ariel", rx: 20, r: 1.9, fill: "#cfd4cd" },
+    { name: "Umbriel", rx: 23, r: 1.8, fill: "#8f938f" },
+    { name: "Titania", rx: 26, r: 2.2, fill: "#c6cbc4" },
+    { name: "Oberon", rx: 29, r: 2.1, fill: "#b0a89e" },
+  ],
+  Neptune: [
+    { name: "Proteus", rx: 14, r: 1.7, fill: "#8d8f96" },
+    { name: "Triton", rx: 18, r: 2.3, fill: "#e3d9c8" },
+  ],
+};
+
+/** Moon orbits share the tilted-ellipse look, squashed so tall systems never clip the frame. */
+const MOON_RY = 0.38;
+
+/** Full ellipse loop around the planet center (the planet group sits at the origin). */
+function moonPath(rx: number): string {
+  const ry = rx * MOON_RY;
+  return (
+    `M ${rx} 0 ` +
+    `A ${rx} ${ry} 0 1 1 ${-rx} 0 ` +
+    `A ${rx} ${ry} 0 1 1 ${rx} 0 Z`
+  );
+}
+
 const RAYS = Array.from({ length: 12 }, (_, i) => i * 30);
 
 export function SolarSystem() {
@@ -68,6 +120,7 @@ export function SolarSystem() {
           const track = ORBITS[p.orbit];
           // Pair-mates start half a lap apart so they never bunch up.
           const begin = `-${((i % 2) * track.dur) / 2}s`;
+          const moons = MOONS[p.name] ?? [];
           return (
             <g key={p.name} transform={reduced ? `translate(${p.x} ${CY})` : undefined}>
               {reduced ? null : (
@@ -99,6 +152,44 @@ export function SolarSystem() {
                   <ellipse cx="0" cy="5" rx="13" ry="2.4" fill="#efd0a0" opacity="0.45" />
                 </>
               ) : null}
+              {moons.map((m, j) => {
+                const ry = m.rx * MOON_RY;
+                const dur = 4 + m.rx * 0.22;
+                // Static lineup spreads moons evenly around the planet;
+                // the orrery spreads them around the lap instead.
+                const theta = (j / moons.length) * Math.PI * 2 - Math.PI / 2;
+                return (
+                  <g key={m.name}>
+                    <ellipse
+                      cx="0"
+                      cy="0"
+                      rx={m.rx}
+                      ry={ry}
+                      fill="none"
+                      stroke="rgba(232,226,255,0.10)"
+                      strokeWidth="0.8"
+                    />
+                    <g
+                      transform={
+                        reduced
+                          ? `translate(${(Math.cos(theta) * m.rx).toFixed(1)} ${(Math.sin(theta) * ry).toFixed(1)})`
+                          : undefined
+                      }
+                    >
+                      {reduced ? null : (
+                        <animateMotion
+                          dur={`${dur.toFixed(2)}s`}
+                          begin={`${((-(j / moons.length) * dur).toFixed(2))}s`}
+                          repeatCount="indefinite"
+                          path={moonPath(m.rx)}
+                        />
+                      )}
+                      <title>{m.name}</title>
+                      <circle r={m.r} fill={m.fill} />
+                    </g>
+                  </g>
+                );
+              })}
             </g>
           );
         })}
