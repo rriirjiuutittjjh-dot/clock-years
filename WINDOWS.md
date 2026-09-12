@@ -29,6 +29,41 @@ Need it running with nobody logged in (a server box)? Use
 [NSSM](https://nssm.cc) to wrap `node .output\server\index.mjs` as a real
 Windows Service instead of the task above.
 
+## Free public URL via Cloudflare
+
+Your PC has no static IP and no open ports — Cloudflare Tunnel fixes both,
+free, no router changes. Start the app first (`start-windows.bat`), then:
+
+**Instant (random URL, changes every restart):** double-click
+**`tunnel-cloudflare.bat`** — it downloads `cloudflared.exe` once, then
+prints a `https://....trycloudflare.com` URL. Share it; anyone can open
+your countdown while both windows stay open.
+
+**Stable (your own domain, still free beyond the domain):**
+
+1. Buy any cheap domain (a `.xyz` is often ~$2 for the first year —
+   truly-free domains no longer exist since Freenom shut down) and add
+   it to Cloudflare's free plan (change nameservers at your registrar).
+2. In a terminal in this folder:
+   `cloudflared.exe tunnel login` (browser approves),
+   `cloudflared.exe tunnel create clock`,
+   `cloudflared.exe tunnel route dns clock clockyourdomain.com`.
+3. Save this as `%USERPROFILE%\.cloudflared\config.yml` (use the tunnel
+   ID printed by `create`):
+   ```yaml
+   tunnel: <tunnel-id>
+   credentials-file: C:\Users\<you>\.cloudflared\<tunnel-id>.json
+   ingress:
+     - hostname: clockyourdomain.com
+       service: http://localhost:8080
+     - service: http_status:404
+   ```
+4. Set `BETTER_AUTH_URL=https://clockyourdomain.com` in `.env` and restart
+   the app, then run `cloudflared.exe tunnel run clock` — for 24/7,
+   `cloudflared.exe service install` (as Administrator) so the tunnel
+   itself survives reboots too.
+5. Re-check after any change: `BASE_URL=https://clockyourdomain.com bash test.sh`.
+
 ## Notes
 
 - **Data:** out of the box the database is in-memory — users and settings
