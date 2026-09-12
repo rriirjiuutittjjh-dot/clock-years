@@ -24,11 +24,22 @@ The repo ships `vercel.json` (Nitro `vercel` preset) — zero config needed:
 | `BETTER_AUTH_URL`    | Yes      | Public URL, e.g. `https://clock-years.vercel.app`           |
 | `BETTER_AUTH_SECRET` | Yes      | `openssl rand -hex 32` — signs sessions across instances    |
 | `DATABASE_URL`       | No*      | Postgres (Neon/Supabase) for persistent users and settings  |
+| `ADMIN_EMAILS`       | No       | Comma-separated owner emails, e.g. `you@example.com`       |
 
 \*Without `DATABASE_URL` the app runs on the built-in in-memory PGLite
 fallback: fine for previews, but users and settings reset on restart.
 
 3. Deploy. `npm run build` runs the app build plus pending DB migrations.
+
+## Roles & admin
+
+Three roles: `member`, `admin`, `owner`. Staff (`admin`/`owner`) open `/admin`
+for site appearance settings and the member list; only the `owner` changes
+roles. Everyone manages their own profile and password at `/settings`.
+
+The first account to sign up becomes owner. For a deterministic admin on
+deploys, set `ADMIN_EMAILS` — a listed address is granted owner on sign-in
+even if it registers late or was demoted (the env is the source of truth).
 
 ## Scripts
 

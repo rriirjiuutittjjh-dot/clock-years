@@ -3,6 +3,7 @@ import { z } from "zod";
 import { authMiddleware } from "@/lib/auth/middleware";
 import { getSql } from "@/lib/db";
 import { type Profile, type Role } from "@/lib/types";
+import { isAdminEmail } from "./admin-env";
 
 type ProfileRow = {
   user_id: string;
@@ -45,14 +46,22 @@ async function ensureProfile(userId: string): Promise<Profile> {
     left join "user" u on u.id = p.user_id
     where p.user_id = ${userId}
   `;
-  if (existing[0]) return asProfile(existing[0]);
+  if (existing[0]) {
+    // Env wins: a listed address self-heals back to owner even if it
+    // registered late or was demoted in the UI.
+    if (existing[0].role !== "owner" && isAdminEmail(existing[0].email)) {
+      await sql`update profiles set role = 'owner', updated_at = now() where user_id = ${userId}`;
+      return { ...asProfile(existing[0]), role: "owner" };
+    }
+    return asProfile(existing[0]);
+  }
 
   const authRows = await sql<{ name: string; email: string; image: string | null }>`
     select name, email, image from "user" where id = ${userId}
   `;
   const auth = authRows[0];
   const owners = await sql<{ n: number }>`select count(*)::int as n from profiles where role = 'owner'`;
-  const role: Role = (owners[0]?.n ?? 0) === 0 ? "owner" : "member";
+  const role: Role = (owners[0]?.n ?? 0) === 0 || isAdminEmail(auth?.email) ? "owner" : "member";
   const displayName = auth?.name?.trim() || auth?.email?.split("@")[0] || "Member";
   const avatar = auth?.image ?? null;
 
