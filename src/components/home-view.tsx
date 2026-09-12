@@ -141,6 +141,13 @@ export function HomeView() {
       {fx ? <Fireworks active={fx} /> : null}
 
       <main className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col items-center justify-center px-4 pb-16 pt-24 text-center">
+        <p className="text-xs font-medium tracking-[0.28em] text-muted uppercase">
+          {t.home.systemSpace}
+        </p>
+        <p className="num mt-2 text-4xl tabular-nums sm:text-5xl" role="timer" aria-label={clockNow}>
+          {clockNow}
+        </p>
+
         <SolarSystem />
 
         <div className={`mt-6 w-full transition-opacity duration-300 ${party ? "opacity-0" : "opacity-100"}`}>
@@ -165,7 +172,6 @@ export function HomeView() {
 
           <div className="mt-6 space-y-2 text-xs tracking-wide text-muted">
             <p>{meta}</p>
-            <p>{clockNow ? t.home.now(clockNow) : ""}</p>
             {readyMs !== null ? <p>{t.home.loadedIn((readyMs / 1000).toFixed(1))}</p> : null}
           </div>
 
