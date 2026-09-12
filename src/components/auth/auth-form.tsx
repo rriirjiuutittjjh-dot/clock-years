@@ -88,7 +88,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
     <SpaceStage>
       <AppChrome hideAuth />
       <main className="mx-auto grid min-h-dvh w-full max-w-5xl items-center px-4 py-24 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
-        <div className="glass overflow-hidden rounded-[32px]">
+        <div className="glass hidden overflow-hidden rounded-[32px] lg:block">
           <AuthArt title={title} />
         </div>
 
