@@ -252,7 +252,7 @@ export function SolarSystem() {
                         />
                       )}
                       <title>{m.name}</title>
-                      <circle r={m.r} fill={m.fill} />
+                      <circle className="moon-dot" r={m.r} fill={m.fill} />
                     </g>
                   </g>
                 );

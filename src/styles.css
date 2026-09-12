@@ -89,9 +89,128 @@
     visibility var(--space-ms) var(--ease);
 }
 
+/* Light space: Space OFF trades the void for a bright sky backdrop with
+   dark content. Every rule below only applies in that mode. */
+html[data-space="off"] {
+  --color-void: #e9e6fa;
+  --color-space: #ddd6f3;
+  --color-nebula: #b9a8ee;
+  --color-ink: #241d4e;
+  --color-muted: #6f6694;
+  color-scheme: light;
+}
+
 html[data-space="off"] .space-bg {
-  opacity: 0;
-  visibility: hidden;
+  opacity: 1;
+  visibility: visible;
+  background:
+    radial-gradient(120% 80% at 50% -10%, #d9cfff 0%, transparent 55%),
+    radial-gradient(90% 60% at 80% 110%, #c3d4ff 0%, transparent 50%),
+    linear-gradient(180deg, #f2efff 0%, #e4e9ff 60%, #dfe4f7 100%);
+}
+
+html[data-space="off"] .bd-star {
+  background: #57519b;
+}
+
+html[data-space="off"] .bd-star.glow {
+  box-shadow: 0 0 6px 1px rgb(90 80 180 / 0.5);
+}
+
+html[data-space="off"] .bd-comet {
+  background: linear-gradient(90deg, #4a4480, rgb(74 68 128 / 0));
+}
+
+html[data-space="off"] .bd-vignette {
+  background: radial-gradient(
+    120% 90% at 50% 45%,
+    transparent 60%,
+    rgb(60 50 120 / 0.16) 100%
+  );
+}
+
+html[data-space="off"] .glass {
+  background: rgb(255 255 255 / 0.6);
+  box-shadow:
+    0 0 0 1px rgb(36 29 78 / 0.12),
+    0 8px 28px rgb(36 29 78 / 0.1);
+}
+
+html[data-space="off"] .glass-strong {
+  background: rgb(255 255 255 / 0.78);
+}
+
+html[data-space="off"] .lang-menu {
+  background: rgb(255 255 255 / 0.96);
+  box-shadow:
+    0 12px 40px rgb(36 29 78 / 0.18),
+    0 0 0 1px rgb(36 29 78 / 0.1);
+}
+
+html[data-space="off"] .lang-option:hover {
+  background: rgb(36 29 78 / 0.07);
+}
+
+html[data-space="off"] .lang-option.current {
+  background: rgb(36 29 78 / 0.1);
+}
+
+html[data-space="off"] .btn-ghost {
+  background: rgb(255 255 255 / 0.6);
+  color: #241d4e;
+  box-shadow: 0 0 0 1px rgb(36 29 78 / 0.14);
+}
+
+html[data-space="off"] .btn-ghost:hover:not(:disabled) {
+  background: rgb(255 255 255 / 0.85);
+}
+
+html[data-space="off"] .btn-primary {
+  box-shadow: 0 0 0 1px rgb(36 29 78 / 0.12);
+}
+
+html[data-space="off"] .field input,
+html[data-space="off"] .field textarea,
+html[data-space="off"] .field select {
+  background: rgb(255 255 255 / 0.7);
+  box-shadow: 0 0 0 1px rgb(36 29 78 / 0.16);
+}
+
+html[data-space="off"] .field input[type="range"] {
+  background: transparent;
+  box-shadow: none;
+  accent-color: #4a3f9e;
+}
+
+html[data-space="off"] .num {
+  background-image: linear-gradient(180deg, #2b2358 0%, #4a3f9e 60%, #6a5cd0 100%);
+  filter: drop-shadow(0 2px 18px rgb(90 80 180 / 0.25));
+}
+
+html[data-space="off"] .colon {
+  color: rgb(70 60 140 / 0.5);
+}
+
+/* Pale washes used for tracks, pills and rows become light-mode tints. */
+html[data-space="off"] [class*="bg-white/"] {
+  background-color: rgb(36 29 78 / 0.08);
+}
+
+html[data-space="off"] div[class*="bg-white/10"] > div {
+  background: linear-gradient(90deg, #4a90c4, #6a5cd0, #d18a3c) !important;
+}
+
+/* Pale orrery strokes and dots become visible indigo in light space. */
+html[data-space="off"] .solar-svg [fill="none"] {
+  stroke: rgb(100 90 180 / 0.5);
+}
+
+html[data-space="off"] .solar-svg g[fill="#e8e2ff"] {
+  fill: #6a639c;
+}
+
+html[data-space="off"] .solar-svg .moon-dot {
+  fill: #77719e;
 }
 
 .space-bg-custom {
