@@ -141,7 +141,7 @@ export function HomeView() {
 
       <main className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col items-center justify-center px-4 pb-16 pt-24 text-center">
         <p
-          className="num mt-2 text-4xl tabular-nums sm:text-5xl"
+          className={`num mt-2 text-4xl tabular-nums transition-opacity duration-300 sm:text-5xl ${party ? "opacity-0" : "opacity-100"}`}
           role="timer"
           aria-label={clockNow}
           suppressHydrationWarning
@@ -149,9 +149,15 @@ export function HomeView() {
           {clockNow}
         </p>
 
-        <SolarSystem />
+        <div
+          className={`w-full transition-opacity duration-300 ${party ? "pointer-events-none opacity-0" : "opacity-100"}`}
+        >
+          <SolarSystem />
+        </div>
 
-        <div className={`mt-6 w-full transition-opacity duration-300 ${party ? "opacity-0" : "opacity-100"}`}>
+        <div
+          className={`mt-6 w-full transition-opacity duration-300 ${party ? "pointer-events-none opacity-0" : "opacity-100"}`}
+        >
           <CountdownClock parts={parts} />
 
           <p className="mt-8 text-sm text-muted">
