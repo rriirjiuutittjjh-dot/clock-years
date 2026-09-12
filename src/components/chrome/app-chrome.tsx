@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Pause, Play, Sparkle, Sparkles, Volume2, VolumeX } from "lucide-react";
+import { Sparkle, Sparkles, Volume2, VolumeX } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
@@ -7,7 +7,7 @@ import { useLocale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
-  const { space, setSpace, motion, setMotion } = useTheme();
+  const { space, setSpace, setMotion } = useTheme();
   const { user, isPending } = useCurrentUserState();
   const { t } = useLocale();
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -30,6 +30,12 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
       window.addEventListener("pointerdown", unlock, { once: true });
     });
   }, []);
+
+  const toggleSpace = () => {
+    const next = space === "on" ? "off" : "on";
+    setSpace(next);
+    setMotion(next);
+  };
 
   const toggleMusic = () => {
     const audio = audioRef.current;
@@ -57,23 +63,12 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
         <button
           type="button"
           className="icon-btn glass"
-          onClick={() => setSpace(space === "on" ? "off" : "on")}
+          onClick={toggleSpace}
           aria-pressed={space === "on"}
           aria-label={space === "on" ? t.chrome.turnSpaceOff : t.chrome.turnSpaceOn}
         >
           {space === "on" ? <Sparkles className="size-4" /> : <Sparkle className="size-4" />}
           <span className="hidden sm:inline">{space === "on" ? t.chrome.spaceOn : t.chrome.spaceOff}</span>
-        </button>
-
-        <button
-          type="button"
-          className="icon-btn glass"
-          onClick={() => setMotion(motion === "on" ? "off" : "on")}
-          aria-pressed={motion === "on"}
-          aria-label={motion === "on" ? t.chrome.turnMotionOff : t.chrome.turnMotionOn}
-        >
-          {motion === "on" ? <Pause className="size-4" /> : <Play className="size-4" />}
-          <span className="hidden sm:inline">{motion === "on" ? t.chrome.motionOn : t.chrome.motionOff}</span>
         </button>
 
         <button
