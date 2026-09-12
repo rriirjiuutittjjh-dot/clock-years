@@ -35,7 +35,7 @@ fallback: fine for previews, but users and settings reset on restart.
 
 Own-server path: Docker + Postgres, no Vercel involved (`vercel.json` is
 ignored here — the build uses the Nitro `node-server` preset). Full steps
-in **[DEPLOY-VPS.md](./DEPLOY-VPS.md)** (Ubuntu 24.04, nginx, HTTPS):
+in **[DEPLOY-VPS.md](./docs/DEPLOY-VPS.md)** (Ubuntu 24.04, nginx, HTTPS):
 
 ```bash
 cp .env.example .env   # set BETTER_AUTH_URL/SECRET, ADMIN_EMAILS, POSTGRES_PASSWORD
@@ -44,10 +44,10 @@ sudo docker compose up -d --build
 
 ## Run on Windows 24/7
 
-No install step: unzip, double-click **`start-windows.bat`**, keep the
+No install step: unzip, double-click **`windows\start-windows.bat`**, keep the
 window open. For always-on (start at logon + restart on crash), run
-**`install-service.ps1`** once as Administrator. Details in
-**[WINDOWS.md](./WINDOWS.md)** (needs Node.js 22 LTS).
+**`windows\install-service.ps1`** once as Administrator. Details in
+**[WINDOWS.md](./docs/WINDOWS.md)** (needs Node.js 22 LTS).
 
 ## Roles & admin
 

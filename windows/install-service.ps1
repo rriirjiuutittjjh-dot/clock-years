@@ -1,11 +1,11 @@
 #Requires -RunAsAdministrator
 # Clock Years 24/7: registers a Scheduled Task that starts the server at logon
 # and restarts it within a minute if it ever crashes. Run once, in an
-# Administrator PowerShell, from this folder:
-#   .\install-service.ps1
+# Administrator PowerShell, from the repo root:
+#   .\windows\install-service.ps1
 # Undo: Unregister-ScheduledTask -TaskName ClockYears -Confirm:$false
 $ErrorActionPreference = "Stop"
-Set-Location (Split-Path -Parent $MyInvocation.MyCommand.Path)
+Set-Location (Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "..")
 
 $node = (Get-Command node -ErrorAction Stop).Source
 if (-not (Test-Path node_modules)) {

@@ -208,7 +208,7 @@ export default defineConfig(({ command, isPreview }) => ({
       ? [
           nitro({
             // Vercel by default; VPS/docker builds set NITRO_PRESET=node-server
-            // (see Dockerfile / DEPLOY-VPS.md) for a plain `node .output/server/index.mjs`.
+            // (see Dockerfile / docs/DEPLOY-VPS.md) for a plain `node .output/server/index.mjs`.
             preset: process.env.NITRO_PRESET === "node-server" ? "node-server" : "vercel",
           }),
         ]

@@ -1,7 +1,7 @@
 @echo off
 title Clock Years
 rem One-click launcher: install -^> build -^> migrate -^> serve on http://localhost:8080
-cd /d "%~dp0"
+cd /d "%~dp0.."
 
 where node >nul 2>nul
 if errorlevel 1 (
