@@ -35,4 +35,5 @@ export const PREVIEW_ALLOWED_HOSTS = [
   "*.vercel.app",
   "*.csb.app",
   "*.codesandbox.io",
+  "*.app.github.dev",
 ] as const;
