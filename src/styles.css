@@ -169,6 +169,14 @@ html[data-space="off"] .btn-primary {
   box-shadow: 0 0 0 1px rgb(36 29 78 / 0.12);
 }
 
+html[data-space="off"] .icon-btn {
+  color: #241d4e;
+}
+
+html[data-space="off"] .icon-btn:hover {
+  background: rgb(36 29 78 / 0.07);
+}
+
 html[data-space="off"] .field input,
 html[data-space="off"] .field textarea,
 html[data-space="off"] .field select {
