@@ -171,6 +171,13 @@ html[data-space="off"] .space-bg {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  /* Force a light native dropdown so options stay readable everywhere. */
+  color-scheme: light;
+}
+
+.lang-select option {
+  color: #1a1030;
+  background-color: #ffffff;
 }
 
 .lang-select:focus-visible {
