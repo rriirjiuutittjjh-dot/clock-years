@@ -19,6 +19,12 @@ export const hi: Dictionary = {
     useDark: "डार्क थीम इस्तेमाल करें",
     useWhite: "सफ़ेद थीम इस्तेमाल करें",
   },
+  layers: {
+    title: "परतें",
+    orbits: "कक्षाएँ",
+    labels: "लेबल",
+    stars: "तारे",
+  },
   planet: {
     diameter: "व्यास",
     distance: "दूरी",

@@ -672,6 +672,14 @@ html[data-theme="light"] .planet-row {
   }
 }
 
+/* Orrery layer visibility, driven by the Layers menu (all on by default). */
+html[data-orbits="off"] .solar-svg .orbit-track,
+html[data-moons="off"] .solar-svg .moon-sys,
+html[data-labels="off"] .solar-svg .planet-name,
+html[data-stars="off"] .solar-svg .sv-stars {
+  display: none;
+}
+
 .colon {
   font-size: 0.62em;
   font-weight: 600;

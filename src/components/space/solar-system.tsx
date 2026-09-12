@@ -177,7 +177,7 @@ export function SolarSystem() {
 
         <ellipse cx={CX} cy={CY} rx="445" ry="108" fill="url(#nebula)" />
 
-        <g fill="#e8e2ff">
+        <g className="sv-stars" fill="#e8e2ff">
           {STARS.map((s, i) => (
             <circle
               key={i}
@@ -191,7 +191,7 @@ export function SolarSystem() {
           ))}
         </g>
 
-        <g fill="none" stroke="rgba(196,181,253,0.30)" strokeWidth="1">
+        <g className="orbit-track" fill="none" stroke="rgba(196,181,253,0.30)" strokeWidth="1">
           {ORBITS.map((o) => (
             <ellipse key={o.rx} cx={CX} cy={CY} rx={o.rx} ry={o.ry} />
           ))}
@@ -268,7 +268,7 @@ export function SolarSystem() {
                 // the orrery spreads them around the lap instead.
                 const theta = (j / moons.length) * Math.PI * 2 - Math.PI / 2;
                 return (
-                  <g key={m.name}>
+                  <g key={m.name} className="moon-sys">
                     <ellipse
                       cx="0"
                       cy="0"

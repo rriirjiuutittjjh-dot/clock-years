@@ -19,6 +19,12 @@ export const pt: Dictionary = {
     useDark: "Usar tema escuro",
     useWhite: "Usar tema branco",
   },
+  layers: {
+    title: "Camadas",
+    orbits: "Órbitas",
+    labels: "Rótulos",
+    stars: "Estrelas",
+  },
   planet: {
     diameter: "Diâmetro",
     distance: "Distância",

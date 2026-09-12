@@ -19,6 +19,12 @@ export const zh: Dictionary = {
     useDark: "使用深色主题",
     useWhite: "使用白色主题",
   },
+  layers: {
+    title: "图层",
+    orbits: "轨道",
+    labels: "标签",
+    stars: "星星",
+  },
   planet: {
     diameter: "直径",
     distance: "距离",

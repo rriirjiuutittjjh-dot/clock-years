@@ -3,6 +3,15 @@ import { getPublicSettings } from "@/lib/server/site";
 import { DEFAULT_SETTINGS, type SiteSettings } from "@/lib/types";
 import { hexToRgb } from "@/lib/utils";
 
+export type SpaceLayers = {
+  orbits: boolean;
+  moons: boolean;
+  labels: boolean;
+  stars: boolean;
+};
+
+const DEFAULT_LAYERS: SpaceLayers = { orbits: true, moons: true, labels: true, stars: true };
+
 type ThemeCtx = {
   settings: SiteSettings;
   space: "on" | "off";
@@ -11,6 +20,8 @@ type ThemeCtx = {
   setMotion: (next: "on" | "off") => void;
   theme: "dark" | "light";
   setTheme: (next: "dark" | "light") => void;
+  layers: SpaceLayers;
+  setLayer: (key: keyof SpaceLayers, val: boolean) => void;
   refreshSettings: () => Promise<void>;
   applySettings: (next: SiteSettings) => void;
 };
@@ -22,11 +33,16 @@ function applyCssVars(
   space: "on" | "off",
   motion: "on" | "off",
   theme: "dark" | "light",
+  layers: SpaceLayers,
 ) {
   const root = document.documentElement;
   root.dataset.space = space;
   root.dataset.motion = motion;
   root.dataset.theme = theme;
+  root.dataset.orbits = layers.orbits ? "on" : "off";
+  root.dataset.moons = layers.moons ? "on" : "off";
+  root.dataset.labels = layers.labels ? "on" : "off";
+  root.dataset.stars = layers.stars ? "on" : "off";
   root.style.setProperty("--bg-blur", `${settings.backgroundBlur}px`);
   root.style.setProperty("--glass-blur", `${settings.glassBlur}px`);
   const { r, g, b } = hexToRgb(settings.glassColor);
@@ -39,6 +55,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [space, setSpaceState] = useState<"on" | "off">("on");
   const [motion, setMotionState] = useState<"on" | "off">("on");
   const [theme, setThemeState] = useState<"dark" | "light">("dark");
+  const [layers, setLayersState] = useState<SpaceLayers>(DEFAULT_LAYERS);
 
   useEffect(() => {
     window.localStorage.removeItem("system-space-lights");
@@ -59,14 +76,23 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       // Migration: space-off used to mean white mode; keep that look.
       setThemeState("light");
     }
+    const storedLayers = window.localStorage.getItem("system-space-layers");
+    if (storedLayers) {
+      try {
+        const parsed = JSON.parse(storedLayers) as Partial<SpaceLayers>;
+        setLayersState({ ...DEFAULT_LAYERS, ...parsed });
+      } catch {
+        /* keep defaults */
+      }
+    }
     void getPublicSettings()
       .then(setSettings)
       .catch(() => setSettings(DEFAULT_SETTINGS));
   }, []);
 
   useEffect(() => {
-    applyCssVars(settings, space, motion, theme);
-  }, [settings, space, motion, theme]);
+    applyCssVars(settings, space, motion, theme, layers);
+  }, [settings, space, motion, theme, layers]);
 
   const value = useMemo<ThemeCtx>(
     () => ({
@@ -86,6 +112,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         setThemeState(next);
         window.localStorage.setItem("system-space-theme", next);
       },
+      layers,
+      setLayer: (key, val) => {
+        setLayersState((prev) => {
+          const next = { ...prev, [key]: val };
+          window.localStorage.setItem("system-space-layers", JSON.stringify(next));
+          return next;
+        });
+      },
       refreshSettings: async () => {
         try {
           setSettings(await getPublicSettings());
@@ -95,7 +129,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       },
       applySettings: setSettings,
     }),
-    [settings, space, motion, theme],
+    [settings, space, motion, theme, layers],
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
