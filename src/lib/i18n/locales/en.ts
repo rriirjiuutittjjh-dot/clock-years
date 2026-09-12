@@ -48,12 +48,6 @@ export const en = {
     startCountingTo: (year: string) => `Start counting to ${year}`,
     srCountdown: (days: number, hours: number, minutes: number, year: number) =>
       `${days} days, ${hours} hours and ${minutes} minutes until ${year}`,
-    clockTitle: "Clock",
-    stopwatchTitle: "Speedrun",
-    start: "Start",
-    pause: "Pause",
-    resume: "Resume",
-    reset: "Reset",
   },
   auth: {
     loginTitle: "Log in",
