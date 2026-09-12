@@ -51,6 +51,7 @@ export function formatNow(now: Date, locale?: string) {
     hour: "numeric",
     minute: "2-digit",
     second: "2-digit",
+    fractionalSecondDigits: 1,
     hour12: true,
   }).format(now);
 }

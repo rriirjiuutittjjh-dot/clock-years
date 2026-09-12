@@ -87,13 +87,14 @@ export function HomeView() {
       }
       const p = splitMs(remaining);
       const stamp = Math.ceil(remaining / 1000);
+      // Hero clock runs at 0.1s; the countdown below only re-renders each second.
+      setClockNow(formatNow(now, locale));
       if (stamp !== lastSecond.current) {
         lastSecond.current = stamp;
         setParts(p);
         const pct = yearProgress(now);
         setProgress(pct);
         setProgressLabel(t.home.yearComplete(now.getFullYear(), pct.toFixed(2)));
-        setClockNow(formatNow(now, locale));
         if (p.seconds === 0) {
           setSr(t.home.srCountdown(p.days, p.hours, p.minutes, targetRef.current.getFullYear()));
         }
@@ -144,7 +145,12 @@ export function HomeView() {
         <p className="text-xs font-medium tracking-[0.28em] text-muted uppercase">
           {t.home.systemSpace}
         </p>
-        <p className="num mt-2 text-4xl tabular-nums sm:text-5xl" role="timer" aria-label={clockNow}>
+        <p
+          className="num mt-2 text-4xl tabular-nums sm:text-5xl"
+          role="timer"
+          aria-label={clockNow}
+          suppressHydrationWarning
+        >
           {clockNow}
         </p>
 
