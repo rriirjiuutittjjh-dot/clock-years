@@ -22,16 +22,20 @@ function orbitPath(rx: number, ry: number): string {
   );
 }
 
-/** Static lineup spreads the full 900 width with the sun in line at center. */
+/**
+ * Planet skins: lit face (c1) melting into shadow (c2), rendered as
+ * radial gradients so every body reads round. Static lineup spreads the
+ * full 900 width with the sun in line at center.
+ */
 const PLANETS = [
-  { name: "Mercury", r: 5.2, fill: "#b7a48c", x: 60, orbit: 0 },
-  { name: "Venus", r: 8.4, fill: "#e2c07a", x: 150, orbit: 0 },
-  { name: "Earth", r: 8.8, fill: "#4f8fce", x: 240, orbit: 1 },
-  { name: "Mars", r: 6.4, fill: "#c45c3e", x: 330, orbit: 1 },
-  { name: "Jupiter", r: 16, fill: "#d9a066", x: 570, orbit: 2 },
-  { name: "Saturn", r: 13.5, fill: "#e6d3a3", x: 670, orbit: 2, rings: true },
-  { name: "Uranus", r: 10, fill: "#7ec8c8", x: 770, orbit: 3 },
-  { name: "Neptune", r: 9.6, fill: "#4b6fd6", x: 860, orbit: 3 },
+  { name: "Mercury", r: 5.2, c1: "#e0bda0", c2: "#7a5a44", x: 60, orbit: 0 },
+  { name: "Venus", r: 8.4, c1: "#ffe9ad", c2: "#d18a3c", x: 150, orbit: 0 },
+  { name: "Earth", r: 8.8, c1: "#7dd3fc", c2: "#1d4ed8", x: 240, orbit: 1 },
+  { name: "Mars", r: 6.4, c1: "#ffa06e", c2: "#b53a1e", x: 330, orbit: 1 },
+  { name: "Jupiter", r: 16, c1: "#ffda94", c2: "#b06a35", x: 570, orbit: 2 },
+  { name: "Saturn", r: 13.5, c1: "#f8e9bf", c2: "#c9a05c", x: 670, orbit: 2, rings: true },
+  { name: "Uranus", r: 10, c1: "#a8f3f0", c2: "#2a9a9e", x: 770, orbit: 3 },
+  { name: "Neptune", r: 9.6, c1: "#9abcff", c2: "#2f3fd0", x: 860, orbit: 3 },
 ] as const;
 
 type Moon = { name: string; rx: number; r: number; fill: string };
@@ -86,6 +90,21 @@ function moonPath(rx: number): string {
   );
 }
 
+/** Deterministic starfield (SSR-safe: no Math.random, positions never shift). */
+const STARS = Array.from({ length: 70 }, (_, i) => {
+  const s1 = Math.sin(i * 127.1 + 311.7) * 43758.5453;
+  const r1 = s1 - Math.floor(s1);
+  const s2 = Math.sin(i * 269.5 + 183.3) * 28001.8384;
+  const r2 = s2 - Math.floor(s2);
+  return {
+    x: +((r1 * 900).toFixed(1)),
+    y: +((r2 * 220).toFixed(1)),
+    r: +((0.6 + r2 * 1.1).toFixed(2)),
+    o: +((0.3 + r1 * 0.6).toFixed(2)),
+    d: +((r1 * 3.6).toFixed(2)),
+  };
+});
+
 const RAYS = Array.from({ length: 12 }, (_, i) => i * 30);
 
 export function SolarSystem() {
@@ -109,9 +128,43 @@ export function SolarSystem() {
             <stop offset="55%" stopColor="#ffd166" />
             <stop offset="100%" stopColor="#ef7d32" />
           </radialGradient>
+          <radialGradient id="nebula" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#2c2160" stopOpacity="0.55" />
+            <stop offset="60%" stopColor="#1d1650" stopOpacity="0.25" />
+            <stop offset="100%" stopColor="#1d1650" stopOpacity="0" />
+          </radialGradient>
+          {PLANETS.map((p) => (
+            <radialGradient
+              key={p.name}
+              id={`skin-${p.name}`}
+              cx="35%"
+              cy="30%"
+              r="80%"
+            >
+              <stop offset="0%" stopColor={p.c1} />
+              <stop offset="55%" stopColor={p.c1} />
+              <stop offset="100%" stopColor={p.c2} />
+            </radialGradient>
+          ))}
         </defs>
 
-        <g fill="none" stroke="rgba(232,226,255,0.16)" strokeWidth="1">
+        <ellipse cx={CX} cy={CY} rx="445" ry="108" fill="url(#nebula)" />
+
+        <g fill="#e8e2ff">
+          {STARS.map((s, i) => (
+            <circle
+              key={i}
+              className="star pulse"
+              cx={s.x}
+              cy={s.y}
+              r={s.r}
+              opacity={s.o}
+              style={{ animationDelay: `${s.d}s` }}
+            />
+          ))}
+        </g>
+
+        <g fill="none" stroke="rgba(196,181,253,0.30)" strokeWidth="1">
           {ORBITS.map((o) => (
             <ellipse key={o.rx} cx={CX} cy={CY} rx={o.rx} ry={o.ry} />
           ))}
@@ -133,24 +186,37 @@ export function SolarSystem() {
                 />
               )}
               {"rings" in p && p.rings ? (
-                <ellipse
-                  cx="0"
-                  cy="0"
-                  rx="24"
-                  ry="7"
-                  fill="none"
-                  stroke="#e8d9b0"
-                  strokeWidth="2.2"
-                  opacity="0.85"
-                  transform="rotate(-18)"
-                />
+                <>
+                  <ellipse
+                    cx="0"
+                    cy="0"
+                    rx="30"
+                    ry="9"
+                    fill="none"
+                    stroke="#f2e4bb"
+                    strokeWidth="1.2"
+                    opacity="0.35"
+                    transform="rotate(-18)"
+                  />
+                  <ellipse
+                    cx="0"
+                    cy="0"
+                    rx="24"
+                    ry="7"
+                    fill="none"
+                    stroke="#f2e4bb"
+                    strokeWidth="2.2"
+                    opacity="0.9"
+                    transform="rotate(-18)"
+                  />
+                </>
               ) : null}
-              <circle r={p.r} fill={p.fill} />
-              {p.name === "Earth" ? <circle cx="-2" cy="-1" r="3.2" fill="#3d8a62" opacity="0.85" /> : null}
+              <circle r={p.r} fill={`url(#skin-${p.name})`} />
+              {p.name === "Earth" ? <circle cx="-2" cy="-1" r="3.2" fill="#3fb97f" opacity="0.9" /> : null}
               {p.name === "Jupiter" ? (
                 <>
-                  <ellipse cx="0" cy="-4" rx="14" ry="3.2" fill="#c9844c" opacity="0.55" />
-                  <ellipse cx="0" cy="5" rx="13" ry="2.4" fill="#efd0a0" opacity="0.45" />
+                  <ellipse cx="0" cy="-4" rx="14" ry="3.2" fill="#e8934f" opacity="0.6" />
+                  <ellipse cx="0" cy="5" rx="13" ry="2.4" fill="#ffedc4" opacity="0.5" />
                 </>
               ) : null}
               {moons.map((m, j) => {
@@ -167,7 +233,7 @@ export function SolarSystem() {
                       rx={m.rx}
                       ry={ry}
                       fill="none"
-                      stroke="rgba(232,226,255,0.10)"
+                      stroke="rgba(232,226,255,0.16)"
                       strokeWidth="0.8"
                     />
                     <g
