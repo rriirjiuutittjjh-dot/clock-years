@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { DashboardMark } from "@/components/auth/auth-art";
 import { GatePage } from "@/components/chrome/gate-page";
 import { CountdownClock } from "@/components/space/countdown-clock";
-import { nextNewYear, splitMs, yearProgress } from "@/lib/countdown";
+import { nextNewYear, splitRange, yearProgress } from "@/lib/countdown";
 import { useLocale } from "@/lib/i18n";
 import { getMyProfile } from "@/lib/server/profiles";
 import type { Profile } from "@/lib/types";
@@ -17,7 +17,7 @@ function Dashboard() {
   // paint (never 00s); the tick effect below takes over live updates on mount.
   const [parts, setParts] = useState(() => {
     const now = new Date();
-    return splitMs(nextNewYear(now).getTime() - now.getTime());
+    return splitRange(now, nextNewYear(now));
   });
   const [pct, setPct] = useState(() => yearProgress(new Date()));
 
@@ -27,7 +27,7 @@ function Dashboard() {
       .catch(() => setProfile(null));
     const tick = () => {
       const now = new Date();
-      setParts(splitMs(nextNewYear(now).getTime() - now.getTime()));
+      setParts(splitRange(now, nextNewYear(now)));
       setPct(yearProgress(now));
     };
     tick();
