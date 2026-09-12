@@ -100,14 +100,14 @@ export function SolarSystem() {
         <title>Solar system</title>
         <defs>
           <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#fff6d2" />
-            <stop offset="42%" stopColor="#f0d48a" />
-            <stop offset="100%" stopColor="#f0d48a" stopOpacity="0" />
+            <stop offset="0%" stopColor="#fff3c4" />
+            <stop offset="45%" stopColor="#ffcf6e" />
+            <stop offset="100%" stopColor="#ff9e4a" stopOpacity="0" />
           </radialGradient>
           <radialGradient id="sunCore" cx="38%" cy="38%" r="62%">
-            <stop offset="0%" stopColor="#fff4c8" />
-            <stop offset="55%" stopColor="#f0d48a" />
-            <stop offset="100%" stopColor="#d7a24a" />
+            <stop offset="0%" stopColor="#fffbe8" />
+            <stop offset="55%" stopColor="#ffd166" />
+            <stop offset="100%" stopColor="#ef7d32" />
           </radialGradient>
         </defs>
 
@@ -198,10 +198,10 @@ export function SolarSystem() {
         {/* Sun paints last so orbit crossings slide behind it. */}
         <g
           className="sun-rays"
-          stroke="#f0d48a"
+          stroke="#ffce7a"
           strokeWidth="2.5"
           strokeLinecap="round"
-          opacity="0.55"
+          opacity="0.7"
         >
           {RAYS.map((deg) => (
             <line

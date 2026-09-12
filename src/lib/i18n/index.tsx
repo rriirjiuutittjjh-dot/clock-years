@@ -98,8 +98,13 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
 }
 
+/** English fallback for trees outside the provider (e.g. the route error page). */
+const FALLBACK_CTX: LocaleCtx = {
+  locale: "en",
+  setLocale: () => undefined,
+  t: en,
+};
+
 export function useLocale(): LocaleCtx {
-  const ctx = useContext(LocaleContext);
-  if (!ctx) throw new Error("useLocale must be used within LocaleProvider");
-  return ctx;
+  return useContext(LocaleContext) ?? FALLBACK_CTX;
 }

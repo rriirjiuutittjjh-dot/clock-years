@@ -5,9 +5,9 @@ export function AuthArt({ title }: { title: string }) {
         <title>{title}</title>
         <defs>
           <radialGradient id="authSun" cx="40%" cy="40%" r="60%">
-            <stop offset="0%" stopColor="#fff4c8" />
-            <stop offset="55%" stopColor="#f0d48a" />
-            <stop offset="100%" stopColor="#d7a24a" />
+            <stop offset="0%" stopColor="#fffbe8" />
+            <stop offset="55%" stopColor="#ffd166" />
+            <stop offset="100%" stopColor="#ef7d32" />
           </radialGradient>
           <linearGradient id="hull" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stopColor="#ece8ff" />
@@ -47,7 +47,7 @@ export function AuthArt({ title }: { title: string }) {
             d="M18 28 L92 8 L162 30 L132 42 L92 36 L48 44 Z"
             fill="url(#hull)"
           />
-          <path d="M92 8 L108 28 L92 24 L76 28 Z" fill="#f0d48a" />
+          <path d="M92 8 L108 28 L92 24 L76 28 Z" fill="#ffd166" />
           <circle cx="70" cy="28" r="5" fill="#1b1238" />
           <circle cx="70" cy="28" r="2.4" fill="#7eb8e8" />
           <circle cx="108" cy="29" r="5" fill="#1b1238" />
@@ -62,7 +62,7 @@ export function DashboardMark() {
   return (
     <svg viewBox="0 0 72 72" className="size-12" aria-hidden="true">
       <circle cx="36" cy="36" r="34" fill="#1a0b3d" />
-      <circle cx="22" cy="28" r="10" fill="#f0d48a" />
+      <circle cx="22" cy="28" r="10" fill="#ffd166" />
       <circle cx="42" cy="34" r="4" fill="#4f8fce" />
       <circle cx="52" cy="40" r="6" fill="#d9a066" />
       <ellipse cx="52" cy="40" rx="10" ry="3" fill="none" stroke="#e6d3a3" strokeWidth="1.4" />
