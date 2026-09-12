@@ -27,6 +27,7 @@ export const es: Dictionary = {
     year: "Año",
     moons: "Lunas",
     close: "Cerrar",
+    systemTitle: "Sistema solar",
   },
   countdown: {
     units: {
@@ -162,5 +163,15 @@ export const es: Dictionary = {
   errorFallback: {
     title: "Algo salió mal",
     message: "Ocurrió un error inesperado. Intenta recargar la página.",
+  },
+  errors: {
+    adminRequired: "Se requiere acceso de administrador.",
+    ownerOnly: "Solo el propietario puede cambiar roles.",
+    noSelfDemote: "No puedes degradarte a ti mismo.",
+    memberNotFound: "Miembro no encontrado.",
+    keepOwner: "Mantén al menos un propietario.",
+    imageTooLarge: "La imagen de perfil es demasiado grande.",
+    backgroundTooLarge: "La imagen de fondo es demasiado grande.",
+    invalidCredentials: "Correo o contraseña incorrectos.",
   },
 };

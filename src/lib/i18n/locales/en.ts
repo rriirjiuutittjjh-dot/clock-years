@@ -29,6 +29,7 @@ export const en = {
     year: "Year",
     moons: "Moons",
     close: "Close",
+    systemTitle: "Solar system",
   },
   countdown: {
     units: {
@@ -162,5 +163,15 @@ export const en = {
   errorFallback: {
     title: "Something went wrong",
     message: "An unexpected error occurred. Try reloading the page.",
+  },
+  errors: {
+    adminRequired: "Admin access required.",
+    ownerOnly: "Only the owner can change roles.",
+    noSelfDemote: "You cannot demote yourself.",
+    memberNotFound: "Member not found.",
+    keepOwner: "Keep at least one owner.",
+    imageTooLarge: "Profile image is too large.",
+    backgroundTooLarge: "Background image is too large.",
+    invalidCredentials: "Wrong email or password.",
   },
 };

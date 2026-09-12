@@ -27,6 +27,7 @@ export const tr: Dictionary = {
     year: "Yıl",
     moons: "Uydular",
     close: "Kapat",
+    systemTitle: "Güneş sistemi",
   },
   countdown: {
     units: {
@@ -162,5 +163,15 @@ export const tr: Dictionary = {
   errorFallback: {
     title: "Bir şeyler ters gitti",
     message: "Beklenmeyen bir hata oluştu. Sayfayı yenilemeyi dene.",
+  },
+  errors: {
+    adminRequired: "Yönetici erişimi gerekli.",
+    ownerOnly: "Rolleri yalnızca sahip değiştirebilir.",
+    noSelfDemote: "Kendini düşüremezsin.",
+    memberNotFound: "Üye bulunamadı.",
+    keepOwner: "En az bir sahip bırak.",
+    imageTooLarge: "Profil resmi çok büyük.",
+    backgroundTooLarge: "Arka plan resmi çok büyük.",
+    invalidCredentials: "E-posta veya parola yanlış.",
   },
 };

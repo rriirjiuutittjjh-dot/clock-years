@@ -5,7 +5,7 @@ import { authClient } from "@/lib/auth/client";
 import { compressImage } from "@/lib/image";
 import { useLocale } from "@/lib/i18n";
 import { getMyProfile, updateMyProfile } from "@/lib/server/profiles";
-import type { Profile } from "@/lib/types";
+import { serverErrorText, type Profile } from "@/lib/types";
 
 export const Route = createFileRoute("/settings")({ component: Settings });
 
@@ -57,7 +57,9 @@ function Settings() {
       setProfile(next);
       setStatus(t.settings.saved);
     } catch (err) {
-      setError(err instanceof Error ? err.message : t.settings.saveError);
+      setError(
+        err instanceof Error ? (serverErrorText(err.message, t) ?? t.settings.saveError) : t.settings.saveError,
+      );
     } finally {
       setBusy(false);
     }

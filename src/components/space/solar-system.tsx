@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PlanetView } from "@/components/space/planet-view";
 import { useTheme } from "@/components/theme-provider";
+import { useLocale } from "@/lib/i18n";
 
 const CX = 450;
 const CY = 110;
@@ -107,6 +108,7 @@ export function SolarSystem() {
   // SMIL motion can't be switched off from CSS, so motion-off renders the
   // classic static lineup instead of the revolving orrery.
   const { motion, space } = useTheme();
+  const { t } = useLocale();
   const reduced = motion === "off";
   const [selected, setSelected] = useState<string | null>(null);
   // Space off hides the whole system-space scene (background fades via CSS).
@@ -115,7 +117,7 @@ export function SolarSystem() {
   return (
     <div className="solar-wrap">
       <svg className="solar-svg" viewBox="0 0 900 220">
-        <title>Solar system</title>
+        <title>{t.planet.systemTitle}</title>
         <defs>
           <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="#fff3c4" />

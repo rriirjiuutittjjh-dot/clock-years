@@ -27,6 +27,7 @@ export const fr: Dictionary = {
     year: "Année",
     moons: "Lunes",
     close: "Fermer",
+    systemTitle: "Système solaire",
   },
   countdown: {
     units: {
@@ -162,5 +163,15 @@ export const fr: Dictionary = {
   errorFallback: {
     title: "Un problème est survenu",
     message: "Une erreur inattendue est survenue. Essayez de recharger la page.",
+  },
+  errors: {
+    adminRequired: "Accès administrateur requis.",
+    ownerOnly: "Seul le propriétaire peut modifier les rôles.",
+    noSelfDemote: "Vous ne pouvez pas vous rétrograder.",
+    memberNotFound: "Membre introuvable.",
+    keepOwner: "Gardez au moins un propriétaire.",
+    imageTooLarge: "L'image de profil est trop grande.",
+    backgroundTooLarge: "L'image d'arrière-plan est trop grande.",
+    invalidCredentials: "E-mail ou mot de passe incorrect.",
   },
 };

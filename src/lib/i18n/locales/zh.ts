@@ -27,6 +27,7 @@ export const zh: Dictionary = {
     year: "一年",
     moons: "卫星",
     close: "关闭",
+    systemTitle: "太阳系",
   },
   countdown: {
     units: {
@@ -160,5 +161,15 @@ export const zh: Dictionary = {
   errorFallback: {
     title: "出了点问题",
     message: "发生意外错误，请尝试重新加载页面。",
+  },
+  errors: {
+    adminRequired: "需要管理员权限。",
+    ownerOnly: "只有所有者可以更改角色。",
+    noSelfDemote: "你不能降级自己。",
+    memberNotFound: "未找到成员。",
+    keepOwner: "请至少保留一位所有者。",
+    imageTooLarge: "头像图片太大。",
+    backgroundTooLarge: "背景图片太大。",
+    invalidCredentials: "邮箱或密码错误。",
   },
 };

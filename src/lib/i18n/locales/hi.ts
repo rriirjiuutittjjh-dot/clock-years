@@ -27,6 +27,7 @@ export const hi: Dictionary = {
     year: "वर्ष",
     moons: "चंद्रमा",
     close: "बंद करें",
+    systemTitle: "सौर मंडल",
   },
   countdown: {
     units: {
@@ -161,5 +162,15 @@ export const hi: Dictionary = {
   errorFallback: {
     title: "कुछ गड़बड़ हुई",
     message: "अप्रत्याशित त्रुटि हुई। पेज रीलोड करके देखें।",
+  },
+  errors: {
+    adminRequired: "एडमिन एक्सेस आवश्यक है।",
+    ownerOnly: "केवल मालिक भूमिकाएँ बदल सकता है।",
+    noSelfDemote: "आप खुद को पदावनत नहीं कर सकते।",
+    memberNotFound: "सदस्य नहीं मिला।",
+    keepOwner: "कम से कम एक मालिक रखें।",
+    imageTooLarge: "प्रोफ़ाइल छवि बहुत बड़ी है।",
+    backgroundTooLarge: "पृष्ठभूमि छवि बहुत बड़ी है।",
+    invalidCredentials: "ईमेल या पासवर्ड गलत है।",
   },
 };

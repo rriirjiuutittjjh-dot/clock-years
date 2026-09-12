@@ -27,6 +27,7 @@ export const ar: Dictionary = {
     year: "السنة",
     moons: "أقمار",
     close: "إغلاق",
+    systemTitle: "المجموعة الشمسية",
   },
   countdown: {
     units: {
@@ -160,5 +161,15 @@ export const ar: Dictionary = {
   errorFallback: {
     title: "حدث خطأ ما",
     message: "حدث خطأ غير متوقع. حاول إعادة تحميل الصفحة.",
+  },
+  errors: {
+    adminRequired: "يلزم الوصول كمسؤول.",
+    ownerOnly: "المالك فقط يمكنه تغيير الأدوار.",
+    noSelfDemote: "لا يمكنك تخفيض رتبتك.",
+    memberNotFound: "العضو غير موجود.",
+    keepOwner: "احتفظ بمالك واحد على الأقل.",
+    imageTooLarge: "صورة الملف الشخصي كبيرة جدًا.",
+    backgroundTooLarge: "صورة الخلفية كبيرة جدًا.",
+    invalidCredentials: "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
   },
 };

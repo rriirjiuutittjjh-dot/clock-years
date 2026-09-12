@@ -105,7 +105,7 @@ export const updateMyProfile = createServerFn({ method: "POST" })
   .validator((input: unknown) => profileUpdate.parse(input))
   .handler(async ({ context, data }) => {
     if (data.avatarUrl && data.avatarUrl.length > 700_000) {
-      throw new Error("Profile image is too large.");
+      throw new Error("IMAGE_TOO_LARGE");
     }
     await ensureProfile(context.userId);
     const sql = await getSql();
@@ -125,7 +125,7 @@ export const listMembers = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const me = await ensureProfile(context.userId);
     if (me.role !== "admin" && me.role !== "owner") {
-      throw new Error("Admin access required.");
+      throw new Error("ADMIN_REQUIRED");
     }
     return loadMembers();
   });
@@ -140,16 +140,16 @@ export const setMemberRole = createServerFn({ method: "POST" })
   .validator((input: unknown) => roleUpdate.parse(input))
   .handler(async ({ context, data }) => {
     const me = await ensureProfile(context.userId);
-    if (me.role !== "owner") throw new Error("Only the owner can change roles.");
+    if (me.role !== "owner") throw new Error("OWNER_ONLY");
     if (data.userId === context.userId && data.role !== "owner") {
-      throw new Error("You cannot demote yourself.");
+      throw new Error("NO_SELF_DEMOTE");
     }
     const sql = await getSql();
     const target = await sql<{ role: Role }>`select role from profiles where user_id = ${data.userId}`;
-    if (!target[0]) throw new Error("Member not found.");
+    if (!target[0]) throw new Error("MEMBER_NOT_FOUND");
     if (target[0].role === "owner" && data.role !== "owner") {
       const owners = await sql<{ n: number }>`select count(*)::int as n from profiles where role = 'owner'`;
-      if ((owners[0]?.n ?? 0) <= 1) throw new Error("Keep at least one owner.");
+      if ((owners[0]?.n ?? 0) <= 1) throw new Error("KEEP_OWNER");
     }
     await sql`
       update profiles set role = ${data.role}, updated_at = now()

@@ -18,7 +18,7 @@ type AuthErrorShape = { code?: unknown; message?: unknown; status?: unknown; sta
  */
 function authErrorMessage(
   err: unknown,
-  t: { alreadyMember: string; loginLink: string },
+  t: { alreadyMember: string; loginLink: string; errors: { invalidCredentials: string } },
   fallback: string,
 ): string {
   if (err && typeof err === "object") {
@@ -26,6 +26,7 @@ function authErrorMessage(
     const code = typeof e.code === "string" ? e.code : "";
     const message = typeof e.message === "string" && e.message.length > 0 ? e.message : "";
     if (code.includes("ALREADY_EXISTS")) return `${t.alreadyMember} ${t.loginLink}`;
+    if (code === "INVALID_EMAIL_OR_PASSWORD") return t.errors.invalidCredentials;
     if (message && code) return code === message ? message : `${message} (${code})`;
     if (message) return message;
     if (code) return `${fallback} (${code})`;
@@ -68,13 +69,15 @@ export function AuthForm({ mode }: { mode: Mode }) {
           password,
           name: name.trim() || email.split("@")[0] || "Member",
         });
-        if (err) throw new Error(authErrorMessage(err, t.auth, t.auth.couldNotRegister));
+        if (err)
+          throw new Error(authErrorMessage(err, { ...t.auth, errors: t.errors }, t.auth.couldNotRegister));
       } else {
         const { error: err } = await authClient.signIn.email({
           email: email.trim(),
           password,
         });
-        if (err) throw new Error(err.message || t.auth.couldNotLogIn);
+        if (err)
+          throw new Error(authErrorMessage(err, { ...t.auth, errors: t.errors }, t.auth.couldNotLogIn));
       }
       window.location.assign("/dashboard");
     } catch (err) {

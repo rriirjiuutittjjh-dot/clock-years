@@ -54,7 +54,7 @@ async function requireStaff(userId: string): Promise<Role> {
   const rows = await sql<{ role: Role }>`select role from profiles where user_id = ${userId}`;
   const role = rows[0]?.role ?? "member";
   if (role !== "admin" && role !== "owner") {
-    throw new Error("Admin access required.");
+    throw new Error("ADMIN_REQUIRED");
   }
   return role;
 }
@@ -74,7 +74,7 @@ export const updateSiteSettings = createServerFn({ method: "POST" })
   .handler(async ({ context, data }) => {
     await requireStaff(context.userId);
     if (data.backgroundUrl && data.backgroundUrl.length > 1_800_000) {
-      throw new Error("Background image is too large.");
+      throw new Error("BACKGROUND_TOO_LARGE");
     }
     const sql = await getSql();
     await sql`

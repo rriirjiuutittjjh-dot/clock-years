@@ -27,6 +27,7 @@ export const ru: Dictionary = {
     year: "Год",
     moons: "Луны",
     close: "Закрыть",
+    systemTitle: "Солнечная система",
   },
   countdown: {
     units: {
@@ -161,5 +162,15 @@ export const ru: Dictionary = {
   errorFallback: {
     title: "Что-то пошло не так",
     message: "Произошла неожиданная ошибка. Попробуйте перезагрузить страницу.",
+  },
+  errors: {
+    adminRequired: "Требуется доступ администратора.",
+    ownerOnly: "Только владелец может менять роли.",
+    noSelfDemote: "Вы не можете понизить себя.",
+    memberNotFound: "Участник не найден.",
+    keepOwner: "Оставьте хотя бы одного владельца.",
+    imageTooLarge: "Изображение профиля слишком большое.",
+    backgroundTooLarge: "Фоновое изображение слишком большое.",
+    invalidCredentials: "Неверный адрес или пароль.",
   },
 };

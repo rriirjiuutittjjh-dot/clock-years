@@ -6,7 +6,14 @@ import { compressImage, sampleAverageColor } from "@/lib/image";
 import { useLocale } from "@/lib/i18n";
 import { getMyProfile, listMembers, setMemberRole } from "@/lib/server/profiles";
 import { updateSiteSettings } from "@/lib/server/site";
-import { DEFAULT_SETTINGS, isStaff, type Profile, type Role, type SiteSettings } from "@/lib/types";
+import {
+  DEFAULT_SETTINGS,
+  isStaff,
+  serverErrorText,
+  type Profile,
+  type Role,
+  type SiteSettings,
+} from "@/lib/types";
 
 export const Route = createFileRoute("/admin")({ component: Admin });
 
@@ -69,7 +76,9 @@ function Admin() {
       setDraft(saved);
       setStatus(t.admin.saved);
     } catch (err) {
-      setError(err instanceof Error ? err.message : t.admin.saveError);
+      setError(
+        err instanceof Error ? (serverErrorText(err.message, t) ?? t.admin.saveError) : t.admin.saveError,
+      );
     } finally {
       setBusy(false);
     }
@@ -85,7 +94,9 @@ function Admin() {
     try {
       setMembers(await setMemberRole({ data: { userId, role } }));
     } catch (err) {
-      setError(err instanceof Error ? err.message : t.admin.roleError);
+      setError(
+        err instanceof Error ? (serverErrorText(err.message, t) ?? t.admin.roleError) : t.admin.roleError,
+      );
     }
   }
 
