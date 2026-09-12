@@ -7,7 +7,6 @@ import { fr } from "./locales/fr";
 import { hi } from "./locales/hi";
 import { it } from "./locales/it";
 import { pt } from "./locales/pt";
-import { ptBR } from "./locales/pt-BR";
 import { ru } from "./locales/ru";
 import { tr } from "./locales/tr";
 import { zh } from "./locales/zh";
@@ -23,7 +22,7 @@ import { zh } from "./locales/zh";
  * blank. Interpolated strings are functions so each language owns its own
  * word order, pluralization, and number formatting.
  */
-export const LOCALES = ["en", "ar", "de", "es", "fr", "hi", "it", "pt", "pt-BR", "ru", "tr", "zh"] as const;
+export const LOCALES = ["en", "ar", "de", "es", "fr", "hi", "it", "pt", "ru", "tr", "zh"] as const;
 export type Locale = (typeof LOCALES)[number];
 export type Dictionary = typeof en;
 
@@ -37,26 +36,12 @@ export const LOCALE_NAMES: Record<Locale, string> = {
   hi: "हिन्दी",
   it: "Italiano",
   pt: "Português",
-  "pt-BR": "Português (Brasil)",
   ru: "Русский",
   tr: "Türkçe",
   zh: "中文",
 };
 
-const dictionaries: Record<Locale, Dictionary> = {
-  en,
-  ar,
-  de,
-  es,
-  fr,
-  hi,
-  it,
-  pt,
-  "pt-BR": ptBR,
-  ru,
-  tr,
-  zh,
-};
+const dictionaries: Record<Locale, Dictionary> = { en, ar, de, es, fr, hi, it, pt, ru, tr, zh };
 const DIRS: Record<Locale, "ltr" | "rtl"> = {
   en: "ltr",
   ar: "rtl",
@@ -66,7 +51,6 @@ const DIRS: Record<Locale, "ltr" | "rtl"> = {
   hi: "ltr",
   it: "ltr",
   pt: "ltr",
-  "pt-BR": "ltr",
   ru: "ltr",
   tr: "ltr",
   zh: "ltr",

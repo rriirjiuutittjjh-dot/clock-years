@@ -8,7 +8,6 @@ import { fr } from "./locales/fr.ts";
 import { hi } from "./locales/hi.ts";
 import { it as itLocale } from "./locales/it.ts";
 import { pt } from "./locales/pt.ts";
-import { ptBR } from "./locales/pt-BR.ts";
 import { ru } from "./locales/ru.ts";
 import { tr } from "./locales/tr.ts";
 import { zh } from "./locales/zh.ts";
@@ -22,7 +21,6 @@ const locales: Record<string, unknown> = {
   hi,
   it: itLocale,
   pt,
-  "pt-BR": ptBR,
   ru,
   tr,
   zh,

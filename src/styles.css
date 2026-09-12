@@ -212,6 +212,11 @@ html[data-space="off"] .space-bg {
   background: rgb(255 255 255 / 0.1);
 }
 
+.lang-option > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Crowded header: the language picker rests on small screens. */
 @media (max-width: 560px) {
   .lang-picker {
