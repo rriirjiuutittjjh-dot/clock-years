@@ -186,9 +186,9 @@ export default defineConfig(({ command, isPreview }) => ({
     host: "0.0.0.0",
     port: 8080,
     strictPort: true,
-    // Sandbox live previews arrive on proxied *.e2b.app hosts — allow them
-    // alongside the loopback defaults. Dev-only; production builds ignore it.
-    allowedHosts: [".e2b.app", "localhost", "127.0.0.1", "::1"],
+    // Sandbox live previews arrive on proxied hosts — allow them alongside the
+    // loopback defaults. Dev-only; production builds ignore it.
+    allowedHosts: [".e2b.app", ".csb.app", ".codesandbox.io", "localhost", "127.0.0.1", "::1"],
   },
   preview: {
     host: "127.0.0.1",
