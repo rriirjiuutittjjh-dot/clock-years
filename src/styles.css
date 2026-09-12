@@ -136,7 +136,7 @@ html[data-theme="light"] .glass-strong {
 }
 
 html[data-theme="light"] .lang-menu {
-  background: rgb(255 255 255 / 0.96);
+  background: rgb(255 255 255);
   box-shadow:
     0 12px 40px rgb(36 29 78 / 0.18),
     0 0 0 1px rgb(36 29 78 / 0.1);
@@ -263,10 +263,10 @@ html[data-theme="light"] .solar-svg .moon-dot {
   padding: 0.4rem;
   border-radius: 18px;
   list-style: none;
-  /* Solid readable panel: the default glass is too faint for a dropdown. */
-  background: rgb(18 8 42 / 0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  /* Fully solid panel: anything behind (e.g. the bright hero clock) must not ghost through. */
+  background: rgb(18 8 42);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   box-shadow:
     0 12px 40px rgb(0 0 0 / 0.5),
     0 0 0 1px rgb(255 255 255 / 0.12);
