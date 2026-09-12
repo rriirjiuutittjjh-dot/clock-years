@@ -1,23 +1,60 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { ar } from "./locales/ar";
+import { de } from "./locales/de";
 import { en } from "./locales/en";
+import { es } from "./locales/es";
+import { fr } from "./locales/fr";
+import { hi } from "./locales/hi";
+import { it } from "./locales/it";
+import { pt } from "./locales/pt";
+import { ru } from "./locales/ru";
+import { tr } from "./locales/tr";
+import { zh } from "./locales/zh";
 
 /**
- * App locales. English ships first; adding a language is:
+ * App locales. Adding a language is:
  * 1. Add `src/lib/i18n/locales/<tag>.ts` exporting a `Dictionary`.
- * 2. Register it in `LOCALES`, `dictionaries`, and `DIRS` below.
- * 3. Add a switcher UI calling `setLocale()` (none while only "en" exists).
+ * 2. Register it in `LOCALES`, `dictionaries`, `DIRS`, and `LOCALE_NAMES`.
+ * The header switcher picks it up automatically.
  *
  * `Dictionary` is the shape of the English copy, so a new locale with a
  * missing or mistyped key fails `npm run typecheck` instead of rendering
  * blank. Interpolated strings are functions so each language owns its own
  * word order, pluralization, and number formatting.
  */
-export const LOCALES = ["en"] as const;
+export const LOCALES = ["en", "ar", "de", "es", "fr", "hi", "it", "pt", "ru", "tr", "zh"] as const;
 export type Locale = (typeof LOCALES)[number];
 export type Dictionary = typeof en;
 
-const dictionaries: Record<Locale, Dictionary> = { en };
-const DIRS: Record<Locale, "ltr" | "rtl"> = { en: "ltr" };
+/** Native display names for the language switcher. */
+export const LOCALE_NAMES: Record<Locale, string> = {
+  en: "English",
+  ar: "العربية",
+  de: "Deutsch",
+  es: "Español",
+  fr: "Français",
+  hi: "हिन्दी",
+  it: "Italiano",
+  pt: "Português",
+  ru: "Русский",
+  tr: "Türkçe",
+  zh: "中文",
+};
+
+const dictionaries: Record<Locale, Dictionary> = { en, ar, de, es, fr, hi, it, pt, ru, tr, zh };
+const DIRS: Record<Locale, "ltr" | "rtl"> = {
+  en: "ltr",
+  ar: "rtl",
+  de: "ltr",
+  es: "ltr",
+  fr: "ltr",
+  hi: "ltr",
+  it: "ltr",
+  pt: "ltr",
+  ru: "ltr",
+  tr: "ltr",
+  zh: "ltr",
+};
 
 const STORAGE_KEY = "system-space-locale";
 

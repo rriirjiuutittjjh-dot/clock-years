@@ -36,7 +36,7 @@ export function MemberNav({ role, current }: { role: Role | null; current: strin
           {t.nav.admin}
         </Link>
       ) : null}
-      <div className="ml-auto pl-2 text-sm [&_button]:text-muted [&_button]:no-underline hover:[&_button]:text-ink">
+      <div className="ms-auto ps-2 text-sm [&_button]:text-muted [&_button]:no-underline hover:[&_button]:text-ink">
         <UserButton />
       </div>
     </nav>

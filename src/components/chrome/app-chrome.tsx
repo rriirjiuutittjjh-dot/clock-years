@@ -1,15 +1,15 @@
 import { Link } from "@tanstack/react-router";
-import { Sparkle, Sparkles, Volume2, VolumeX } from "lucide-react";
+import { Globe, Sparkle, Sparkles, Volume2, VolumeX } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
-import { useLocale } from "@/lib/i18n";
+import { LOCALES, LOCALE_NAMES, useLocale, type Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
   const { space, setSpace, setMotion } = useTheme();
   const { user, isPending } = useCurrentUserState();
-  const { t } = useLocale();
+  const { locale, setLocale, t } = useLocale();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [musicOn, setMusicOn] = useState(true);
 
@@ -81,6 +81,22 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
           {musicOn ? <Volume2 className="size-4" /> : <VolumeX className="size-4" />}
           <span className="hidden sm:inline">{t.chrome.music}</span>
         </button>
+
+        <label className="icon-btn glass lang-picker">
+          <Globe className="size-4" aria-hidden="true" />
+          <select
+            className="lang-select"
+            value={locale}
+            onChange={(e) => setLocale(e.target.value as Locale)}
+            aria-label={t.chrome.language}
+          >
+            {LOCALES.map((l) => (
+              <option key={l} value={l}>
+                {LOCALE_NAMES[l]}
+              </option>
+            ))}
+          </select>
+        </label>
 
         {hideAuth ? null : isPending ? (
           <div className="glass h-11 w-24 animate-pulse rounded-full" />

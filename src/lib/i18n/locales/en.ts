@@ -15,6 +15,7 @@ export const en = {
     dashboard: "Dashboard",
     logIn: "Log in",
     register: "Register",
+    language: "Language",
   },
   countdown: {
     units: {
