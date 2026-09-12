@@ -3,6 +3,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { GatePage } from "@/components/chrome/gate-page";
 import { useTheme } from "@/components/theme-provider";
 import { compressImage, sampleAverageColor } from "@/lib/image";
+import { useLocale } from "@/lib/i18n";
 import { getMyProfile, listMembers, setMemberRole } from "@/lib/server/profiles";
 import { updateSiteSettings } from "@/lib/server/site";
 import { DEFAULT_SETTINGS, isStaff, type Profile, type Role, type SiteSettings } from "@/lib/types";
@@ -10,6 +11,7 @@ import { DEFAULT_SETTINGS, isStaff, type Profile, type Role, type SiteSettings }
 export const Route = createFileRoute("/admin")({ component: Admin });
 
 function Admin() {
+  const { t } = useLocale();
   const { settings, applySettings } = useTheme();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [draft, setDraft] = useState<SiteSettings>(settings);
@@ -52,7 +54,7 @@ function Admin() {
       if (draft.glassAuto) color = await sampleAverageColor(url);
       patch({ backgroundUrl: url, glassColor: color });
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Could not use that image.");
+      setError(e instanceof Error ? e.message : t.admin.imageError);
     }
   }
 
@@ -65,9 +67,9 @@ function Admin() {
       const saved = await updateSiteSettings({ data: draft });
       applySettings(saved);
       setDraft(saved);
-      setStatus("Appearance saved for everyone.");
+      setStatus(t.admin.saved);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not save.");
+      setError(err instanceof Error ? err.message : t.admin.saveError);
     } finally {
       setBusy(false);
     }
@@ -83,7 +85,7 @@ function Admin() {
     try {
       setMembers(await setMemberRole({ data: { userId, role } }));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not change role.");
+      setError(err instanceof Error ? err.message : t.admin.roleError);
     }
   }
 
@@ -91,8 +93,8 @@ function Admin() {
     return (
       <GatePage current="/admin" role={profile.role}>
         <section className="glass rounded-[32px] p-8">
-          <h1 className="text-2xl font-semibold">Admin only</h1>
-          <p className="mt-2 text-sm text-muted">Ask the owner to promote your orbit.</p>
+          <h1 className="text-2xl font-semibold">{t.admin.deniedTitle}</h1>
+          <p className="mt-2 text-sm text-muted">{t.admin.deniedBlurb}</p>
         </section>
       </GatePage>
     );
@@ -101,17 +103,17 @@ function Admin() {
   return (
     <GatePage current="/admin" role={profile?.role ?? null}>
       <section className="glass rounded-[32px] p-6 sm:p-8">
-        <h1 className="text-3xl font-semibold tracking-tight">Admin</h1>
+        <h1 className="text-3xl font-semibold tracking-tight">{t.admin.title}</h1>
         <p className="mt-2 text-sm text-muted">
-          Background, blur, and glass. Values start at 0px. Auto glass samples the upload.
+          {t.admin.subtitle}
         </p>
 
         <form className="mt-8 space-y-6" onSubmit={(e) => void onSave(e)}>
           <div>
-            <p className="field-label">Background</p>
+            <p className="field-label">{t.admin.background}</p>
             <div className="mt-3 flex flex-wrap items-center gap-3">
               <label className="btn btn-ghost cursor-pointer">
-                Upload image
+                {t.admin.uploadImage}
                 <input
                   type="file"
                   accept="image/*"
@@ -121,7 +123,7 @@ function Admin() {
               </label>
               {draft.backgroundUrl ? (
                 <button type="button" className="btn btn-ghost" onClick={() => patch({ backgroundUrl: null })}>
-                  Clear
+                  {t.admin.clear}
                 </button>
               ) : null}
             </div>
@@ -134,7 +136,7 @@ function Admin() {
           </div>
 
           <label className="field">
-            <span>Background blur · {draft.backgroundBlur}px</span>
+            <span>{t.admin.backgroundBlur(draft.backgroundBlur)}</span>
             <input
               type="range"
               min={0}
@@ -145,7 +147,7 @@ function Admin() {
           </label>
 
           <label className="field">
-            <span>Glass blur · {draft.glassBlur}px</span>
+            <span>{t.admin.glassBlur(draft.glassBlur)}</span>
             <input
               type="range"
               min={0}
@@ -156,7 +158,7 @@ function Admin() {
           </label>
 
           <label className="field">
-            <span>Glass fill · {draft.glassOpacity}</span>
+            <span>{t.admin.glassFill(draft.glassOpacity)}</span>
             <input
               type="range"
               min={0}
@@ -168,7 +170,7 @@ function Admin() {
 
           <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
             <label className="field">
-              <span>Glass color</span>
+              <span>{t.admin.glassColor}</span>
               <input
                 type="color"
                 value={draft.glassColor}
@@ -181,7 +183,7 @@ function Admin() {
                 checked={draft.glassAuto}
                 onChange={(e) => patch({ glassAuto: e.target.checked })}
               />
-              Color glass auto
+              {t.admin.colorAuto}
             </label>
           </div>
 
@@ -190,19 +192,19 @@ function Admin() {
 
           <div className="flex flex-wrap gap-2">
             <button className="btn btn-primary" type="submit" disabled={busy}>
-              {busy ? "Saving…" : "Save appearance"}
+              {busy ? t.admin.saving : t.admin.saveAppearance}
             </button>
             <button className="btn btn-ghost" type="button" onClick={() => void reset()}>
-              Reset to 0
+              {t.admin.reset}
             </button>
           </div>
         </form>
       </section>
 
       <section className="glass mt-4 rounded-[32px] p-6 sm:p-8">
-        <h2 className="text-xl font-semibold">Members</h2>
+        <h2 className="text-xl font-semibold">{t.admin.members}</h2>
         <p className="mt-1 text-sm text-muted">
-          Roles: member, admin, owner. Only the owner can change them.
+          {t.admin.membersBlurb}
         </p>
         <ul className="mt-6 space-y-3">
           {members.map((m) => (
@@ -226,9 +228,9 @@ function Admin() {
                   value={m.role}
                   onChange={(e) => void changeRole(m.userId, e.target.value as Role)}
                 >
-                  <option value="member">member</option>
-                  <option value="admin">admin</option>
-                  <option value="owner">owner</option>
+                  <option value="member">{t.admin.roles.member}</option>
+                  <option value="admin">{t.admin.roles.admin}</option>
+                  <option value="owner">{t.admin.roles.owner}</option>
                 </select>
               ) : (
                 <span className="text-xs tracking-[0.16em] uppercase text-muted">{m.role}</span>

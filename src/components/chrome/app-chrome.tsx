@@ -3,11 +3,13 @@ import { Pause, Play, Sparkle, Sparkles, Volume2, VolumeX } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
+import { useLocale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
   const { space, setSpace, motion, setMotion } = useTheme();
   const { user, isPending } = useCurrentUserState();
+  const { t } = useLocale();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [musicOn, setMusicOn] = useState(true);
 
@@ -57,10 +59,10 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
           className="icon-btn glass"
           onClick={() => setSpace(space === "on" ? "off" : "on")}
           aria-pressed={space === "on"}
-          aria-label={space === "on" ? "Turn space off" : "Turn space on"}
+          aria-label={space === "on" ? t.chrome.turnSpaceOff : t.chrome.turnSpaceOn}
         >
           {space === "on" ? <Sparkles className="size-4" /> : <Sparkle className="size-4" />}
-          <span className="hidden sm:inline">Space {space === "on" ? "on" : "off"}</span>
+          <span className="hidden sm:inline">{space === "on" ? t.chrome.spaceOn : t.chrome.spaceOff}</span>
         </button>
 
         <button
@@ -68,10 +70,10 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
           className="icon-btn glass"
           onClick={() => setMotion(motion === "on" ? "off" : "on")}
           aria-pressed={motion === "on"}
-          aria-label={motion === "on" ? "Turn motion off" : "Turn motion on"}
+          aria-label={motion === "on" ? t.chrome.turnMotionOff : t.chrome.turnMotionOn}
         >
           {motion === "on" ? <Pause className="size-4" /> : <Play className="size-4" />}
-          <span className="hidden sm:inline">Motion {motion === "on" ? "on" : "off"}</span>
+          <span className="hidden sm:inline">{motion === "on" ? t.chrome.motionOn : t.chrome.motionOff}</span>
         </button>
 
         <button
@@ -79,10 +81,10 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
           className="icon-btn glass"
           onClick={toggleMusic}
           aria-pressed={musicOn}
-          aria-label={musicOn ? "Mute music" : "Play music"}
+          aria-label={musicOn ? t.chrome.muteMusic : t.chrome.playMusic}
         >
           {musicOn ? <Volume2 className="size-4" /> : <VolumeX className="size-4" />}
-          <span className="hidden sm:inline">Music</span>
+          <span className="hidden sm:inline">{t.chrome.music}</span>
         </button>
 
         {hideAuth ? null : isPending ? (
@@ -101,16 +103,16 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
               </span>
             )}
             <span className="hidden max-w-[7rem] truncate sm:inline">
-              {user.displayName ?? "Dashboard"}
+              {user.displayName ?? t.chrome.dashboard}
             </span>
           </Link>
         ) : (
           <div className="flex gap-2">
             <Link to="/login" className="btn btn-ghost">
-              Log in
+              {t.chrome.logIn}
             </Link>
             <Link to="/register" className="btn btn-primary">
-              Register
+              {t.chrome.register}
             </Link>
           </div>
         )}

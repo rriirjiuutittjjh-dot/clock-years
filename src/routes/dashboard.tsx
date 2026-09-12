@@ -4,12 +4,14 @@ import { DashboardMark } from "@/components/auth/auth-art";
 import { GatePage } from "@/components/chrome/gate-page";
 import { CountdownClock } from "@/components/space/countdown-clock";
 import { nextNewYear, splitMs, yearProgress } from "@/lib/countdown";
+import { useLocale } from "@/lib/i18n";
 import { getMyProfile } from "@/lib/server/profiles";
 import type { Profile } from "@/lib/types";
 
 export const Route = createFileRoute("/dashboard")({ component: Dashboard });
 
 function Dashboard() {
+  const { t } = useLocale();
   const [profile, setProfile] = useState<Profile | null>(null);
   // Render-time snapshot so the server paints the real countdown on first
   // paint (never 00s); the tick effect below takes over live updates on mount.
@@ -41,19 +43,19 @@ function Dashboard() {
         <div className="flex items-start gap-4">
           <DashboardMark />
           <div>
-            <p className="text-xs tracking-[0.28em] text-muted uppercase">Member orbit</p>
+            <p className="text-xs tracking-[0.28em] text-muted uppercase">{t.dashboard.memberOrbit}</p>
             <h1 className="mt-1 text-3xl font-semibold tracking-tight">
-              {profile ? `Welcome, ${profile.displayName}` : "Dashboard"}
+              {profile ? t.dashboard.welcome(profile.displayName) : t.dashboard.title}
             </h1>
             <p className="mt-2 text-sm text-muted">
-              {profile?.bio || "Set a bio in Account to leave a trace in the system."}
+              {profile?.bio || t.dashboard.bioFallback}
             </p>
           </div>
         </div>
 
         <div className="mt-6 flex flex-wrap gap-2">
           <span className="rounded-full bg-white/10 px-3 py-1 text-xs tracking-[0.16em] uppercase">
-            {role ?? "member"}
+            {role ?? t.dashboard.roleFallback}
           </span>
           {profile?.email ? (
             <span className="rounded-full bg-white/8 px-3 py-1 text-xs text-muted">{profile.email}</span>
@@ -62,31 +64,31 @@ function Dashboard() {
       </section>
 
       <section className="glass mt-4 rounded-[32px] p-6 sm:p-8">
-        <h2 className="text-sm tracking-[0.2em] text-muted uppercase">Countdown</h2>
+        <h2 className="text-sm tracking-[0.2em] text-muted uppercase">{t.dashboard.countdownTitle}</h2>
         <div className="mt-4">
           <CountdownClock parts={parts} />
         </div>
         <div className="mx-auto mt-6 h-1.5 max-w-md overflow-hidden rounded-full bg-white/10">
           <div className="h-full rounded-full bg-ice" style={{ width: `${pct.toFixed(2)}%` }} />
         </div>
-        <p className="mt-3 text-center text-xs text-muted">{pct.toFixed(2)}% of this year has passed</p>
+        <p className="mt-3 text-center text-xs text-muted">{t.dashboard.yearPassed(pct.toFixed(2))}</p>
       </section>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         <Link to="/settings" className="glass block rounded-[28px] p-6 no-underline transition-colors hover:bg-white/6">
-          <h2 className="text-lg font-medium">Account</h2>
-          <p className="mt-1 text-sm text-muted">Avatar, bio, and password.</p>
+          <h2 className="text-lg font-medium">{t.dashboard.account}</h2>
+          <p className="mt-1 text-sm text-muted">{t.dashboard.accountBlurb}</p>
         </Link>
         {role === "admin" || role === "owner" ? (
           <Link to="/admin" className="glass block rounded-[28px] p-6 no-underline transition-colors hover:bg-white/6">
-            <h2 className="text-lg font-medium">Admin</h2>
-            <p className="mt-1 text-sm text-muted">Background, blur, and glass.</p>
+            <h2 className="text-lg font-medium">{t.dashboard.admin}</h2>
+            <p className="mt-1 text-sm text-muted">{t.dashboard.adminBlurb}</p>
           </Link>
         ) : (
           <div className="glass rounded-[28px] p-6">
-            <h2 className="text-lg font-medium">Role</h2>
+            <h2 className="text-lg font-medium">{t.dashboard.roleTitle}</h2>
             <p className="mt-1 text-sm text-muted">
-              Members explore System Space. Admins shape the sky. Owners hold the keys.
+              {t.dashboard.roleBlurb}
             </p>
           </div>
         )}

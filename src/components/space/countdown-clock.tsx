@@ -1,15 +1,22 @@
 import { Fragment } from "react";
-import { pad2, UNIT_LABELS, UNITS, type Unit } from "@/lib/countdown";
+import { pad2, UNITS, type Unit } from "@/lib/countdown";
+import { useLocale } from "@/lib/i18n";
 
 type Parts = Record<Unit, number>;
 
 export function CountdownClock({ parts, compact = false }: { parts: Parts; compact?: boolean }) {
+  const { t } = useLocale();
   const wide = parts.days >= 100;
   return (
     <div
       className={`countdown${wide ? " wide" : ""}`}
       role="timer"
-      aria-label={`${parts.days} days ${pad2(parts.hours)} hours ${pad2(parts.minutes)} minutes ${pad2(parts.seconds)} seconds`}
+      aria-label={t.countdown.ariaLabel(
+        parts.days,
+        pad2(parts.hours),
+        pad2(parts.minutes),
+        pad2(parts.seconds),
+      )}
     >
       {UNITS.map((unit, i) => (
         <Fragment key={unit}>
@@ -22,7 +29,7 @@ export function CountdownClock({ parts, compact = false }: { parts: Parts; compa
             <div className="num">
               {unit === "days" ? String(parts.days).padStart(2, "0") : pad2(parts[unit])}
             </div>
-            <div className="unit-label">{UNIT_LABELS[unit]}</div>
+            <div className="unit-label">{t.countdown.units[unit]}</div>
           </div>
         </Fragment>
       ))}

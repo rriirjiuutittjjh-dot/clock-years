@@ -3,12 +3,14 @@ import { useEffect, useState, type FormEvent } from "react";
 import { GatePage } from "@/components/chrome/gate-page";
 import { authClient } from "@/lib/auth/client";
 import { compressImage } from "@/lib/image";
+import { useLocale } from "@/lib/i18n";
 import { getMyProfile, updateMyProfile } from "@/lib/server/profiles";
 import type { Profile } from "@/lib/types";
 
 export const Route = createFileRoute("/settings")({ component: Settings });
 
 function Settings() {
+  const { t } = useLocale();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [displayName, setDisplayName] = useState("");
   const [bio, setBio] = useState("");
@@ -29,8 +31,8 @@ function Settings() {
         setBio(p.bio);
         setAvatarUrl(p.avatarUrl);
       })
-      .catch(() => setError("Could not load your account."));
-  }, []);
+      .catch(() => setError(t.settings.loadError));
+  }, [t]);
 
   async function onAvatar(file: File | undefined) {
     if (!file) return;
@@ -39,7 +41,7 @@ function Settings() {
       const url = await compressImage(file, { maxEdge: 320, maxBytes: 420_000, quality: 0.84 });
       setAvatarUrl(url);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Could not use that image.");
+      setError(e instanceof Error ? e.message : t.settings.imageError);
     }
   }
 
@@ -53,9 +55,9 @@ function Settings() {
         data: { displayName: displayName.trim(), bio: bio.trim(), avatarUrl },
       });
       setProfile(next);
-      setStatus("Account saved.");
+      setStatus(t.settings.saved);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not save.");
+      setError(err instanceof Error ? err.message : t.settings.saveError);
     } finally {
       setBusy(false);
     }
@@ -65,11 +67,11 @@ function Settings() {
     e.preventDefault();
     setPwStatus(null);
     if (newPassword !== confirm) {
-      setPwStatus("New passwords do not match.");
+      setPwStatus(t.settings.passwordsNoMatch);
       return;
     }
     if (newPassword.length < 8) {
-      setPwStatus("Use at least 8 characters.");
+      setPwStatus(t.settings.tooShort);
       return;
     }
     const { error: err } = await authClient.changePassword({
@@ -78,20 +80,20 @@ function Settings() {
       revokeOtherSessions: false,
     });
     if (err) {
-      setPwStatus(err.message || "Could not update password. Email accounts only.");
+      setPwStatus(err.message || t.settings.updateError);
       return;
     }
     setCurrentPassword("");
     setNewPassword("");
     setConfirm("");
-    setPwStatus("Password updated.");
+    setPwStatus(t.settings.updated);
   }
 
   return (
     <GatePage current="/settings" role={profile?.role ?? null}>
       <section className="glass rounded-[32px] p-6 sm:p-8">
-        <h1 className="text-3xl font-semibold tracking-tight">Account</h1>
-        <p className="mt-2 text-sm text-muted">Profile, bio, and password for your orbit.</p>
+        <h1 className="text-3xl font-semibold tracking-tight">{t.settings.title}</h1>
+        <p className="mt-2 text-sm text-muted">{t.settings.subtitle}</p>
 
         <form className="mt-8 space-y-5" onSubmit={(e) => void onSave(e)}>
           <div className="flex flex-wrap items-center gap-4">
@@ -105,7 +107,7 @@ function Settings() {
               )}
             </div>
             <label className="btn btn-ghost cursor-pointer">
-              Upload photo
+              {t.settings.uploadPhoto}
               <input
                 type="file"
                 accept="image/*"
@@ -115,27 +117,27 @@ function Settings() {
             </label>
             {avatarUrl ? (
               <button type="button" className="btn btn-ghost" onClick={() => setAvatarUrl(null)}>
-                Remove
+                {t.settings.remove}
               </button>
             ) : null}
           </div>
 
           <label className="field">
-            <span>Display name</span>
+            <span>{t.settings.displayName}</span>
             <input value={displayName} onChange={(e) => setDisplayName(e.target.value)} maxLength={80} required />
           </label>
           <label className="field">
-            <span>Bio</span>
+            <span>{t.settings.bio}</span>
             <textarea
               value={bio}
               onChange={(e) => setBio(e.target.value)}
               maxLength={280}
-              placeholder="A short note from your orbit."
+              placeholder={t.settings.bioPlaceholder}
             />
           </label>
           {profile?.email ? (
             <label className="field">
-              <span>Email</span>
+              <span>{t.settings.email}</span>
               <input value={profile.email} readOnly />
             </label>
           ) : null}
@@ -143,19 +145,19 @@ function Settings() {
           {error ? <p className="text-sm text-rose-300">{error}</p> : null}
           {status ? <p className="text-sm text-ice">{status}</p> : null}
           <button className="btn btn-primary" type="submit" disabled={busy}>
-            {busy ? "Saving…" : "Save profile"}
+            {busy ? t.settings.saving : t.settings.saveProfile}
           </button>
         </form>
       </section>
 
       <section className="glass mt-4 rounded-[32px] p-6 sm:p-8">
-        <h2 className="text-xl font-semibold">Password</h2>
+        <h2 className="text-xl font-semibold">{t.settings.passwordTitle}</h2>
         <p className="mt-1 text-sm text-muted">
-          For email accounts. Google and X sign-in keep their own credentials.
+          {t.settings.passwordBlurb}
         </p>
         <form className="mt-6 space-y-4" onSubmit={(e) => void onPassword(e)}>
           <label className="field">
-            <span>Current password</span>
+            <span>{t.settings.currentPassword}</span>
             <input
               type="password"
               autoComplete="current-password"
@@ -165,7 +167,7 @@ function Settings() {
             />
           </label>
           <label className="field">
-            <span>New password</span>
+            <span>{t.settings.newPassword}</span>
             <input
               type="password"
               autoComplete="new-password"
@@ -176,7 +178,7 @@ function Settings() {
             />
           </label>
           <label className="field">
-            <span>Confirm password</span>
+            <span>{t.settings.confirmPassword}</span>
             <input
               type="password"
               autoComplete="new-password"
@@ -187,7 +189,7 @@ function Settings() {
           </label>
           {pwStatus ? <p className="text-sm text-muted">{pwStatus}</p> : null}
           <button className="btn btn-primary" type="submit">
-            Update password
+            {t.settings.updatePassword}
           </button>
         </form>
       </section>

@@ -4,6 +4,7 @@ import { authClient, authEnabled } from "@/lib/auth/client";
 import { AuthArt } from "@/components/auth/auth-art";
 import { SpaceStage } from "@/components/space/space-stage";
 import { AppChrome } from "@/components/chrome/app-chrome";
+import { useLocale } from "@/lib/i18n";
 
 type Mode = "login" | "register";
 
@@ -14,22 +15,20 @@ export function AuthForm({ mode }: { mode: Mode }) {
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const { t } = useLocale();
 
-  const title = mode === "login" ? "Log in" : "Create account";
-  const subtitle =
-    mode === "login"
-      ? "Return to System Space. Your orbit is saved."
-      : "Join as a member. The first account becomes owner.";
+  const title = mode === "login" ? t.auth.loginTitle : t.auth.registerTitle;
+  const subtitle = mode === "login" ? t.auth.loginSubtitle : t.auth.registerSubtitle;
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     setError(null);
     if (!authEnabled) {
-      setError("Sign-in is disabled.");
+      setError(t.auth.signInDisabled);
       return;
     }
     if (mode === "register" && password !== confirm) {
-      setError("Passwords do not match.");
+      setError(t.auth.passwordsNoMatch);
       return;
     }
     setBusy(true);
@@ -40,17 +39,17 @@ export function AuthForm({ mode }: { mode: Mode }) {
           password,
           name: name.trim() || email.split("@")[0] || "Member",
         });
-        if (err) throw new Error(err.message || "Could not register.");
+        if (err) throw new Error(err.message || t.auth.couldNotRegister);
       } else {
         const { error: err } = await authClient.signIn.email({
           email: email.trim(),
           password,
         });
-        if (err) throw new Error(err.message || "Could not log in.");
+        if (err) throw new Error(err.message || t.auth.couldNotLogIn);
       }
       window.location.assign("/dashboard");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+      setError(err instanceof Error ? err.message : t.auth.somethingWrong);
       setBusy(false);
     }
   }
@@ -71,29 +70,29 @@ export function AuthForm({ mode }: { mode: Mode }) {
           <form className="mt-8 space-y-4" onSubmit={(e) => void onSubmit(e)}>
             {mode === "register" ? (
               <label className="field">
-                <span>Name</span>
+                <span>{t.auth.name}</span>
                 <input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   autoComplete="name"
                   maxLength={80}
-                  placeholder="Your name"
+                  placeholder={t.auth.namePlaceholder}
                 />
               </label>
             ) : null}
             <label className="field">
-              <span>Email</span>
+              <span>{t.auth.email}</span>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"
-                placeholder="you@orbit.mail"
+                placeholder={t.auth.emailPlaceholder}
               />
             </label>
             <label className="field">
-              <span>Password</span>
+              <span>{t.auth.password}</span>
               <input
                 type="password"
                 required
@@ -101,12 +100,12 @@ export function AuthForm({ mode }: { mode: Mode }) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete={mode === "login" ? "current-password" : "new-password"}
-                placeholder="At least 8 characters"
+                placeholder={t.auth.passwordPlaceholder}
               />
             </label>
             {mode === "register" ? (
               <label className="field">
-                <span>Confirm password</span>
+                <span>{t.auth.confirmPassword}</span>
                 <input
                   type="password"
                   required
@@ -114,7 +113,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
                   value={confirm}
                   onChange={(e) => setConfirm(e.target.value)}
                   autoComplete="new-password"
-                  placeholder="Repeat your password"
+                  placeholder={t.auth.confirmPasswordPlaceholder}
                 />
               </label>
             ) : null}
@@ -122,23 +121,23 @@ export function AuthForm({ mode }: { mode: Mode }) {
             {error ? <p className="text-sm text-rose-300">{error}</p> : null}
 
             <button className="btn btn-primary w-full" type="submit" disabled={busy}>
-              {busy ? "Please wait…" : title}
+              {busy ? t.auth.pleaseWait : title}
             </button>
           </form>
 
           <p className="mt-6 text-sm text-muted">
             {mode === "login" ? (
               <>
-                New here?{" "}
+                {t.auth.newHere}{" "}
                 <Link to="/register" className="text-ink underline-offset-4 hover:underline">
-                  Register
+                  {t.auth.registerLink}
                 </Link>
               </>
             ) : (
               <>
-                Already a member?{" "}
+                {t.auth.alreadyMember}{" "}
                 <Link to="/login" className="text-ink underline-offset-4 hover:underline">
-                  Log in
+                  {t.auth.loginLink}
                 </Link>
               </>
             )}

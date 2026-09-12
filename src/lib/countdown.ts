@@ -1,13 +1,6 @@
 export const UNITS = ["days", "hours", "minutes", "seconds"] as const;
 export type Unit = (typeof UNITS)[number];
 
-export const UNIT_LABELS: Record<Unit, string> = {
-  days: "Days",
-  hours: "Hours",
-  minutes: "Minutes",
-  seconds: "Seconds",
-};
-
 export function nextNewYear(from: Date) {
   return new Date(from.getFullYear() + 1, 0, 1, 0, 0, 0, 0);
 }
@@ -30,17 +23,18 @@ export function yearProgress(now: Date) {
 
 export const pad2 = (n: number) => String(n).padStart(2, "0");
 
-export function formatTarget(target: Date) {
-  return new Intl.DateTimeFormat(undefined, {
+export function formatTarget(target: Date, locale?: string) {
+  return new Intl.DateTimeFormat(locale, {
     month: "long",
     day: "numeric",
     year: "numeric",
   }).format(target);
 }
 
-export function formatMeta(target: Date) {
-  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "local time";
-  const when = new Intl.DateTimeFormat(undefined, {
+/** Date + zone parts — the sentence around them lives in the dictionary. */
+export function formatMetaParts(target: Date, locale?: string) {
+  const timeZone = Intl.DateTimeFormat(locale).resolvedOptions().timeZone || "local time";
+  const when = new Intl.DateTimeFormat(locale, {
     weekday: "short",
     day: "numeric",
     month: "short",
@@ -49,11 +43,11 @@ export function formatMeta(target: Date) {
     minute: "2-digit",
     hour12: false,
   }).format(target);
-  return `Rings in ${when} · ${tz}`;
+  return { when, timeZone };
 }
 
-export function formatNow(now: Date) {
-  return new Intl.DateTimeFormat(undefined, {
+export function formatNow(now: Date, locale?: string) {
+  return new Intl.DateTimeFormat(locale, {
     hour: "numeric",
     minute: "2-digit",
     second: "2-digit",

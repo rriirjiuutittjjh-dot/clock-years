@@ -1,15 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { UserButton } from "@/lib/auth/gates";
+import { useLocale } from "@/lib/i18n";
 import { isStaff, type Role } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/dashboard", label: "Dashboard" },
-  { to: "/settings", label: "Account" },
-] as const;
-
 export function MemberNav({ role, current }: { role: Role | null; current: string }) {
+  const { t } = useLocale();
+  const links = [
+    { to: "/", label: t.nav.home },
+    { to: "/dashboard", label: t.nav.dashboard },
+    { to: "/settings", label: t.nav.account },
+  ] as const;
   return (
     <nav className="glass flex flex-wrap items-center gap-1 rounded-[22px] p-2">
       {links.map((l) => (
@@ -32,7 +33,7 @@ export function MemberNav({ role, current }: { role: Role | null; current: strin
             current === "/admin" ? "bg-white/12 text-ink" : "text-muted hover:text-ink",
           )}
         >
-          Admin
+          {t.nav.admin}
         </Link>
       ) : null}
       <div className="ml-auto pl-2 text-sm [&_button]:text-muted [&_button]:no-underline hover:[&_button]:text-ink">

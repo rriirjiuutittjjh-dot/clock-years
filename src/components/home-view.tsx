@@ -5,7 +5,7 @@ import { Fireworks } from "@/components/space/fireworks";
 import { SolarSystem } from "@/components/space/solar-system";
 import { SpaceStage } from "@/components/space/space-stage";
 import {
-  formatMeta,
+  formatMetaParts,
   formatNow,
   formatTarget,
   nextNewYear,
@@ -13,8 +13,10 @@ import {
   splitMs,
   yearProgress,
 } from "@/lib/countdown";
+import { useLocale } from "@/lib/i18n";
 
 export function HomeView() {
+  const { t, locale } = useLocale();
   // Render-time snapshot: the server paints the REAL countdown on first paint
   // (never 00s), and the tick effect below takes over live updates on mount.
   const targetRef = useRef(nextNewYear(new Date()));
@@ -25,13 +27,18 @@ export function HomeView() {
   const [parts, setParts] = useState(() =>
     splitMs(targetRef.current.getTime() - Date.now()),
   );
-  const [targetLabel, setTargetLabel] = useState(() => formatTarget(targetRef.current));
-  const [meta, setMeta] = useState(() => formatMeta(targetRef.current));
-  const [clockNow, setClockNow] = useState(() => formatNow(new Date()));
+  const [targetLabel, setTargetLabel] = useState(() =>
+    formatTarget(targetRef.current, locale),
+  );
+  const [meta, setMeta] = useState(() => {
+    const { when, timeZone } = formatMetaParts(targetRef.current, locale);
+    return t.home.ringsIn(when, timeZone);
+  });
+  const [clockNow, setClockNow] = useState(() => formatNow(new Date(), locale));
   const [progress, setProgress] = useState(() => yearProgress(new Date()));
   const [progressLabel, setProgressLabel] = useState(() => {
     const now = new Date();
-    return `${now.getFullYear()} is ${yearProgress(now).toFixed(2)}% complete`;
+    return t.home.yearComplete(now.getFullYear(), yearProgress(now).toFixed(2));
   });
   const [party, setParty] = useState(false);
   const [partySub, setPartySub] = useState("");
@@ -42,23 +49,27 @@ export function HomeView() {
   const [readyMs, setReadyMs] = useState<number | null>(null);
 
   const describe = useCallback(() => {
-    setTargetLabel(formatTarget(targetRef.current));
-    setMeta(formatMeta(targetRef.current));
-  }, []);
+    setTargetLabel(formatTarget(targetRef.current, locale));
+    const { when, timeZone } = formatMetaParts(targetRef.current, locale);
+    setMeta(t.home.ringsIn(when, timeZone));
+  }, [locale, t]);
 
-  const startParty = useCallback((year: number) => {
-    setParty(true);
-    setFx(true);
-    setTrueMidnight(true);
-    setPartySub("Here we go.");
-    setNextYearLabel(String(year + 1));
-    const midnight = new Date(year, 0, 1).getTime();
-    if (partyTimer.current) window.clearInterval(partyTimer.current);
-    partyTimer.current = window.setInterval(() => {
-      const s = splitMs(Date.now() - midnight);
-      setPartySub(`${pad2(s.hours)}h ${pad2(s.minutes)}m ${pad2(s.seconds)}s of ${year} so far`);
-    }, 1000);
-  }, []);
+  const startParty = useCallback(
+    (year: number) => {
+      setParty(true);
+      setFx(true);
+      setTrueMidnight(true);
+      setPartySub(t.home.partyGo);
+      setNextYearLabel(String(year + 1));
+      const midnight = new Date(year, 0, 1).getTime();
+      if (partyTimer.current) window.clearInterval(partyTimer.current);
+      partyTimer.current = window.setInterval(() => {
+        const s = splitMs(Date.now() - midnight);
+        setPartySub(t.home.partyElapsed(s.hours, s.minutes, s.seconds, year));
+      }, 1000);
+    },
+    [t],
+  );
 
   useEffect(() => {
     targetRef.current = nextNewYear(new Date());
@@ -81,12 +92,10 @@ export function HomeView() {
         setParts(p);
         const pct = yearProgress(now);
         setProgress(pct);
-        setProgressLabel(`${now.getFullYear()} is ${pct.toFixed(2)}% complete`);
-        setClockNow(formatNow(now));
+        setProgressLabel(t.home.yearComplete(now.getFullYear(), pct.toFixed(2)));
+        setClockNow(formatNow(now, locale));
         if (p.seconds === 0) {
-          setSr(
-            `${p.days} days, ${p.hours} hours and ${p.minutes} minutes until ${targetRef.current.getFullYear()}`,
-          );
+          setSr(t.home.srCountdown(p.days, p.hours, p.minutes, targetRef.current.getFullYear()));
         }
         document.title = `${p.days}d ${pad2(p.hours)}:${pad2(p.minutes)}:${pad2(p.seconds)} · System Space`;
       }
@@ -100,13 +109,13 @@ export function HomeView() {
       window.clearInterval(interval);
       if (partyTimer.current) window.clearInterval(partyTimer.current);
     };
-  }, [describe, startParty]);
+  }, [describe, startParty, locale, t]);
 
   const onPreview = () => {
     setParty(true);
     setFx(true);
     setTrueMidnight(false);
-    setPartySub("A sneak peek of midnight.");
+    setPartySub(t.home.partyPeek);
     window.setTimeout(() => {
       if (!partyStarted.current) {
         setParty(false);
@@ -138,7 +147,7 @@ export function HomeView() {
           <CountdownClock parts={parts} />
 
           <p className="mt-8 text-sm text-muted">
-            Target: <strong className="font-medium text-ink">{targetLabel}</strong>
+            {t.home.target} <strong className="font-medium text-ink">{targetLabel}</strong>
           </p>
 
           <div className="mx-auto mt-6 w-full max-w-md">
@@ -156,13 +165,13 @@ export function HomeView() {
 
           <div className="mt-6 space-y-2 text-xs tracking-wide text-muted">
             <p>{meta}</p>
-            <p>{clockNow ? `Now: ${clockNow}` : ""}</p>
-            {readyMs !== null ? <p>Loaded in {(readyMs / 1000).toFixed(1)}s</p> : null}
+            <p>{clockNow ? t.home.now(clockNow) : ""}</p>
+            {readyMs !== null ? <p>{t.home.loadedIn((readyMs / 1000).toFixed(1))}</p> : null}
           </div>
 
           {!partyStarted.current ? (
             <button type="button" className="btn btn-ghost mt-6" onClick={onPreview}>
-              Preview the finale
+              {t.home.previewFinale}
             </button>
           ) : null}
         </div>
@@ -170,12 +179,12 @@ export function HomeView() {
 
       {party ? (
         <div className="celebrate">
-          <h1>Happy New Year</h1>
-          <p>Here is to a brilliant year ahead.</p>
+          <h1>{t.home.partyTitle}</h1>
+          <p>{t.home.partyWish}</p>
           <p className="text-sm text-muted">{partySub}</p>
           {trueMidnight ? (
             <button type="button" className="btn btn-ghost" onClick={onNext}>
-              Start counting to {nextYearLabel}
+              {t.home.startCountingTo(nextYearLabel)}
             </button>
           ) : null}
         </div>
