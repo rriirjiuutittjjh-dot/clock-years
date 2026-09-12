@@ -42,6 +42,13 @@ cp .env.example .env   # set BETTER_AUTH_URL/SECRET, ADMIN_EMAILS, POSTGRES_PASS
 sudo docker compose up -d --build
 ```
 
+## Run on Windows 24/7
+
+No install step: unzip, double-click **`start-windows.bat`**, keep the
+window open. For always-on (start at logon + restart on crash), run
+**`install-service.ps1`** once as Administrator. Details in
+**[WINDOWS.md](./WINDOWS.md)** (needs Node.js 22 LTS).
+
 ## Roles & admin
 
 Three roles: `member`, `admin`, `owner`. Staff (`admin`/`owner`) open `/admin`
