@@ -17,6 +17,11 @@ export function splitMs(ms: number) {
   };
 }
 
+export function daysInYear(year: number) {
+  const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  return leap ? 366 : 365;
+}
+
 export function yearProgress(now: Date) {
   const start = new Date(now.getFullYear(), 0, 1).getTime();
   const end = new Date(now.getFullYear() + 1, 0, 1).getTime();

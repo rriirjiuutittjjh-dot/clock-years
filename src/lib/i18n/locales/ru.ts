@@ -18,6 +18,7 @@ export const ru: Dictionary = {
   countdown: {
     units: {
       years: "Лет",
+      months: "Месяцев",
       days: "Дней",
       hours: "Часов",
       minutes: "Минут",

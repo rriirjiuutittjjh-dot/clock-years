@@ -20,6 +20,7 @@ export const en = {
   countdown: {
     units: {
       years: "Years",
+      months: "Months",
       days: "Days",
       hours: "Hours",
       minutes: "Minutes",

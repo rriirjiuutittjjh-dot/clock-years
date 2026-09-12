@@ -18,6 +18,7 @@ export const zh: Dictionary = {
   countdown: {
     units: {
       years: "年",
+      months: "个月",
       days: "天",
       hours: "小时",
       minutes: "分",

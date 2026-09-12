@@ -521,6 +521,21 @@ select:focus-visible {
   box-shadow: 0 0 8px 1px rgb(255 209 102 / 0.8);
 }
 
+/* Full-year totals strip (1 year = 12 months = 365 days = …). */
+.stat-num {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink);
+}
+
+.stat-name {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
 /* Planet name tags in the orrery (muted auto-flips for light space). */
 .planet-name {
   font-size: 10.5px;

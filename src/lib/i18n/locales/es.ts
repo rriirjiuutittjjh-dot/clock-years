@@ -18,6 +18,7 @@ export const es: Dictionary = {
   countdown: {
     units: {
       years: "Años",
+      months: "Meses",
       days: "Días",
       hours: "Horas",
       minutes: "Minutos",
