@@ -27,7 +27,10 @@ export function CountdownClock({ parts, compact = false }: { parts: Parts; compa
             </div>
           ) : null}
           <div className="unit">
-            <div className="num">
+            <div
+              className={unit === "seconds" ? "num tick" : "num"}
+              key={unit === "seconds" ? parts.seconds : unit}
+            >
               {unit === "days" ? String(parts.days).padStart(2, "0") : pad2(parts[unit])}
             </div>
             <div className="unit-label">{t.countdown.units[unit]}</div>

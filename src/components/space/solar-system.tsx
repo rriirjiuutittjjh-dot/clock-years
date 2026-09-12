@@ -211,6 +211,7 @@ export function SolarSystem() {
                   />
                 </>
               ) : null}
+              <title>{p.name}</title>
               <circle r={p.r} fill={`url(#skin-${p.name})`} />
               {p.name === "Earth" ? <circle cx="-2" cy="-1" r="3.2" fill="#3fb97f" opacity="0.9" /> : null}
               {p.name === "Jupiter" ? (
@@ -257,6 +258,9 @@ export function SolarSystem() {
                   </g>
                 );
               })}
+              <text y={p.r + 15} textAnchor="middle" className="planet-name">
+                {p.name}
+              </text>
             </g>
           );
         })}

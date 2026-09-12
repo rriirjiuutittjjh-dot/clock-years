@@ -500,11 +500,48 @@ select:focus-visible {
 }
 
 .unit-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
   font-size: clamp(0.62rem, 1.5vw, 0.82rem);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--color-ink) 68%, var(--color-muted));
+  color: color-mix(in srgb, var(--color-ink) 78%, var(--color-muted));
+  text-shadow: 0 0 16px rgb(196 181 253 / 0.35);
+}
+
+.unit-label::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--color-sun);
+  box-shadow: 0 0 8px 1px rgb(255 209 102 / 0.8);
+}
+
+/* Planet name tags in the orrery (muted auto-flips for light space). */
+.planet-name {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  fill: var(--color-muted);
+}
+
+/* The seconds digit pops on every tick (keyed by the clock). */
+.num.tick {
+  animation: tick-pop 0.45s var(--ease);
+}
+
+@keyframes tick-pop {
+  0% {
+    transform: scale(1.045);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .colon {
@@ -846,7 +883,8 @@ html[data-motion="off"] .sun-rays,
 html[data-motion="off"] .bd-drift,
 html[data-motion="off"] .bd-blob,
 html[data-motion="off"] .bd-comet,
-html[data-motion="off"] .bd-star.tw {
+html[data-motion="off"] .bd-star.tw,
+html[data-motion="off"] .num.tick {
   animation: none;
 }
 
