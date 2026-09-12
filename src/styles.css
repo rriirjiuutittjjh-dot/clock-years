@@ -618,7 +618,7 @@ html[data-theme="light"] .planet-card {
   height: 96px;
 }
 
-html[data-theme="light"] .planet-orb ellipse {
+html[data-theme="light"] .planet-orb .planet-ring {
   stroke: #a89468;
 }
 
