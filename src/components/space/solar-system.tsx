@@ -22,15 +22,16 @@ function orbitPath(rx: number, ry: number): string {
   );
 }
 
+/** Static lineup spreads the full 900 width with the sun in line at center. */
 const PLANETS = [
-  { name: "Mercury", r: 5.2, fill: "#b7a48c", x: 540, orbit: 0 },
-  { name: "Venus", r: 8.4, fill: "#e2c07a", x: 578, orbit: 0 },
-  { name: "Earth", r: 8.8, fill: "#4f8fce", x: 614, orbit: 1 },
-  { name: "Mars", r: 6.4, fill: "#c45c3e", x: 646, orbit: 1 },
-  { name: "Jupiter", r: 16, fill: "#d9a066", x: 684, orbit: 2 },
-  { name: "Saturn", r: 13.5, fill: "#e6d3a3", x: 736, orbit: 2, rings: true },
-  { name: "Uranus", r: 10, fill: "#7ec8c8", x: 778, orbit: 3 },
-  { name: "Neptune", r: 9.6, fill: "#4b6fd6", x: 806, orbit: 3 },
+  { name: "Mercury", r: 5.2, fill: "#b7a48c", x: 60, orbit: 0 },
+  { name: "Venus", r: 8.4, fill: "#e2c07a", x: 150, orbit: 0 },
+  { name: "Earth", r: 8.8, fill: "#4f8fce", x: 240, orbit: 1 },
+  { name: "Mars", r: 6.4, fill: "#c45c3e", x: 330, orbit: 1 },
+  { name: "Jupiter", r: 16, fill: "#d9a066", x: 570, orbit: 2 },
+  { name: "Saturn", r: 13.5, fill: "#e6d3a3", x: 670, orbit: 2, rings: true },
+  { name: "Uranus", r: 10, fill: "#7ec8c8", x: 770, orbit: 3 },
+  { name: "Neptune", r: 9.6, fill: "#4b6fd6", x: 860, orbit: 3 },
 ] as const;
 
 type Moon = { name: string; rx: number; r: number; fill: string };

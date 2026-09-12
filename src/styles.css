@@ -378,12 +378,6 @@ select:focus-visible {
     visibility var(--space-ms) var(--ease);
 }
 
-html[data-space="off"] .solar-wrap {
-  opacity: 0;
-  visibility: hidden;
-  max-height: 0;
-}
-
 .solar-svg {
   width: 100%;
   height: auto;

@@ -35,3 +35,11 @@ test("motion-off CSS only kills animation, never time output", () => {
   assert.doesNotMatch(block[1], /display|visibility/, "must not hide elements");
   assert.match(block[1], /animation:\s*none/, "must only stop animation");
 });
+
+test("space-off keeps the solar system visible (static lineup, no void)", () => {
+  assert.doesNotMatch(
+    css,
+    /data-space="off"[\s\S]{0,160}?\.solar-wrap/,
+    "space-off must not hide the solar system",
+  );
+});
