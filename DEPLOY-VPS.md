@@ -68,6 +68,8 @@ Edit `.env`:
 sudo docker compose up -d --build
 sudo docker compose logs -f app   # wait for "Listening on", Ctrl-C to exit
 curl -s -o /dev/null -w 'app=%{http_code}\n' http://localhost:8080/
+bash test.sh                      # 8 smoke checks (read-only, safe)
+bash test.sh --write              # + real signup/session round-trip
 ```
 
 Migrations run automatically on every start (safe to re-run).
@@ -101,7 +103,11 @@ sudo certbot --nginx -d clockyourdomain.com
 
 `certbot` gets the certificate and renews it automatically. The
 `X-Forwarded-Proto`/`Host` headers are required — auth cookies and
-redirects break without them.
+redirects break without them. Verify the public URL too:
+
+```bash
+BASE_URL=https://clockyourdomain.com bash test.sh
+```
 
 Lock down the firewall (app stays reachable only through nginx):
 
