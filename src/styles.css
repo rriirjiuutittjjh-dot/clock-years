@@ -1,0 +1,1001 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-void: #070411;
+  --color-space: #12082a;
+  --color-nebula: #2a1458;
+  --color-ink: #f3efff;
+  --color-muted: #9b8ec4;
+  --color-line: #ffffff;
+  --color-sun: #ffd166;
+  --color-ice: #7eb8e8;
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  img {
+    outline: 1px solid rgb(255 255 255 / 0.1);
+    outline-offset: -1px;
+  }
+}
+
+:root {
+  --bg-blur: 0px;
+  --glass-blur: 0px;
+  --glass-rgb: 255, 255, 255;
+  --glass-alpha: 0.1;
+  --space-ms: 0.1s;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.space-root {
+  position: relative;
+  min-height: 100dvh;
+  color: var(--color-ink);
+}
+
+.space-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 80% at 50% -10%, #2a1458 0%, transparent 55%),
+    radial-gradient(90% 60% at 80% 110%, #1a0b3d 0%, transparent 50%),
+    #12082a;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--space-ms) var(--ease),
+    visibility var(--space-ms) var(--ease);
+}
+
+/* Light theme: bright sky backdrop with dark content. Every data-theme
+   rule below only applies in white mode, independent of space on/off. */
+html[data-theme="light"] {
+  --color-void: #e9e6fa;
+  --color-space: #ddd6f3;
+  --color-nebula: #b9a8ee;
+  --color-ink: #241d4e;
+  --color-muted: #6f6694;
+  color-scheme: light;
+}
+
+/* Space off fades the 3D scene; the themed base gradient stays. */
+html[data-space="off"] .bd {
+  opacity: 0;
+}
+
+html[data-theme="light"] .space-bg {
+  background:
+    radial-gradient(120% 80% at 50% -10%, #d9cfff 0%, transparent 55%),
+    radial-gradient(90% 60% at 80% 110%, #c3d4ff 0%, transparent 50%),
+    linear-gradient(180deg, #f2efff 0%, #e4e9ff 60%, #dfe4f7 100%);
+}
+
+html[data-theme="light"] .bd-comet {
+  background: linear-gradient(90deg, #4a4480, rgb(74 68 128 / 0));
+}
+
+html[data-theme="light"] .bd-vignette {
+  background: radial-gradient(
+    120% 90% at 50% 45%,
+    transparent 60%,
+    rgb(60 50 120 / 0.16) 100%
+  );
+}
+
+html[data-theme="light"] .glass {
+  background: rgb(255 255 255 / 0.6);
+  box-shadow:
+    0 0 0 1px rgb(36 29 78 / 0.12),
+    0 8px 28px rgb(36 29 78 / 0.1);
+}
+
+html[data-theme="light"] .glass-strong {
+  background: rgb(255 255 255 / 0.78);
+}
+
+html[data-theme="light"] .lang-menu {
+  background: rgb(255 255 255);
+  box-shadow:
+    0 12px 40px rgb(36 29 78 / 0.18),
+    0 0 0 1px rgb(36 29 78 / 0.1);
+}
+
+html[data-theme="light"] .lang-option:hover {
+  background: rgb(36 29 78 / 0.07);
+}
+
+html[data-theme="light"] .lang-option.current {
+  background: rgb(36 29 78 / 0.1);
+}
+
+html[data-theme="light"] .btn-ghost {
+  background: rgb(255 255 255 / 0.6);
+  color: #241d4e;
+  box-shadow: 0 0 0 1px rgb(36 29 78 / 0.14);
+}
+
+html[data-theme="light"] .btn-ghost:hover:not(:disabled) {
+  background: rgb(255 255 255 / 0.85);
+}
+
+html[data-theme="light"] .btn-primary {
+  box-shadow: 0 0 0 1px rgb(36 29 78 / 0.12);
+}
+
+html[data-theme="light"] .icon-btn {
+  color: #241d4e;
+}
+
+html[data-theme="light"] .icon-btn:hover {
+  background: rgb(36 29 78 / 0.07);
+}
+
+html[data-theme="light"] .field input,
+html[data-theme="light"] .field textarea,
+html[data-theme="light"] .field select {
+  background: rgb(255 255 255 / 0.7);
+  box-shadow: 0 0 0 1px rgb(36 29 78 / 0.16);
+}
+
+html[data-theme="light"] .field input[type="range"] {
+  background: transparent;
+  box-shadow: none;
+  accent-color: #4a3f9e;
+}
+
+html[data-theme="light"] .num {
+  background-image: linear-gradient(180deg, #2b2358 0%, #4a3f9e 60%, #6a5cd0 100%);
+  filter: drop-shadow(0 2px 18px rgb(90 80 180 / 0.25));
+}
+
+html[data-theme="light"] .colon {
+  color: rgb(70 60 140 / 0.5);
+}
+
+/* Pale washes used for tracks, pills and rows become light-mode tints. */
+html[data-theme="light"] [class*="bg-white/"] {
+  background-color: rgb(36 29 78 / 0.08);
+}
+
+html[data-theme="light"] div[class*="bg-white/10"] > div {
+  background: linear-gradient(90deg, #4a90c4, #6a5cd0, #d18a3c) !important;
+}
+
+/* Pale orrery strokes and dots become visible indigo in light space. */
+html[data-theme="light"] .solar-svg [fill="none"] {
+  stroke: rgb(100 90 180 / 0.5);
+}
+
+
+
+html[data-theme="light"] .solar-svg .moon-dot {
+  fill: #77719e;
+}
+
+.space-bg-custom {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(var(--bg-blur));
+  transform: scale(1.08);
+}
+
+.space-bg-custom[hidden] {
+  display: none;
+}
+
+.space-content {
+  position: relative;
+  z-index: 2;
+  min-height: 100dvh;
+}
+
+.glass {
+  background: rgb(var(--glass-rgb) / var(--glass-alpha));
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.1);
+}
+
+.glass-strong {
+  background: rgb(var(--glass-rgb) / calc(var(--glass-alpha) + 0.06));
+}
+
+.lang-picker {
+  position: relative;
+}
+
+.lang-menu {
+  position: absolute;
+  inset-inline-end: 0;
+  top: calc(100% + 0.5rem);
+  z-index: 30;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.15rem;
+  min-width: 15rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0.4rem;
+  border-radius: 18px;
+  list-style: none;
+  /* Fully solid panel: anything behind (e.g. the bright hero clock) must not ghost through. */
+  background: rgb(18 8 42);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow:
+    0 12px 40px rgb(0 0 0 / 0.5),
+    0 0 0 1px rgb(255 255 255 / 0.12);
+}
+
+.lang-menu > li {
+  list-style: none;
+  min-width: 0;
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  text-align: start;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.lang-option:hover {
+  background: rgb(255 255 255 / 0.08);
+}
+
+.lang-option.current {
+  background: rgb(255 255 255 / 0.1);
+}
+
+.lang-option > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Crowded header: the language picker rests on small screens. */
+@media (max-width: 560px) {
+  .lang-picker {
+    display: none;
+  }
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0 0.95rem;
+  border-radius: var(--radius-pill);
+  border: 0;
+  color: #ece6ff;
+  font: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: transparent;
+  transition:
+    background 0.2s var(--ease),
+    transform 0.15s ease-out;
+}
+
+.icon-btn:hover {
+  background: rgb(var(--glass-rgb) / calc(var(--glass-alpha) + 0.08));
+}
+
+.icon-btn:active {
+  transform: scale(0.96);
+}
+
+.icon-btn:focus:not(:focus-visible),
+.btn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.icon-btn:focus-visible,
+.btn:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #c9c0ff;
+  outline-offset: 3px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 1.15rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background 0.2s var(--ease),
+    color 0.2s var(--ease),
+    transform 0.15s ease-out;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #f4f0ff;
+  color: #12082a;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #ffffff;
+}
+
+.btn-ghost {
+  background: rgb(255 255 255 / 0.06);
+  color: #ece6ff;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.1);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: rgb(255 255 255 / 0.12);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  text-align: start;
+}
+
+.field span,
+.field-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  min-height: 44px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: rgb(8 4 22 / 0.45);
+  color: var(--color-ink);
+  font: inherit;
+  padding: 0.7rem 0.9rem;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+
+.field textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.field input[type="range"] {
+  padding: 0;
+  min-height: 44px;
+  background: transparent;
+  box-shadow: none;
+  accent-color: #e8e2ff;
+}
+
+.field input[type="color"] {
+  padding: 0.25rem;
+  height: 44px;
+  cursor: pointer;
+}
+
+.countdown {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(0.2rem, 1.2vw, 0.9rem);
+  font-size: clamp(2.6rem, 10vw, 7.6rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  max-width: 100%;
+}
+
+.countdown.wide {
+  font-size: clamp(1.9rem, 8vw, 5.8rem);
+}
+
+.unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.num {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  background-image: linear-gradient(180deg, #ffffff 0%, #d7d0ff 58%, #b7ade8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 28px rgb(196 181 253 / 0.28));
+}
+
+.unit-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: clamp(0.62rem, 1.5vw, 0.82rem);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-ink) 78%, var(--color-muted));
+  text-shadow: 0 0 16px rgb(196 181 253 / 0.35);
+}
+
+.unit-label::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--color-sun);
+  box-shadow: 0 0 8px 1px rgb(255 209 102 / 0.8);
+}
+
+/* Planet name tags in the orrery (muted auto-flips for light space). */
+.planet-name {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  fill: var(--color-muted);
+}
+
+/* The seconds digit pops on every tick (keyed by the clock). */
+.num.tick {
+  animation: tick-pop 0.45s var(--ease);
+}
+
+@keyframes tick-pop {
+  0% {
+    transform: scale(1.045);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Clickable planets glow on hover/focus. */
+.planet-btn {
+  cursor: pointer;
+  outline: none;
+}
+
+.planet-btn:hover,
+.planet-btn:focus-visible {
+  filter: brightness(1.18) drop-shadow(0 0 10px rgb(255 209 102 / 0.45));
+}
+
+/* Planet detail view. */
+.planet-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(4 2 12 / 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: fade-in 0.25s var(--ease);
+}
+
+html[data-theme="light"] .planet-modal {
+  background: rgb(36 29 78 / 0.35);
+}
+
+.planet-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: min(22rem, 100%);
+  border-radius: 28px;
+  padding: 1.75rem 1.5rem 1.5rem;
+  background: rgb(18 8 42 / 0.94);
+  box-shadow:
+    0 12px 40px rgb(0 0 0 / 0.5),
+    0 0 0 1px rgb(255 255 255 / 0.12);
+  animation: pop 0.35s var(--ease) both;
+}
+
+html[data-theme="light"] .planet-card {
+  background: rgb(255 255 255 / 0.96);
+  box-shadow:
+    0 12px 40px rgb(36 29 78 / 0.18),
+    0 0 0 1px rgb(36 29 78 / 0.1);
+}
+
+.planet-close {
+  position: absolute;
+  top: 0.75rem;
+  inset-inline-end: 0.75rem;
+}
+
+.planet-orb {
+  width: 96px;
+  height: 96px;
+}
+
+html[data-theme="light"] .planet-orb .planet-ring {
+  stroke: #a89468;
+}
+
+.planet-title {
+  margin: 0.25rem 0 0.75rem;
+  font-size: 1.35rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.planet-rows {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+}
+
+.planet-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.25rem;
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+}
+
+html[data-theme="light"] .planet-row {
+  border-color: rgb(36 29 78 / 0.12);
+}
+
+.planet-row dt {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.planet-row dd {
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+.colon {
+  font-size: 0.62em;
+  font-weight: 600;
+  color: rgb(205 212 255 / 0.45);
+  margin-top: 0.12em;
+  animation: blink 2s steps(1, end) infinite;
+}
+
+/* The orrery always paints whole — no height/visibility constraints left to clip it. */
+.solar-wrap {
+  width: min(920px, 100%);
+  margin: 0 auto;
+  animation: fade-in 0.4s var(--ease);
+}
+
+.solar-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+.sun-glow {
+  animation: sunglow 4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.sun-rays {
+  animation: drift 60s linear infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.celebrate {
+  position: fixed;
+  inset: 0;
+  z-index: 6;
+  display: grid;
+  place-content: center;
+  gap: 0.55rem;
+  padding: 2rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+.celebrate h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 10vw, 6.4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  animation: pop 0.9s var(--ease) both;
+}
+
+.celebrate p {
+  margin: 0;
+  color: #d7d0ff;
+}
+
+.celebrate .btn {
+  pointer-events: auto;
+  margin: 1rem auto 0;
+}
+
+.fx {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0.22;
+  }
+}
+
+@keyframes sunglow {
+  0%,
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.96);
+    opacity: 0;
+    filter: blur(8px);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .countdown {
+    flex-wrap: wrap;
+    gap: 0.55rem 0.8rem;
+    font-size: clamp(2.4rem, 18vw, 4.4rem);
+  }
+  .countdown.wide {
+    font-size: clamp(1.8rem, 14vw, 3.2rem);
+  }
+  .colon {
+    display: none;
+  }
+  .unit {
+    flex: 1 1 40%;
+  }
+}
+
+/* Space backdrop: comets + vignette over the themed base gradient. */
+.bd {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease);
+}
+
+.bd-comet {
+  position: absolute;
+  width: 130px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #fff, rgb(255 255 255 / 0));
+  opacity: 0;
+}
+
+.bd-comet-a {
+  top: 6%;
+  right: 8%;
+  animation: bd-comet 13s linear infinite;
+}
+
+.bd-comet-b {
+  top: 24%;
+  right: 32%;
+  width: 90px;
+  animation: bd-comet 19s linear infinite;
+  animation-delay: -9s;
+}
+
+@keyframes bd-comet {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-24deg);
+    opacity: 0;
+  }
+  1.5% {
+    opacity: 0.9;
+  }
+  8% {
+    transform: translate3d(-46vmax, 26vmax, 0) rotate(-24deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(-46vmax, 26vmax, 0) rotate(-24deg);
+    opacity: 0;
+  }
+}
+
+.bd-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 90% at 50% 45%,
+    transparent 55%,
+    rgb(4 2 12 / 0.55) 100%
+  );
+}
+
+/* Motion off kills the ambient animations. Driven by the header toggle, which
+   defaults to the OS reduced-motion preference but stays user-overridable. */
+html[data-motion="off"] .colon,
+html[data-motion="off"] .celebrate h1,
+html[data-motion="off"] .sun-glow,
+html[data-motion="off"] .sun-rays,
+html[data-motion="off"] .bd-comet,
+html[data-motion="off"] .neb,
+html[data-motion="off"] .dust,
+html[data-motion="off"] .solar-wrap,
+html[data-motion="off"] .num.tick {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    --space-ms: 0.01s;
+  }
+}
+
+/* 3D warp background: streaks stream outward from the vanishing point. */
+.warp-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.warp-star {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  background: #fff;
+  animation: warp-fly 3s linear infinite;
+}
+
+@keyframes warp-fly {
+  0% {
+    transform: rotate(var(--a)) translateX(0) scaleX(1);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(var(--a)) translateX(var(--d)) scaleX(7);
+    opacity: 0;
+  }
+}
+
+html[data-theme="light"] .warp-star {
+  background: #57519b;
+}
+
+html[data-motion="off"] .warp-field {
+  display: none;
+}
+
+/* 4D depth planes: each trails the smoothed mouse (--mx/--my) at its own depth. */
+.warp-field {
+  transform: translate3d(calc(var(--mx, 0) * 14px), calc(var(--my, 0) * 14px), 0);
+  will-change: transform;
+}
+
+.neb-wrap {
+  position: absolute;
+  inset: -6%;
+  transform: translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 10px), 0);
+  will-change: transform;
+}
+
+.neb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+}
+
+.neb-a {
+  width: 44vmax;
+  height: 44vmax;
+  left: 4%;
+  top: -14%;
+  background: radial-gradient(circle, rgb(124 58 237 / 0.32), transparent 65%);
+  animation: neb-float-a 27s ease-in-out infinite alternate;
+}
+
+.neb-b {
+  width: 40vmax;
+  height: 40vmax;
+  right: -10%;
+  bottom: -16%;
+  background: radial-gradient(circle, rgb(56 89 199 / 0.3), transparent 65%);
+  animation: neb-float-b 34s ease-in-out infinite alternate;
+}
+
+.neb-c {
+  width: 24vmax;
+  height: 24vmax;
+  right: 14%;
+  top: -4%;
+  background: radial-gradient(circle, rgb(219 112 147 / 0.22), transparent 65%);
+  animation: neb-float-a 21s ease-in-out infinite alternate;
+}
+
+@keyframes neb-float-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4%, 6%, 0) scale(1.12);
+  }
+}
+
+@keyframes neb-float-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.08);
+  }
+  to {
+    transform: translate3d(-5%, -4%, 0) scale(1);
+  }
+}
+
+.dust-wrap {
+  position: absolute;
+  inset: -8%;
+  transform: translate3d(calc(var(--mx, 0) * 26px), calc(var(--my, 0) * 26px), 0);
+  will-change: transform;
+}
+
+.dust {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px 2px rgb(216 205 255 / 0.7);
+  animation: dust-float 7s ease-in-out infinite alternate;
+}
+
+@keyframes dust-float {
+  from {
+    transform: translate3d(-8px, -6px, 0);
+  }
+  to {
+    transform: translate3d(8px, 6px, 0);
+  }
+}
+
+html[data-theme="light"] .dust {
+  background: #57519b;
+  box-shadow: 0 0 8px 2px rgb(90 80 180 / 0.5);
+}
