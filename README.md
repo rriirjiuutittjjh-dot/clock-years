@@ -31,6 +31,17 @@ fallback: fine for previews, but users and settings reset on restart.
 
 3. Deploy. `npm run build` runs the app build plus pending DB migrations.
 
+## Deploy to a VPS (Ubuntu)
+
+Own-server path: Docker + Postgres, no Vercel involved (`vercel.json` is
+ignored here — the build uses the Nitro `node-server` preset). Full steps
+in **[DEPLOY-VPS.md](./DEPLOY-VPS.md)** (Ubuntu 24.04, nginx, HTTPS):
+
+```bash
+cp .env.example .env   # set BETTER_AUTH_URL/SECRET, ADMIN_EMAILS, POSTGRES_PASSWORD
+sudo docker compose up -d --build
+```
+
 ## Roles & admin
 
 Three roles: `member`, `admin`, `owner`. Staff (`admin`/`owner`) open `/admin`

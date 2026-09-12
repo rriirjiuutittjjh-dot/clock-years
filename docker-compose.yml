@@ -1,0 +1,35 @@
+# Clock Years on a VPS: app + managed Postgres in one `docker compose up -d`.
+# Needs a .env next to this file — see .env.example (BETTER_AUTH_URL,
+# BETTER_AUTH_SECRET, ADMIN_EMAILS, POSTGRES_PASSWORD). DATABASE_URL is
+# wired below and always wins over any value in .env.
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: clock
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env (openssl rand -hex 24)}
+      POSTGRES_DB: clockyears
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clock -d clockyears"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://clock:${POSTGRES_PASSWORD}@db:5432/clockyears
+      PORT: "8080"
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:
