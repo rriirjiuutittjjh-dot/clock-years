@@ -3,32 +3,20 @@ import type { Dictionary } from "../index";
 /** Turkish copy — must satisfy the `Dictionary` type (missing keys fail typecheck). */
 export const tr: Dictionary = {
   chrome: {
-    spaceOn: "Uzay açık",
-    spaceOff: "Uzay kapalı",
-    turnSpaceOn: "Uzayı aç",
-    turnSpaceOff: "Uzayı kapat",
     music: "Müzik",
-    muteMusic: "Müziği kapat",
-    playMusic: "Müziği aç",
     dashboard: "Panel",
     logIn: "Giriş yap",
     register: "Kaydol",
     language: "Dil",
+    install: "Uygulamayı yükle",
+    updateReady: "Güncelleme hazır",
+    reload: "Yeniden yükle",
     dark: "Koyu",
     white: "Beyaz",
     useDark: "Koyu temayı kullan",
     useWhite: "Beyaz temayı kullan",
   },
 
-  planet: {
-    diameter: "Çap",
-    distance: "Uzaklık",
-    day: "Gün",
-    year: "Yıl",
-    moons: "Uydular",
-    close: "Kapat",
-    systemTitle: "Güneş sistemi",
-  },
   countdown: {
     units: {
       years: "Yıl",
@@ -38,9 +26,36 @@ export const tr: Dictionary = {
       minutes: "Dakika",
       seconds: "Saniye",
     },
-    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
-      `${years} yıl ${months} ay ${days} gün ${hours} saat ${minutes} dakika ${seconds} saniye`,
+    ariaLabel: (
+      years: number,
+      months: number,
+      days: number,
+      hours: string,
+      minutes: string,
+      seconds: string,
+    ) => `${years} yıl ${months} ay ${days} gün ${hours} saat ${minutes} dakika ${seconds} saniye`,
   },
+  event: {
+    label: "Yakında",
+    releases: (date: string) => `${date} tarihinde çıkıyor`,
+    outNow: "Şimdi satışta",
+    more: (count: number) => `Daha fazla çıkış (${count})`,
+    less: "Daha az göster",
+    timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
+      `Yayına ${years} yıl, ${months} ay, ${days} gün, ${hours} saat ve ${minutes} dakika kaldı`,
+  },
+
+  playlist: {
+    title: "Çalma listesi",
+    play: "Oynat",
+    pause: "Duraklat",
+    live: "Sistem ambiyansı · canlı",
+    failed: "Bu parça yüklenemedi",
+    retry: "Tekrar dene",
+    seek: "Sar",
+    count: (n: number) => `${n} parça`,
+  },
+
   home: {
     target: "Hedef:",
     yearComplete: (year: number, pct: string) => `${year} %${pct} tamamlandı`,

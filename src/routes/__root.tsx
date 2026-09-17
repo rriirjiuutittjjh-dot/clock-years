@@ -17,11 +17,17 @@ export const Route = createRootRoute({
       {
         name: "description",
         content:
-          "System Space — a cinematic countdown to New Year with a living solar system, glass controls, and member orbits.",
+          "System Space — a cinematic countdown to New Year with glass controls, event countdowns, and member orbits.",
       },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { name: "apple-mobile-web-app-title", content: APP_NAME },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
       { rel: "stylesheet", href: appCss },
     ],
   }),

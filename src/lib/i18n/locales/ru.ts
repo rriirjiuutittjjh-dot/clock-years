@@ -3,32 +3,20 @@ import type { Dictionary } from "../index";
 /** Russian copy — must satisfy the `Dictionary` type (missing keys fail typecheck). */
 export const ru: Dictionary = {
   chrome: {
-    spaceOn: "Космос вкл",
-    spaceOff: "Космос выкл",
-    turnSpaceOn: "Включить космос",
-    turnSpaceOff: "Выключить космос",
     music: "Музыка",
-    muteMusic: "Выключить музыку",
-    playMusic: "Включить музыку",
     dashboard: "Панель",
     logIn: "Войти",
     register: "Регистрация",
     language: "Язык",
+    install: "Установить приложение",
+    updateReady: "Обновление готово",
+    reload: "Обновить",
     dark: "Тёмная",
     white: "Белая",
     useDark: "Использовать тёмную тему",
     useWhite: "Использовать белую тему",
   },
 
-  planet: {
-    diameter: "Диаметр",
-    distance: "Расстояние",
-    day: "День",
-    year: "Год",
-    moons: "Луны",
-    close: "Закрыть",
-    systemTitle: "Солнечная система",
-  },
   countdown: {
     units: {
       years: "Лет",
@@ -38,9 +26,37 @@ export const ru: Dictionary = {
       minutes: "Минут",
       seconds: "Секунд",
     },
-    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
+    ariaLabel: (
+      years: number,
+      months: number,
+      days: number,
+      hours: string,
+      minutes: string,
+      seconds: string,
+    ) =>
       `${years} лет ${months} месяцев ${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`,
   },
+  event: {
+    label: "Скоро",
+    releases: (date: string) => `Выходит ${date}`,
+    outNow: "Уже вышла",
+    more: (count: number) => `Ещё релизы (${count})`,
+    less: "Показать меньше",
+    timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
+      `До релиза осталось ${years} г. ${months} мес. ${days} д. ${hours} ч. ${minutes} мин.`,
+  },
+
+  playlist: {
+    title: "Плейлист",
+    play: "Играть",
+    pause: "Пауза",
+    live: "Эмбиент системы · вживую",
+    failed: "Не удалось загрузить этот трек",
+    retry: "Повторить",
+    seek: "Перемотка",
+    count: (n: number) => `треков: ${n}`,
+  },
+
   home: {
     target: "Цель:",
     yearComplete: (year: number, pct: string) => `${year} год пройден на ${pct}%`,
@@ -101,8 +117,7 @@ export const ru: Dictionary = {
     admin: "Админ",
     adminBlurb: "Фон, размытие и стекло.",
     roleTitle: "Роль",
-    roleBlurb:
-      "Участники исследуют System Space. Админы формируют небо. Владельцы держат ключи.",
+    roleBlurb: "Участники исследуют System Space. Админы формируют небо. Владельцы держат ключи.",
   },
   settings: {
     title: "Аккаунт",

@@ -86,19 +86,28 @@ export function formatMetaParts(target: Date, locale?: string) {
     day: "numeric",
     month: "short",
     year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
   }).format(target);
   return { when, timeZone };
 }
 
 export function formatNow(now: Date, locale?: string) {
-  return new Intl.DateTimeFormat(locale, {
-    hour: "numeric",
-    minute: "2-digit",
-    second: "2-digit",
-    fractionalSecondDigits: 1,
-    hour12: true,
-  }).format(now);
+  try {
+    return new Intl.DateTimeFormat(locale, {
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit",
+      fractionalSecondDigits: 1,
+      hour12: true,
+    }).format(now);
+  } catch {
+    // Older engines (Safari < 15.4, legacy Android WebView) reject
+    // fractionalSecondDigits — fall back to whole seconds rather than
+    // throwing on every tick and freezing the page.
+    return new Intl.DateTimeFormat(locale, {
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+    }).format(now);
+  }
 }

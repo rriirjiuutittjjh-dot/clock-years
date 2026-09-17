@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { useTheme } from "@/components/theme-provider";
-import { SpaceBackdrop } from "@/components/space/space-backdrop";
 
 export function SpaceStage({ children }: { children: ReactNode }) {
   const { settings } = useTheme();
@@ -16,7 +15,6 @@ export function SpaceStage({ children }: { children: ReactNode }) {
               : undefined
           }
         />
-        <SpaceBackdrop />
       </div>
       <div className="space-content">{children}</div>
     </div>

@@ -1,9 +1,11 @@
 # Clock Years (System Space)
 
-A cinematic New Year countdown: a living solar system (clickable planets with
-fact cards), a six-unit clock ticking at 0.1s, a 4D mouse-reactive warp
-background, dark/white themes, 11 languages, and member accounts with
-dashboard, settings, and admin orbits.
+A cinematic New Year countdown: a six-unit clock ticking at 0.1s, event
+countdowns (Grand Theft Auto VI — November 19, 2026 — plus an expandable
+list of more upcoming releases), a 100-track mp3 playlist with a live
+generative ambience, a clean minimal backdrop, dark/white themes, 11
+languages, and member accounts with dashboard, settings, and admin orbits.
+The playlist files are generated code (see `scripts/generate-music.mjs`).
 
 ## Develop
 
@@ -19,11 +21,11 @@ The repo ships `vercel.json` (Nitro `vercel` preset) — zero config needed:
 1. Push this branch, then Vercel → Add New → Project → Import the repo.
 2. Set environment variables (Project Settings → Environment Variables):
 
-| Variable             | Required | What it does                                                |
-| -------------------- | -------- | ----------------------------------------------------------- |
-| `BETTER_AUTH_URL`    | Yes      | Public URL, e.g. `https://clock-years.vercel.app`           |
-| `BETTER_AUTH_SECRET` | Yes      | `openssl rand -hex 32` — signs sessions across instances    |
-| `DATABASE_URL`       | No*      | Postgres (Neon/Supabase) for persistent users and settings  |
+| Variable             | Required | What it does                                               |
+| -------------------- | -------- | ---------------------------------------------------------- |
+| `BETTER_AUTH_URL`    | Yes      | Public URL, e.g. `https://clock-years.vercel.app`          |
+| `BETTER_AUTH_SECRET` | Yes      | `openssl rand -hex 32` — signs sessions across instances   |
+| `DATABASE_URL`       | No*      | Postgres (Neon/Supabase) for persistent users and settings |
 | `ADMIN_EMAILS`       | No       | Comma-separated owner emails, e.g. `you@example.com`       |
 
 \*Without `DATABASE_URL` the app runs on the built-in in-memory PGLite
@@ -48,6 +50,15 @@ No install step: unzip, double-click **`windows\start-windows.bat`**, keep the
 window open. For always-on (start at logon + restart on crash), run
 **`windows\install-service.ps1`** once as Administrator. Details in
 **[WINDOWS.md](./docs/WINDOWS.md)** (needs Node.js 22 LTS).
+
+## Install as an app (PWA)
+
+On PC (Chrome/Edge: install icon in the address bar, or the **Install app**
+button in the header) and Android (Chrome menu → *Install app*), the site
+installs to your home screen / desktop with its own window and icon, and
+keeps working offline: the app shell is precached and every playlist track
+you have played is available without a network. iOS: Share → *Add to Home
+Screen*.
 
 ## Roles & admin
 

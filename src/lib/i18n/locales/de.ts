@@ -3,32 +3,20 @@ import type { Dictionary } from "../index";
 /** German copy — must satisfy the `Dictionary` type (missing keys fail typecheck). */
 export const de: Dictionary = {
   chrome: {
-    spaceOn: "Space an",
-    spaceOff: "Space aus",
-    turnSpaceOn: "Space einschalten",
-    turnSpaceOff: "Space ausschalten",
     music: "Musik",
-    muteMusic: "Musik stummschalten",
-    playMusic: "Musik abspielen",
     dashboard: "Dashboard",
     logIn: "Anmelden",
     register: "Registrieren",
     language: "Sprache",
+    install: "App installieren",
+    updateReady: "Update bereit",
+    reload: "Neu laden",
     dark: "Dunkel",
     white: "Weiß",
     useDark: "Dunkles Design verwenden",
     useWhite: "Weißes Design verwenden",
   },
 
-  planet: {
-    diameter: "Durchmesser",
-    distance: "Entfernung",
-    day: "Tag",
-    year: "Jahr",
-    moons: "Monde",
-    close: "Schließen",
-    systemTitle: "Sonnensystem",
-  },
   countdown: {
     units: {
       years: "Jahre",
@@ -38,9 +26,37 @@ export const de: Dictionary = {
       minutes: "Minuten",
       seconds: "Sekunden",
     },
-    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
+    ariaLabel: (
+      years: number,
+      months: number,
+      days: number,
+      hours: string,
+      minutes: string,
+      seconds: string,
+    ) =>
       `${years} Jahre ${months} Monaten ${days} Tage ${hours} Stunden ${minutes} Minuten ${seconds} Sekunden`,
   },
+  event: {
+    label: "Demnächst",
+    releases: (date: string) => `Erscheint am ${date}`,
+    outNow: "Jetzt erhältlich",
+    more: (count: number) => `Weitere Releases (${count})`,
+    less: "Weniger anzeigen",
+    timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
+      `Noch ${years} Jahre, ${months} Monate, ${days} Tage, ${hours} Stunden und ${minutes} Minuten bis zur Veröffentlichung`,
+  },
+
+  playlist: {
+    title: "Playlist",
+    play: "Wiedergabe",
+    pause: "Pause",
+    live: "System-Klangwelt · live",
+    failed: "Titel konnte nicht geladen werden",
+    retry: "Erneut versuchen",
+    seek: "Spulen",
+    count: (n: number) => `${n} Titel`,
+  },
+
   home: {
     target: "Ziel:",
     yearComplete: (year: number, pct: string) => `${year} ist zu ${pct}% geschafft`,

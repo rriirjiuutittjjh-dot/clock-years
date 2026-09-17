@@ -3,32 +3,20 @@ import type { Dictionary } from "../index";
 /** Simplified Chinese copy — must satisfy the `Dictionary` type (missing keys fail typecheck). */
 export const zh: Dictionary = {
   chrome: {
-    spaceOn: "空间开",
-    spaceOff: "空间关",
-    turnSpaceOn: "开启空间",
-    turnSpaceOff: "关闭空间",
     music: "音乐",
-    muteMusic: "静音",
-    playMusic: "播放音乐",
     dashboard: "仪表盘",
     logIn: "登录",
     register: "注册",
     language: "语言",
+    install: "安装应用",
+    updateReady: "更新已就绪",
+    reload: "重新加载",
     dark: "深色",
     white: "白色",
     useDark: "使用深色主题",
     useWhite: "使用白色主题",
   },
 
-  planet: {
-    diameter: "直径",
-    distance: "距离",
-    day: "一天",
-    year: "一年",
-    moons: "卫星",
-    close: "关闭",
-    systemTitle: "太阳系",
-  },
   countdown: {
     units: {
       years: "年",
@@ -38,9 +26,36 @@ export const zh: Dictionary = {
       minutes: "分",
       seconds: "秒",
     },
-    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
-      `${years}年${months}个月${days}天${hours}小时${minutes}分${seconds}秒`,
+    ariaLabel: (
+      years: number,
+      months: number,
+      days: number,
+      hours: string,
+      minutes: string,
+      seconds: string,
+    ) => `${years}年${months}个月${days}天${hours}小时${minutes}分${seconds}秒`,
   },
+  event: {
+    label: "即将到来",
+    releases: (date: string) => `将于${date}发售`,
+    outNow: "现已推出",
+    more: (count: number) => `更多发售（${count}）`,
+    less: "收起",
+    timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
+      `距离发售还有 ${years} 年 ${months} 个月 ${days} 天 ${hours} 小时 ${minutes} 分钟`,
+  },
+
+  playlist: {
+    title: "播放列表",
+    play: "播放",
+    pause: "暂停",
+    live: "系统氛围 · 实时",
+    failed: "无法加载此曲目",
+    retry: "重试",
+    seek: "快进",
+    count: (n: number) => `${n} 首曲目`,
+  },
+
   home: {
     target: "目标：",
     yearComplete: (year: number, pct: string) => `${year} 年已过去 ${pct}%`,

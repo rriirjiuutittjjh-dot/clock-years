@@ -3,32 +3,20 @@ import type { Dictionary } from "../index";
 /** Hindi copy — must satisfy the `Dictionary` type (missing keys fail typecheck). */
 export const hi: Dictionary = {
   chrome: {
-    spaceOn: "अंतरिक्ष चालू",
-    spaceOff: "अंतरिक्ष बंद",
-    turnSpaceOn: "अंतरिक्ष चालू करें",
-    turnSpaceOff: "अंतरिक्ष बंद करें",
     music: "संगीत",
-    muteMusic: "संगीत बंद करें",
-    playMusic: "संगीत चलाएँ",
     dashboard: "डैशबोर्ड",
     logIn: "लॉग इन",
     register: "रजिस्टर",
     language: "भाषा",
+    install: "ऐप इंस्टॉल करें",
+    updateReady: "अपडेट तैयार है",
+    reload: "पुनः लोड करें",
     dark: "डार्क",
     white: "सफ़ेद",
     useDark: "डार्क थीम इस्तेमाल करें",
     useWhite: "सफ़ेद थीम इस्तेमाल करें",
   },
 
-  planet: {
-    diameter: "व्यास",
-    distance: "दूरी",
-    day: "दिन",
-    year: "वर्ष",
-    moons: "चंद्रमा",
-    close: "बंद करें",
-    systemTitle: "सौर मंडल",
-  },
   countdown: {
     units: {
       years: "वर्ष",
@@ -38,9 +26,36 @@ export const hi: Dictionary = {
       minutes: "मिनट",
       seconds: "सेकंड",
     },
-    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
-      `${years} वर्ष ${months} महीने ${days} दिन ${hours} घंटे ${minutes} मिनट ${seconds} सेकंड`,
+    ariaLabel: (
+      years: number,
+      months: number,
+      days: number,
+      hours: string,
+      minutes: string,
+      seconds: string,
+    ) => `${years} वर्ष ${months} महीने ${days} दिन ${hours} घंटे ${minutes} मिनट ${seconds} सेकंड`,
   },
+  event: {
+    label: "आगामी",
+    releases: (date: string) => `${date} को रिलीज़ होगा`,
+    outNow: "अभी उपलब्ध",
+    more: (count: number) => `और रिलीज़ (${count})`,
+    less: "कम दिखाएँ",
+    timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
+      `रिलीज़ से पहले ${years} वर्ष, ${months} महीने, ${days} दिन, ${hours} घंटे और ${minutes} मिनट शेष`,
+  },
+
+  playlist: {
+    title: "प्लेलिस्ट",
+    play: "चलाएँ",
+    pause: "रोकें",
+    live: "सिस्टम एम्बिएंस · लाइव",
+    failed: "यह ट्रैक लोड नहीं हो सका",
+    retry: "पुनः प्रयास",
+    seek: "आगे बढ़ाएँ",
+    count: (n: number) => `${n} ट्रैक`,
+  },
+
   home: {
     target: "लक्ष्य:",
     yearComplete: (year: number, pct: string) => `${year} ${pct}% पूरा हुआ`,
@@ -101,8 +116,7 @@ export const hi: Dictionary = {
     admin: "एडमिन",
     adminBlurb: "पृष्ठभूमि, धुंधलापन और काँच।",
     roleTitle: "भूमिका",
-    roleBlurb:
-      "सदस्य System Space खोजते हैं। एडमिन आसमान सँवारते हैं। स्वामी चाबियाँ रखते हैं।",
+    roleBlurb: "सदस्य System Space खोजते हैं। एडमिन आसमान सँवारते हैं। स्वामी चाबियाँ रखते हैं।",
   },
   settings: {
     title: "खाता",
