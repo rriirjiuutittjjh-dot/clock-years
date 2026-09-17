@@ -31,6 +31,8 @@ export function MusicPicker() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const playRef = useRef<(id: string | null) => void>(() => undefined);
+  /** Track ids that already got their one automatic retry. */
+  const retriedRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     const intent = localStorage.getItem("system-space-music") !== "false";
@@ -44,6 +46,18 @@ export function MusicPicker() {
     audio.addEventListener("error", () => {
       const id = currentRef.current;
       if (id === null) return;
+      // One automatic retry — flaky mobile networks often fail the first
+      // fetch of a track and succeed immediately after.
+      if (!retriedRef.current.has(id)) {
+        retriedRef.current.add(id);
+        const src = audio.getAttribute("src");
+        window.setTimeout(() => {
+          if (currentRef.current !== id || !intentRef.current || !src) return;
+          audio.src = src; // fresh load, not the errored element state
+          void audio.play().catch(() => undefined);
+        }, 700);
+        return;
+      }
       setFailedId(id);
       setCurrentId(null);
       currentRef.current = null;
@@ -278,9 +292,15 @@ export function MusicPicker() {
                           <span />
                         </span>
                       ) : null}
-                      <span className="text-[0.65rem] tabular-nums text-muted">
-                        {fmt(track.seconds)}
-                      </span>
+                      {failed ? (
+                        <span className="text-[0.65rem] font-bold tracking-[0.12em] text-sun uppercase">
+                          {t.playlist.retry}
+                        </span>
+                      ) : (
+                        <span className="text-[0.65rem] tabular-nums text-muted">
+                          {fmt(track.seconds)}
+                        </span>
+                      )}
                     </span>
                   </button>
                 </li>

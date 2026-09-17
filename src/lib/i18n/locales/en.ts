@@ -53,6 +53,7 @@ export const en = {
     pause: "Pause",
     live: "System ambience · live",
     failed: "Could not load this track",
+    retry: "Retry",
     seek: "Seek",
     count: (n: number) => `${n} tracks`,
   },

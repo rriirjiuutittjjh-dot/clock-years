@@ -51,6 +51,7 @@ export const zh: Dictionary = {
     pause: "暂停",
     live: "系统氛围 · 实时",
     failed: "无法加载此曲目",
+    retry: "重试",
     seek: "快进",
     count: (n: number) => `${n} 首曲目`,
   },

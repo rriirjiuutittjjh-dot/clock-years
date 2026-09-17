@@ -51,6 +51,7 @@ export const tr: Dictionary = {
     pause: "Duraklat",
     live: "Sistem ambiyansı · canlı",
     failed: "Bu parça yüklenemedi",
+    retry: "Tekrar dene",
     seek: "Sar",
     count: (n: number) => `${n} parça`,
   },

@@ -52,6 +52,7 @@ export const ru: Dictionary = {
     pause: "Пауза",
     live: "Эмбиент системы · вживую",
     failed: "Не удалось загрузить этот трек",
+    retry: "Повторить",
     seek: "Перемотка",
     count: (n: number) => `треков: ${n}`,
   },

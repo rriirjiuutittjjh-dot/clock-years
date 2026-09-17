@@ -52,6 +52,7 @@ export const de: Dictionary = {
     pause: "Pause",
     live: "System-Klangwelt · live",
     failed: "Titel konnte nicht geladen werden",
+    retry: "Erneut versuchen",
     seek: "Spulen",
     count: (n: number) => `${n} Titel`,
   },

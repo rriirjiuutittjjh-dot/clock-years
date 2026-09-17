@@ -51,6 +51,7 @@ export const hi: Dictionary = {
     pause: "रोकें",
     live: "सिस्टम एम्बिएंस · लाइव",
     failed: "यह ट्रैक लोड नहीं हो सका",
+    retry: "पुनः प्रयास",
     seek: "आगे बढ़ाएँ",
     count: (n: number) => `${n} ट्रैक`,
   },

@@ -52,6 +52,7 @@ export const es: Dictionary = {
     pause: "Pausar",
     live: "Ambiente del sistema · en vivo",
     failed: "No se pudo cargar esta pista",
+    retry: "Reintentar",
     seek: "Avanzar",
     count: (n: number) => `${n} pistas`,
   },
