@@ -1,9 +1,9 @@
 # Clock Years (System Space)
 
 A cinematic New Year countdown: a six-unit clock ticking at 0.1s, event
-countdowns (Grand Theft Auto VI — November 19, 2026), a clean minimal
-backdrop, dark/white themes, 11 languages, and member accounts with dashboard,
-settings, and admin orbits.
+countdowns with game news (Grand Theft Auto VI — November 19, 2026), a clean
+minimal backdrop, dark/white themes, 11 languages, and member accounts with
+dashboard, settings, and admin orbits.
 
 ## Develop
 

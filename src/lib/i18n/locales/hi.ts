@@ -42,6 +42,10 @@ export const hi: Dictionary = {
       `रिलीज़ से पहले ${years} वर्ष, ${months} महीने, ${days} दिन, ${hours} घंटे और ${minutes} मिनट शेष`,
   },
 
+  news: {
+    title: "गेम समाचार",
+  },
+
   home: {
     target: "लक्ष्य:",
     yearComplete: (year: number, pct: string) => `${year} ${pct}% पूरा हुआ`,

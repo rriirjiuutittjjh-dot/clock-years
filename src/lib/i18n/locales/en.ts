@@ -44,6 +44,10 @@ export const en = {
     timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
       `${years} years, ${months} months, ${days} days, ${hours} hours and ${minutes} minutes until the release`,
   },
+  news: {
+    title: "Game news",
+  },
+
   home: {
     target: "Target:",
     yearComplete: (year: number, pct: string) => `${year} is ${pct}% complete`,

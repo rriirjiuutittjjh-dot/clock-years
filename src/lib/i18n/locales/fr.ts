@@ -43,6 +43,10 @@ export const fr: Dictionary = {
       `${years} ans, ${months} mois, ${days} jours, ${hours} heures et ${minutes} minutes avant la sortie`,
   },
 
+  news: {
+    title: "Actualités du jeu",
+  },
+
   home: {
     target: "Cible :",
     yearComplete: (year: number, pct: string) => `${year} est à ${pct}%`,

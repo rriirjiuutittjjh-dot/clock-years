@@ -3,6 +3,7 @@ import { AppChrome } from "@/components/chrome/app-chrome";
 import { CountdownClock } from "@/components/space/countdown-clock";
 import { EventCountdown } from "@/components/space/event-countdown";
 import { Fireworks } from "@/components/space/fireworks";
+import { GameNews } from "@/components/space/game-news";
 import { SpaceStage } from "@/components/space/space-stage";
 import {
   formatMetaParts,
@@ -169,8 +170,9 @@ export function HomeView() {
             <p className="mt-3 text-xs tracking-wide text-muted">{progressLabel}</p>
           </div>
 
-          <div className="mt-6">
+          <div className="mt-6 space-y-4">
             <EventCountdown />
+            <GameNews />
           </div>
 
           <div className="mt-6 space-y-2 text-xs tracking-wide text-muted">
