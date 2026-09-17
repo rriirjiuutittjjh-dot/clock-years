@@ -39,6 +39,8 @@ export const ar: Dictionary = {
     label: "الحدث القادم",
     releases: (date: string) => `يصدر بتاريخ ${date}`,
     outNow: "متاح الآن",
+    more: (count: number) => `المزيد من الإصدارات (${count})`,
+    less: "عرض أقل",
     timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
       `متبقٍ ${years} سنوات و${months} أشهر و${days} أيام و${hours} ساعات و${minutes} دقيقة على الإصدار`,
   },

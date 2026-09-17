@@ -38,6 +38,8 @@ export const zh: Dictionary = {
     label: "即将到来",
     releases: (date: string) => `将于${date}发售`,
     outNow: "现已推出",
+    more: (count: number) => `更多发售（${count}）`,
+    less: "收起",
     timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
       `距离发售还有 ${years} 年 ${months} 个月 ${days} 天 ${hours} 小时 ${minutes} 分钟`,
   },

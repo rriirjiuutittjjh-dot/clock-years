@@ -39,6 +39,8 @@ export const ru: Dictionary = {
     label: "Скоро",
     releases: (date: string) => `Выходит ${date}`,
     outNow: "Уже вышла",
+    more: (count: number) => `Ещё релизы (${count})`,
+    less: "Показать меньше",
     timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
       `До релиза осталось ${years} г. ${months} мес. ${days} д. ${hours} ч. ${minutes} мин.`,
   },

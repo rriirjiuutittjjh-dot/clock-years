@@ -462,6 +462,22 @@ select:focus-visible {
   color: color-mix(in srgb, var(--color-ink) 78%, var(--color-muted));
 }
 
+/* Expandable "More releases" list inside the event card. */
+.event-list {
+  animation: event-list-in 0.3s var(--ease);
+}
+
+@keyframes event-list-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* The seconds digit pops on every tick (keyed by the clock). */
 .num.tick {
   animation: tick-pop 0.45s var(--ease);

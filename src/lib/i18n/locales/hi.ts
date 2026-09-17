@@ -38,6 +38,8 @@ export const hi: Dictionary = {
     label: "आगामी",
     releases: (date: string) => `${date} को रिलीज़ होगा`,
     outNow: "अभी उपलब्ध",
+    more: (count: number) => `और रिलीज़ (${count})`,
+    less: "कम दिखाएँ",
     timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
       `रिलीज़ से पहले ${years} वर्ष, ${months} महीने, ${days} दिन, ${hours} घंटे और ${minutes} मिनट शेष`,
   },

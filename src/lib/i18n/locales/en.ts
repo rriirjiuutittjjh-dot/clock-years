@@ -41,6 +41,8 @@ export const en = {
     label: "Coming up",
     releases: (date: string) => `Releases ${date}`,
     outNow: "Out now",
+    more: (count: number) => `More releases (${count})`,
+    less: "Show less",
     timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
       `${years} years, ${months} months, ${days} days, ${hours} hours and ${minutes} minutes until the release`,
   },

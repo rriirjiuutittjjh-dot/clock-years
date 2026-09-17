@@ -38,6 +38,8 @@ export const tr: Dictionary = {
     label: "Yakında",
     releases: (date: string) => `${date} tarihinde çıkıyor`,
     outNow: "Şimdi satışta",
+    more: (count: number) => `Daha fazla çıkış (${count})`,
+    less: "Daha az göster",
     timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
       `Yayına ${years} yıl, ${months} ay, ${days} gün, ${hours} saat ve ${minutes} dakika kaldı`,
   },

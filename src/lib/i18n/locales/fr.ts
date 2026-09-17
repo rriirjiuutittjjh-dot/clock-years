@@ -39,6 +39,8 @@ export const fr: Dictionary = {
     label: "À venir",
     releases: (date: string) => `Sort le ${date}`,
     outNow: "Déjà disponible",
+    more: (count: number) => `Plus de sorties (${count})`,
+    less: "Afficher moins",
     timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
       `${years} ans, ${months} mois, ${days} jours, ${hours} heures et ${minutes} minutes avant la sortie`,
   },
