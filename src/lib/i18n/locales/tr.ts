@@ -9,6 +9,8 @@ export const tr: Dictionary = {
     register: "Kaydol",
     language: "Dil",
     install: "Uygulamayı yükle",
+    updateReady: "Güncelleme hazır",
+    reload: "Yeniden yükle",
     dark: "Koyu",
     white: "Beyaz",
     useDark: "Koyu temayı kullan",

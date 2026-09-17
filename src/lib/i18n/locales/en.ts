@@ -11,6 +11,8 @@ export const en = {
     register: "Register",
     language: "Language",
     install: "Install app",
+    updateReady: "Update ready",
+    reload: "Reload",
     dark: "Dark",
     white: "White",
     useDark: "Use dark theme",

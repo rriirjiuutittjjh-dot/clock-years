@@ -3,6 +3,7 @@ import { Moon, Sun } from "lucide-react";
 import { LanguagePicker } from "@/components/chrome/language-picker";
 import { InstallPrompt } from "@/components/chrome/install-prompt";
 import { MusicPicker } from "@/components/chrome/music-picker";
+import { UpdateBanner } from "@/components/chrome/update-banner";
 import { useTheme } from "@/components/theme-provider";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { useLocale } from "@/lib/i18n";
@@ -22,6 +23,7 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
 
   return (
     <header className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-start justify-end gap-3 p-4 sm:p-5">
+      <UpdateBanner />
       <div className="pointer-events-auto flex shrink-0 items-center justify-end gap-2">
         <button
           type="button"

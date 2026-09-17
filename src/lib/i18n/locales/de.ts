@@ -9,6 +9,8 @@ export const de: Dictionary = {
     register: "Registrieren",
     language: "Sprache",
     install: "App installieren",
+    updateReady: "Update bereit",
+    reload: "Neu laden",
     dark: "Dunkel",
     white: "Weiß",
     useDark: "Dunkles Design verwenden",

@@ -9,6 +9,8 @@ export const zh: Dictionary = {
     register: "注册",
     language: "语言",
     install: "安装应用",
+    updateReady: "更新已就绪",
+    reload: "重新加载",
     dark: "深色",
     white: "白色",
     useDark: "使用深色主题",

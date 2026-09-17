@@ -9,7 +9,7 @@
  *   answered with the full 200 body (accepted by media elements), so a
  *   track keeps working offline once it has been played.
  */
-const VERSION = "system-space-v1";
+const VERSION = "system-space-v2";
 const SHELL = ["/", "/manifest.webmanifest", "/icon-192.png", "/icon-512.png", "/favicon.svg"];
 
 self.addEventListener("install", (event) => {
@@ -41,6 +41,10 @@ async function musicStrategy(pathname) {
   if (response.ok) await cache.put(pathname, response.clone());
   return response;
 }
+
+self.addEventListener("message", (event) => {
+  if (event.data === "skip-waiting") self.skipWaiting();
+});
 
 self.addEventListener("fetch", (event) => {
   const request = event.request;

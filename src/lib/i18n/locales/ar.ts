@@ -9,6 +9,8 @@ export const ar: Dictionary = {
     register: "إنشاء حساب",
     language: "اللغة",
     install: "تثبيت التطبيق",
+    updateReady: "تحديث جاهز",
+    reload: "تحديث الصفحة",
     dark: "داكن",
     white: "أبيض",
     useDark: "استخدام المظهر الداكن",

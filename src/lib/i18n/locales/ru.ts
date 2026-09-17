@@ -9,6 +9,8 @@ export const ru: Dictionary = {
     register: "Регистрация",
     language: "Язык",
     install: "Установить приложение",
+    updateReady: "Обновление готово",
+    reload: "Обновить",
     dark: "Тёмная",
     white: "Белая",
     useDark: "Использовать тёмную тему",

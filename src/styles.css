@@ -516,6 +516,22 @@ html[data-theme="light"] .music-option.current {
   white-space: nowrap;
 }
 
+/* "New version ready" pill (bottom center, above everything but menus). */
+.update-banner {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  pointer-events: auto;
+  animation: event-list-in 0.3s var(--ease);
+}
+
 /* Now-playing strip: title, elapsed/total time and a seek bar. */
 .now-playing {
   padding: 0.5rem 0.75rem 0.4rem;
