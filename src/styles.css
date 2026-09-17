@@ -60,9 +60,11 @@
 
 :root {
   --bg-blur: 0px;
-  --glass-blur: 0px;
+  /* Pre-hydration glass: match DEFAULT_SETTINGS so the first paint already
+     shows real glass (the theme provider takes over with DB settings). */
+  --glass-blur: 12px;
   --glass-rgb: 255, 255, 255;
-  --glass-alpha: 0.1;
+  --glass-alpha: 0.2;
   --space-ms: 0.1s;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
