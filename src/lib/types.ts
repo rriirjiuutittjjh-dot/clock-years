@@ -24,8 +24,8 @@ export type SiteSettings = {
 export const DEFAULT_SETTINGS: SiteSettings = {
   backgroundUrl: null,
   backgroundBlur: 0,
-  glassBlur: 12,
-  glassOpacity: 20,
+  glassBlur: 0,
+  glassOpacity: 10,
   glassColor: "#ffffff",
   glassAuto: true,
 };

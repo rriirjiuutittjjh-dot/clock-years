@@ -5,20 +5,32 @@
  */
 export const en = {
   chrome: {
+    spaceOn: "Space on",
+    spaceOff: "Space off",
+    turnSpaceOn: "Turn space on",
+    turnSpaceOff: "Turn space off",
     music: "Music",
+    muteMusic: "Mute music",
+    playMusic: "Play music",
     dashboard: "Dashboard",
     logIn: "Log in",
     register: "Register",
     language: "Language",
-    install: "Install app",
-    updateReady: "Update ready",
-    reload: "Reload",
     dark: "Dark",
     white: "White",
     useDark: "Use dark theme",
     useWhite: "Use white theme",
   },
 
+  planet: {
+    diameter: "Diameter",
+    distance: "Distance",
+    day: "Day",
+    year: "Year",
+    moons: "Moons",
+    close: "Close",
+    systemTitle: "Solar system",
+  },
   countdown: {
     units: {
       years: "Years",
@@ -28,36 +40,9 @@ export const en = {
       minutes: "Minutes",
       seconds: "Seconds",
     },
-    ariaLabel: (
-      years: number,
-      months: number,
-      days: number,
-      hours: string,
-      minutes: string,
-      seconds: string,
-    ) =>
+    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
       `${years} years ${months} months ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`,
   },
-  event: {
-    label: "Coming up",
-    releases: (date: string) => `Releases ${date}`,
-    outNow: "Out now",
-    more: (count: number) => `More releases (${count})`,
-    less: "Show less",
-    timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
-      `${years} years, ${months} months, ${days} days, ${hours} hours and ${minutes} minutes until the release`,
-  },
-  playlist: {
-    title: "Playlist",
-    play: "Play",
-    pause: "Pause",
-    live: "System ambience · live",
-    failed: "Could not load this track",
-    retry: "Retry",
-    seek: "Seek",
-    count: (n: number) => `${n} tracks`,
-  },
-
   home: {
     target: "Target:",
     yearComplete: (year: number, pct: string) => `${year} is ${pct}% complete`,

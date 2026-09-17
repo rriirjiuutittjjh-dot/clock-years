@@ -3,20 +3,32 @@ import type { Dictionary } from "../index";
 /** Portuguese copy — must satisfy the `Dictionary` type (missing keys fail typecheck). */
 export const pt: Dictionary = {
   chrome: {
+    spaceOn: "Espaço ligado",
+    spaceOff: "Espaço desligado",
+    turnSpaceOn: "Ligar espaço",
+    turnSpaceOff: "Desligar espaço",
     music: "Música",
+    muteMusic: "Silenciar música",
+    playMusic: "Tocar música",
     dashboard: "Painel",
     logIn: "Entrar",
     register: "Registrar",
     language: "Idioma",
-    install: "Instalar app",
-    updateReady: "Atualização pronta",
-    reload: "Recarregar",
     dark: "Escuro",
     white: "Branco",
     useDark: "Usar tema escuro",
     useWhite: "Usar tema branco",
   },
 
+  planet: {
+    diameter: "Diâmetro",
+    distance: "Distância",
+    day: "Dia",
+    year: "Ano",
+    moons: "Luas",
+    close: "Fechar",
+    systemTitle: "Sistema solar",
+  },
   countdown: {
     units: {
       years: "Anos",
@@ -26,37 +38,9 @@ export const pt: Dictionary = {
       minutes: "Minutos",
       seconds: "Segundos",
     },
-    ariaLabel: (
-      years: number,
-      months: number,
-      days: number,
-      hours: string,
-      minutes: string,
-      seconds: string,
-    ) =>
+    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
       `${years} anos ${months} meses ${days} dias ${hours} horas ${minutes} minutos ${seconds} segundos`,
   },
-  event: {
-    label: "Em breve",
-    releases: (date: string) => `Lança em ${date}`,
-    outNow: "Já disponível",
-    more: (count: number) => `Mais lançamentos (${count})`,
-    less: "Mostrar menos",
-    timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
-      `${years} anos, ${months} meses, ${days} dias, ${hours} horas e ${minutes} minutos para o lançamento`,
-  },
-
-  playlist: {
-    title: "Playlist",
-    play: "Tocar",
-    pause: "Pausar",
-    live: "Ambiente do sistema · ao vivo",
-    failed: "Não foi possível carregar esta faixa",
-    retry: "Tentar de novo",
-    seek: "Avançar",
-    count: (n: number) => `${n} faixas`,
-  },
-
   home: {
     target: "Meta:",
     yearComplete: (year: number, pct: string) => `${year} está ${pct}% completo`,
@@ -117,7 +101,8 @@ export const pt: Dictionary = {
     admin: "Admin",
     adminBlurb: "Fundo, desfoque e vidro.",
     roleTitle: "Função",
-    roleBlurb: "Membros exploram o System Space. Admins moldam o céu. Donos guardam as chaves.",
+    roleBlurb:
+      "Membros exploram o System Space. Admins moldam o céu. Donos guardam as chaves.",
   },
   settings: {
     title: "Conta",

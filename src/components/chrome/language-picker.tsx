@@ -1,7 +1,6 @@
 import { Check, ChevronDown, Globe } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { LOCALES, LOCALE_NAMES, useLocale } from "@/lib/i18n";
-import { playSfx } from "@/lib/sfx";
 
 export function LanguagePicker() {
   const { locale, setLocale, t } = useLocale();
@@ -32,10 +31,7 @@ export function LanguagePicker() {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label={t.chrome.language}
-        onClick={() => {
-          playSfx(open ? "close" : "open");
-          setOpen((o) => !o);
-        }}
+        onClick={() => setOpen((o) => !o)}
       >
         <Globe className="size-4" aria-hidden="true" />
         <span className="hidden sm:inline">{LOCALE_NAMES[locale]}</span>
@@ -52,7 +48,6 @@ export function LanguagePicker() {
                 aria-checked={l === locale}
                 className={`lang-option${l === locale ? " current" : ""}`}
                 onClick={() => {
-                  playSfx("pop");
                   setLocale(l);
                   setOpen(false);
                 }}
