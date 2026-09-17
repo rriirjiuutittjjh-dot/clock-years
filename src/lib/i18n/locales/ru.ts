@@ -43,10 +43,6 @@ export const ru: Dictionary = {
       `До релиза осталось ${years} г. ${months} мес. ${days} д. ${hours} ч. ${minutes} мин.`,
   },
 
-  news: {
-    title: "Новости игры",
-  },
-
   home: {
     target: "Цель:",
     yearComplete: (year: number, pct: string) => `${year} год пройден на ${pct}%`,

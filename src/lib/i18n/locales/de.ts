@@ -43,10 +43,6 @@ export const de: Dictionary = {
       `Noch ${years} Jahre, ${months} Monate, ${days} Tage, ${hours} Stunden und ${minutes} Minuten bis zur Veröffentlichung`,
   },
 
-  news: {
-    title: "Game-News",
-  },
-
   home: {
     target: "Ziel:",
     yearComplete: (year: number, pct: string) => `${year} ist zu ${pct}% geschafft`,

@@ -42,10 +42,6 @@ export const zh: Dictionary = {
       `距离发售还有 ${years} 年 ${months} 个月 ${days} 天 ${hours} 小时 ${minutes} 分钟`,
   },
 
-  news: {
-    title: "游戏新闻",
-  },
-
   home: {
     target: "目标：",
     yearComplete: (year: number, pct: string) => `${year} 年已过去 ${pct}%`,

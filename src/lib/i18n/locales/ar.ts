@@ -43,10 +43,6 @@ export const ar: Dictionary = {
       `متبقٍ ${years} سنوات و${months} أشهر و${days} أيام و${hours} ساعات و${minutes} دقيقة على الإصدار`,
   },
 
-  news: {
-    title: "أخبار اللعبة",
-  },
-
   home: {
     target: "الهدف:",
     yearComplete: (year: number, pct: string) => `اكتمل ${pct}% من ${year}`,

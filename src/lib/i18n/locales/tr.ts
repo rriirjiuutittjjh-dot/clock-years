@@ -42,10 +42,6 @@ export const tr: Dictionary = {
       `Yayına ${years} yıl, ${months} ay, ${days} gün, ${hours} saat ve ${minutes} dakika kaldı`,
   },
 
-  news: {
-    title: "Oyun haberleri",
-  },
-
   home: {
     target: "Hedef:",
     yearComplete: (year: number, pct: string) => `${year} %${pct} tamamlandı`,
