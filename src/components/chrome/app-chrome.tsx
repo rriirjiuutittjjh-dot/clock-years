@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { LanguagePicker } from "@/components/chrome/language-picker";
 import { useTheme } from "@/components/theme-provider";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
+import { startAmbient, stopAmbient } from "@/lib/ambient";
 import { useLocale } from "@/lib/i18n";
 import { playSfx } from "@/lib/sfx";
 
@@ -11,27 +12,18 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
   const { theme, setTheme } = useTheme();
   const { user, isPending } = useCurrentUserState();
   const { t } = useLocale();
-  const audioRef = useRef<HTMLAudioElement>(null);
-  // Intent drives the button; the unlock callback reads the ref so a stale
-  // closure can never start music the user has since muted.
+  // Intent drives the button; ambient music and the unlock callback both
+  // read the ref, so a stale closure can never play muted music.
   const musicIntentRef = useRef(true);
   const [musicOn, setMusicOn] = useState(true);
 
   useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
     const intent = localStorage.getItem("system-space-music") !== "false";
     musicIntentRef.current = intent;
     setMusicOn(intent);
-    if (!intent) return;
-    audio.play().catch(() => {
-      // Autoplay blocked (mobile / strict browsers): start on the first
-      // gesture, but only if the user has not muted in the meantime.
-      const unlock = () => {
-        if (musicIntentRef.current) void audio.play().catch(() => undefined);
-      };
-      window.addEventListener("pointerdown", unlock, { once: true });
-    });
+    // Generative ambient loop (Web Audio, no file) — starts silently if
+    // autoplay is blocked and begins on the first gesture.
+    if (intent) startAmbient();
   }, []);
 
   const toggleTheme = () => {
@@ -40,17 +32,14 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
   };
 
   const toggleMusic = () => {
-    // Flip the user's intent — never key off audio.paused, which can be
-    // false-sounded while autoplay is still blocked.
+    // Flip the user's intent — the button always shows the truth.
     const next = !musicOn;
     playSfx("click");
     musicIntentRef.current = next;
     setMusicOn(next);
     localStorage.setItem("system-space-music", String(next));
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (next) void audio.play().catch(() => undefined);
-    else audio.pause();
+    if (next) startAmbient();
+    else stopAmbient();
   };
 
   const initial = (user?.displayName ?? user?.primaryEmail ?? "M").charAt(0).toUpperCase();
@@ -112,10 +101,6 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
           </div>
         )}
       </div>
-
-      <audio ref={audioRef} loop>
-        <source src="/background.mp3" type="audio/mpeg" />
-      </audio>
     </header>
   );
 }

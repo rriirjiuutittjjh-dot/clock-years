@@ -22,6 +22,15 @@ function audioCtx(): AudioContext | null {
   return ctx;
 }
 
+/**
+ * The app's single AudioContext, shared by the UI effects and the ambient
+ * music. Creating/resuming outside a user gesture is allowed — a suspended
+ * context simply waits for the first gesture.
+ */
+export function getAudioContext(): AudioContext | null {
+  return audioCtx();
+}
+
 function sfxEnabled(): boolean {
   if (typeof window === "undefined") return false;
   return window.localStorage.getItem("system-space-music") !== "false";
