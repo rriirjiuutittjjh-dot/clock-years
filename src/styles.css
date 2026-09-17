@@ -467,6 +467,15 @@ select:focus-visible {
   animation: event-list-in 0.3s var(--ease);
 }
 
+/* The game the big timer is counting to. */
+.event-list button[aria-current="true"] {
+  background: rgb(255 255 255 / 0.08);
+}
+
+html[data-theme="light"] .event-list button[aria-current="true"] {
+  background: rgb(36 29 78 / 0.08);
+}
+
 @keyframes event-list-in {
   from {
     opacity: 0;

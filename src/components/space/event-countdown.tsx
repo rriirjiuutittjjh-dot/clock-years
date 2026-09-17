@@ -70,7 +70,7 @@ export function EventCountdown({ variant = "card" }: { variant?: "card" | "inlin
     snap.games.find((game) => game.event.id === snap.defaultEvent.id) ??
     snap.games[0];
   const { snap: main } = selected;
-  const more = snap.games.filter((game) => game.event.id !== selected.event.id);
+  const allGames = snap.games;
 
   return (
     <div
@@ -113,7 +113,7 @@ export function EventCountdown({ variant = "card" }: { variant?: "card" | "inlin
         )}
       </div>
 
-      {more.length > 0 ? (
+      {allGames.length > 1 ? (
         <Fragment>
           <button
             type="button"
@@ -121,38 +121,41 @@ export function EventCountdown({ variant = "card" }: { variant?: "card" | "inlin
             aria-expanded={open}
             onClick={() => setOpen((next) => !next)}
           >
-            {open ? t.event.less : t.event.more(more.length)}
+            {open ? t.event.less : t.event.more(allGames.length)}
           </button>
           {open ? (
             <ul className="event-list mt-3 space-y-1 border-t border-white/10 pt-2 text-left">
-              {more.map((game) => (
-                <li key={game.event.id}>
-                  <button
-                    type="button"
-                    className="flex w-full items-baseline justify-between gap-x-4 rounded-xl px-2.5 py-1.5 text-left transition-colors hover:bg-white/5"
-                    aria-current={game.event.id === selected.event.id ? "true" : undefined}
-                    onClick={() => setSelectedId(game.event.id)}
-                  >
-                    <span className="min-w-0">
-                      <span className="block truncate text-sm font-medium text-ink">
-                        {game.event.title}
+              {allGames.map((game) => {
+                const current = game.event.id === selected.event.id;
+                return (
+                  <li key={game.event.id}>
+                    <button
+                      type="button"
+                      className="flex w-full items-baseline justify-between gap-x-4 rounded-xl px-2.5 py-1.5 text-left transition-colors hover:bg-white/5"
+                      aria-current={current ? "true" : undefined}
+                      onClick={() => setSelectedId(game.event.id)}
+                    >
+                      <span className="min-w-0">
+                        <span className="block truncate text-sm font-medium text-ink">
+                          {game.event.title}
+                        </span>
+                        <span className="block text-xs text-muted">
+                          {t.event.releases(formatTarget(game.event.target, locale))}
+                        </span>
                       </span>
-                      <span className="block text-xs text-muted">
-                        {t.event.releases(formatTarget(game.event.target, locale))}
-                      </span>
-                    </span>
-                    {game.snap.released ? (
-                      <span className="flex-none text-[0.65rem] font-bold tracking-[0.12em] text-sun uppercase">
-                        {t.event.outNow}
-                      </span>
-                    ) : (
-                      <span className="flex-none text-xs tabular-nums text-muted">
-                        {spanText(game.snap.parts)}
-                      </span>
-                    )}
-                  </button>
-                </li>
-              ))}
+                      {game.snap.released ? (
+                        <span className="flex-none text-[0.65rem] font-bold tracking-[0.12em] text-sun uppercase">
+                          {t.event.outNow}
+                        </span>
+                      ) : (
+                        <span className="flex-none text-xs tabular-nums text-muted">
+                          {spanText(game.snap.parts)}
+                        </span>
+                      )}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           ) : null}
         </Fragment>
