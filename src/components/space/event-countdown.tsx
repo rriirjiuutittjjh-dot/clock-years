@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { formatTarget, pad2, splitRange } from "@/lib/countdown";
-import { currentEvent, upcomingGames, type ScheduledEvent } from "@/lib/events";
+import { currentEvent, liveGames, type ScheduledEvent } from "@/lib/events";
 import { useLocale } from "@/lib/i18n";
 
 type Snap = {
@@ -8,27 +8,26 @@ type Snap = {
   released: boolean;
 };
 
+type GameSnap = { event: ScheduledEvent; snap: Snap };
+
 type Snapshot = {
-  event: ScheduledEvent;
-  snap: Snap;
-  more: Array<{ event: ScheduledEvent; snap: Snap }>;
+  /** All games worth counting to right now, soonest first. */
+  games: GameSnap[];
+  /** Default featured game (GTA VI, or the next release once it is out). */
+  defaultEvent: ScheduledEvent;
 };
 
 /** Render-time snapshot so the server paints the real timer on first paint. */
 function snapshot(now: Date): Snapshot | null {
-  const event = currentEvent(now);
-  if (!event) return null;
+  const defaultEvent = currentEvent(now);
+  if (!defaultEvent) return null;
   const snapOf = (target: Date): Snap => ({
     parts: splitRange(now, target),
     released: target.getTime() <= now.getTime(),
   });
   return {
-    event,
-    snap: snapOf(event.target),
-    more: upcomingGames(now, event.id).map((game) => ({
-      event: game,
-      snap: snapOf(game.target),
-    })),
+    games: liveGames(now).map((event) => ({ event, snap: snapOf(event.target) })),
+    defaultEvent,
   };
 }
 
@@ -44,16 +43,17 @@ function spanText(parts: ReturnType<typeof splitRange>) {
 }
 
 /**
- * Card for the featured release (see src/lib/events.ts): title, localized
- * date and a live timer, plus an expandable "More releases" list of the
- * other upcoming games. Self-ticking, so it drops into any page. Shows
- * "Out now" once a release passes and renders nothing once every event is
- * long past.
+ * Countdown card for upcoming game releases (see src/lib/events.ts): the big
+ * timer tracks the selected game — GTA VI by default, or any game picked from
+ * the expandable "More releases" list (click a row to switch, click GTA VI to
+ * switch back). Self-ticking, so it drops into any page. Shows "Out now" once
+ * a release passes and renders nothing once every event is long past.
  */
 export function EventCountdown({ variant = "card" }: { variant?: "card" | "inline" }) {
   const { t, locale } = useLocale();
   const [snap, setSnap] = useState<Snapshot | null>(() => snapshot(new Date()));
   const [open, setOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   useEffect(() => {
     const tick = () => setSnap(snapshot(new Date()));
@@ -63,7 +63,14 @@ export function EventCountdown({ variant = "card" }: { variant?: "card" | "inlin
   }, []);
 
   if (!snap) return null;
-  const { event, snap: main, more } = snap;
+
+  // Selected game — or the featured default when nothing (valid) is picked.
+  const selected =
+    snap.games.find((game) => game.event.id === selectedId) ??
+    snap.games.find((game) => game.event.id === snap.defaultEvent.id) ??
+    snap.games[0];
+  const { snap: main } = selected;
+  const more = snap.games.filter((game) => game.event.id !== selected.event.id);
 
   return (
     <div
@@ -78,9 +85,9 @@ export function EventCountdown({ variant = "card" }: { variant?: "card" | "inlin
       </p>
       <div className="mt-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <div className="min-w-0">
-          <p className="text-sm font-semibold text-ink">{event.title}</p>
+          <p className="text-sm font-semibold text-ink">{selected.event.title}</p>
           <p className="mt-0.5 text-xs text-muted">
-            {t.event.releases(formatTarget(event.target, locale))}
+            {t.event.releases(formatTarget(selected.event.target, locale))}
           </p>
         </div>
         {main.released ? (
@@ -117,24 +124,33 @@ export function EventCountdown({ variant = "card" }: { variant?: "card" | "inlin
             {open ? t.event.less : t.event.more(more.length)}
           </button>
           {open ? (
-            <ul className="event-list mt-3 space-y-2.5 border-t border-white/10 pt-3 text-left">
-              {more.map(({ event: game, snap: item }) => (
-                <li key={game.id} className="flex items-baseline justify-between gap-x-4">
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-ink">{game.title}</p>
-                    <p className="text-xs text-muted">
-                      {t.event.releases(formatTarget(game.target, locale))}
-                    </p>
-                  </div>
-                  {item.released ? (
-                    <p className="flex-none text-[0.65rem] font-bold tracking-[0.12em] text-sun uppercase">
-                      {t.event.outNow}
-                    </p>
-                  ) : (
-                    <p className="flex-none text-xs tabular-nums text-muted">
-                      {spanText(item.parts)}
-                    </p>
-                  )}
+            <ul className="event-list mt-3 space-y-1 border-t border-white/10 pt-2 text-left">
+              {more.map((game) => (
+                <li key={game.event.id}>
+                  <button
+                    type="button"
+                    className="flex w-full items-baseline justify-between gap-x-4 rounded-xl px-2.5 py-1.5 text-left transition-colors hover:bg-white/5"
+                    aria-current={game.event.id === selected.event.id ? "true" : undefined}
+                    onClick={() => setSelectedId(game.event.id)}
+                  >
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm font-medium text-ink">
+                        {game.event.title}
+                      </span>
+                      <span className="block text-xs text-muted">
+                        {t.event.releases(formatTarget(game.event.target, locale))}
+                      </span>
+                    </span>
+                    {game.snap.released ? (
+                      <span className="flex-none text-[0.65rem] font-bold tracking-[0.12em] text-sun uppercase">
+                        {t.event.outNow}
+                      </span>
+                    ) : (
+                      <span className="flex-none text-xs tabular-nums text-muted">
+                        {spanText(game.snap.parts)}
+                      </span>
+                    )}
+                  </button>
                 </li>
               ))}
             </ul>

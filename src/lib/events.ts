@@ -65,16 +65,14 @@ function stillCurrent(event: ScheduledEvent, now: number) {
 export function currentEvent(from: Date): ScheduledEvent | null {
   const now = from.getTime();
   if (stillCurrent(FEATURED_EVENT, now)) return FEATURED_EVENT;
-  const next = MORE_GAMES.filter((event) => stillCurrent(event, now)).sort(
-    (a, b) => a.target.getTime() - b.target.getTime(),
-  );
+  const next = liveGames(from);
   return next[0] ?? null;
 }
 
-/** Upcoming games for the "More releases" list, soonest first, `exclude` out. */
-export function upcomingGames(from: Date, excludeId?: string): ScheduledEvent[] {
+/** Every game worth counting to right now — featured + calendar, soonest first. */
+export function liveGames(from: Date): ScheduledEvent[] {
   const now = from.getTime();
-  return MORE_GAMES.filter((event) => event.id !== excludeId && stillCurrent(event, now)).sort(
-    (a, b) => a.target.getTime() - b.target.getTime(),
-  );
+  return [FEATURED_EVENT, ...MORE_GAMES]
+    .filter((event) => stillCurrent(event, now))
+    .sort((a, b) => a.target.getTime() - b.target.getTime());
 }
