@@ -11,21 +11,23 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
   const { user, isPending } = useCurrentUserState();
   const { t } = useLocale();
   const audioRef = useRef<HTMLAudioElement>(null);
+  // Intent drives the button; the unlock callback reads the ref so a stale
+  // closure can never start music the user has since muted.
+  const musicIntentRef = useRef(true);
   const [musicOn, setMusicOn] = useState(true);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    const stored = localStorage.getItem("system-space-music");
-    if (stored === "false") {
-      audio.pause();
-      setMusicOn(false);
-      return;
-    }
+    const intent = localStorage.getItem("system-space-music") !== "false";
+    musicIntentRef.current = intent;
+    setMusicOn(intent);
+    if (!intent) return;
     audio.play().catch(() => {
+      // Autoplay blocked (mobile / strict browsers): start on the first
+      // gesture, but only if the user has not muted in the meantime.
       const unlock = () => {
-        void audio.play();
-        window.removeEventListener("pointerdown", unlock);
+        if (musicIntentRef.current) void audio.play().catch(() => undefined);
       };
       window.addEventListener("pointerdown", unlock, { once: true });
     });
@@ -36,17 +38,16 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
   };
 
   const toggleMusic = () => {
+    // Flip the user's intent — never key off audio.paused, which can be
+    // false-sounded while autoplay is still blocked.
+    const next = !musicOn;
+    musicIntentRef.current = next;
+    setMusicOn(next);
+    localStorage.setItem("system-space-music", String(next));
     const audio = audioRef.current;
     if (!audio) return;
-    if (audio.paused) {
-      void audio.play();
-      localStorage.setItem("system-space-music", "true");
-      setMusicOn(true);
-    } else {
-      audio.pause();
-      localStorage.setItem("system-space-music", "false");
-      setMusicOn(false);
-    }
+    if (next) void audio.play().catch(() => undefined);
+    else audio.pause();
   };
 
   const initial = (user?.displayName ?? user?.primaryEmail ?? "M").charAt(0).toUpperCase();
