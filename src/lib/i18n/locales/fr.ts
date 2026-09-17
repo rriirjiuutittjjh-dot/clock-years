@@ -3,10 +3,6 @@ import type { Dictionary } from "../index";
 /** French copy — must satisfy the `Dictionary` type (missing keys fail typecheck). */
 export const fr: Dictionary = {
   chrome: {
-    spaceOn: "Espace activé",
-    spaceOff: "Espace désactivé",
-    turnSpaceOn: "Activer l'espace",
-    turnSpaceOff: "Désactiver l'espace",
     music: "Musique",
     muteMusic: "Couper la musique",
     playMusic: "Jouer la musique",
@@ -20,15 +16,6 @@ export const fr: Dictionary = {
     useWhite: "Utiliser le thème blanc",
   },
 
-  planet: {
-    diameter: "Diamètre",
-    distance: "Distance",
-    day: "Jour",
-    year: "Année",
-    moons: "Lunes",
-    close: "Fermer",
-    systemTitle: "Système solaire",
-  },
   countdown: {
     units: {
       years: "Ans",
@@ -38,9 +25,24 @@ export const fr: Dictionary = {
       minutes: "Minutes",
       seconds: "Secondes",
     },
-    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
+    ariaLabel: (
+      years: number,
+      months: number,
+      days: number,
+      hours: string,
+      minutes: string,
+      seconds: string,
+    ) =>
       `${years} ans ${months} mois ${days} jours ${hours} heures ${minutes} minutes ${seconds} secondes`,
   },
+  event: {
+    label: "À venir",
+    releases: (date: string) => `Sort le ${date}`,
+    outNow: "Déjà disponible",
+    timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
+      `${years} ans, ${months} mois, ${days} jours, ${hours} heures et ${minutes} minutes avant la sortie`,
+  },
+
   home: {
     target: "Cible :",
     yearComplete: (year: number, pct: string) => `${year} est à ${pct}%`,

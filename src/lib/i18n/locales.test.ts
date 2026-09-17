@@ -74,6 +74,8 @@ describe("locales", () => {
   it("interpolations return non-empty strings", () => {
     const args: Record<string, unknown[]> = {
       "countdown.ariaLabel": [110, "20", "37", "54"],
+      "event.releases": ["November 19, 2026"],
+      "event.timerAria": [0, 2, 1, 11, 11],
       "home.yearComplete": [2026, "69.63"],
       "home.ringsIn": ["when", "tz"],
       "home.loadedIn": ["19.1"],
@@ -88,10 +90,9 @@ describe("locales", () => {
     };
     for (const [tag, dict] of Object.entries(locales)) {
       for (const [path, a] of Object.entries(args)) {
-        const fn = path.split(".").reduce<unknown>(
-          (o, k) => (o as Record<string, unknown>)[k],
-          dict,
-        );
+        const fn = path
+          .split(".")
+          .reduce<unknown>((o, k) => (o as Record<string, unknown>)[k], dict);
         assert.equal(typeof fn, "function", `${tag}.${path} is a function`);
         const out = (fn as (...xs: unknown[]) => unknown)(...a);
         assert.equal(typeof out, "string", `${tag}.${path} returns a string`);

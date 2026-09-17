@@ -1,9 +1,9 @@
 # Clock Years (System Space)
 
-A cinematic New Year countdown: a living solar system (clickable planets with
-fact cards), a six-unit clock ticking at 0.1s, a 4D mouse-reactive warp
-background, dark/white themes, 11 languages, and member accounts with
-dashboard, settings, and admin orbits.
+A cinematic New Year countdown: a six-unit clock ticking at 0.1s, event
+countdowns (Grand Theft Auto VI — November 19, 2026), a clean minimal
+backdrop, dark/white themes, 11 languages, and member accounts with dashboard,
+settings, and admin orbits.
 
 ## Develop
 
@@ -19,11 +19,11 @@ The repo ships `vercel.json` (Nitro `vercel` preset) — zero config needed:
 1. Push this branch, then Vercel → Add New → Project → Import the repo.
 2. Set environment variables (Project Settings → Environment Variables):
 
-| Variable             | Required | What it does                                                |
-| -------------------- | -------- | ----------------------------------------------------------- |
-| `BETTER_AUTH_URL`    | Yes      | Public URL, e.g. `https://clock-years.vercel.app`           |
-| `BETTER_AUTH_SECRET` | Yes      | `openssl rand -hex 32` — signs sessions across instances    |
-| `DATABASE_URL`       | No*      | Postgres (Neon/Supabase) for persistent users and settings  |
+| Variable             | Required | What it does                                               |
+| -------------------- | -------- | ---------------------------------------------------------- |
+| `BETTER_AUTH_URL`    | Yes      | Public URL, e.g. `https://clock-years.vercel.app`          |
+| `BETTER_AUTH_SECRET` | Yes      | `openssl rand -hex 32` — signs sessions across instances   |
+| `DATABASE_URL`       | No*      | Postgres (Neon/Supabase) for persistent users and settings |
 | `ADMIN_EMAILS`       | No       | Comma-separated owner emails, e.g. `you@example.com`       |
 
 \*Without `DATABASE_URL` the app runs on the built-in in-memory PGLite

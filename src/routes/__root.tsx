@@ -17,7 +17,7 @@ export const Route = createRootRoute({
       {
         name: "description",
         content:
-          "System Space — a cinematic countdown to New Year with a living solar system, glass controls, and member orbits.",
+          "System Space — a cinematic countdown to New Year with glass controls, event countdowns, and member orbits.",
       },
     ],
     links: [

@@ -3,10 +3,6 @@ import type { Dictionary } from "../index";
 /** Simplified Chinese copy — must satisfy the `Dictionary` type (missing keys fail typecheck). */
 export const zh: Dictionary = {
   chrome: {
-    spaceOn: "空间开",
-    spaceOff: "空间关",
-    turnSpaceOn: "开启空间",
-    turnSpaceOff: "关闭空间",
     music: "音乐",
     muteMusic: "静音",
     playMusic: "播放音乐",
@@ -20,15 +16,6 @@ export const zh: Dictionary = {
     useWhite: "使用白色主题",
   },
 
-  planet: {
-    diameter: "直径",
-    distance: "距离",
-    day: "一天",
-    year: "一年",
-    moons: "卫星",
-    close: "关闭",
-    systemTitle: "太阳系",
-  },
   countdown: {
     units: {
       years: "年",
@@ -38,9 +25,23 @@ export const zh: Dictionary = {
       minutes: "分",
       seconds: "秒",
     },
-    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
-      `${years}年${months}个月${days}天${hours}小时${minutes}分${seconds}秒`,
+    ariaLabel: (
+      years: number,
+      months: number,
+      days: number,
+      hours: string,
+      minutes: string,
+      seconds: string,
+    ) => `${years}年${months}个月${days}天${hours}小时${minutes}分${seconds}秒`,
   },
+  event: {
+    label: "即将到来",
+    releases: (date: string) => `将于${date}发售`,
+    outNow: "现已推出",
+    timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
+      `距离发售还有 ${years} 年 ${months} 个月 ${days} 天 ${hours} 小时 ${minutes} 分钟`,
+  },
+
   home: {
     target: "目标：",
     yearComplete: (year: number, pct: string) => `${year} 年已过去 ${pct}%`,

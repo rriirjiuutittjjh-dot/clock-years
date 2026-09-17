@@ -3,10 +3,6 @@ import type { Dictionary } from "../index";
 /** Turkish copy — must satisfy the `Dictionary` type (missing keys fail typecheck). */
 export const tr: Dictionary = {
   chrome: {
-    spaceOn: "Uzay açık",
-    spaceOff: "Uzay kapalı",
-    turnSpaceOn: "Uzayı aç",
-    turnSpaceOff: "Uzayı kapat",
     music: "Müzik",
     muteMusic: "Müziği kapat",
     playMusic: "Müziği aç",
@@ -20,15 +16,6 @@ export const tr: Dictionary = {
     useWhite: "Beyaz temayı kullan",
   },
 
-  planet: {
-    diameter: "Çap",
-    distance: "Uzaklık",
-    day: "Gün",
-    year: "Yıl",
-    moons: "Uydular",
-    close: "Kapat",
-    systemTitle: "Güneş sistemi",
-  },
   countdown: {
     units: {
       years: "Yıl",
@@ -38,9 +25,23 @@ export const tr: Dictionary = {
       minutes: "Dakika",
       seconds: "Saniye",
     },
-    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
-      `${years} yıl ${months} ay ${days} gün ${hours} saat ${minutes} dakika ${seconds} saniye`,
+    ariaLabel: (
+      years: number,
+      months: number,
+      days: number,
+      hours: string,
+      minutes: string,
+      seconds: string,
+    ) => `${years} yıl ${months} ay ${days} gün ${hours} saat ${minutes} dakika ${seconds} saniye`,
   },
+  event: {
+    label: "Yakında",
+    releases: (date: string) => `${date} tarihinde çıkıyor`,
+    outNow: "Şimdi satışta",
+    timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
+      `Yayına ${years} yıl, ${months} ay, ${days} gün, ${hours} saat ve ${minutes} dakika kaldı`,
+  },
+
   home: {
     target: "Hedef:",
     yearComplete: (year: number, pct: string) => `${year} %${pct} tamamlandı`,

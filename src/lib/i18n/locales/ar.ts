@@ -3,10 +3,6 @@ import type { Dictionary } from "../index";
 /** Arabic copy — must satisfy the `Dictionary` type (missing keys fail typecheck). */
 export const ar: Dictionary = {
   chrome: {
-    spaceOn: "الفضاء يعمل",
-    spaceOff: "الفضاء متوقف",
-    turnSpaceOn: "تشغيل الفضاء",
-    turnSpaceOff: "إيقاف الفضاء",
     music: "موسيقى",
     muteMusic: "كتم الموسيقى",
     playMusic: "تشغيل الموسيقى",
@@ -20,15 +16,6 @@ export const ar: Dictionary = {
     useWhite: "استخدام المظهر الأبيض",
   },
 
-  planet: {
-    diameter: "القطر",
-    distance: "المسافة",
-    day: "اليوم",
-    year: "السنة",
-    moons: "أقمار",
-    close: "إغلاق",
-    systemTitle: "المجموعة الشمسية",
-  },
   countdown: {
     units: {
       years: "سنوات",
@@ -38,9 +25,24 @@ export const ar: Dictionary = {
       minutes: "دقائق",
       seconds: "ثوانٍ",
     },
-    ariaLabel: (years: number, months: number, days: number, hours: string, minutes: string, seconds: string) =>
+    ariaLabel: (
+      years: number,
+      months: number,
+      days: number,
+      hours: string,
+      minutes: string,
+      seconds: string,
+    ) =>
       `${years} سنوات ${months} أشهر ${days} أيام ${hours} ساعات ${minutes} دقائق ${seconds} ثوانٍ`,
   },
+  event: {
+    label: "الحدث القادم",
+    releases: (date: string) => `يصدر بتاريخ ${date}`,
+    outNow: "متاح الآن",
+    timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
+      `متبقٍ ${years} سنوات و${months} أشهر و${days} أيام و${hours} ساعات و${minutes} دقيقة على الإصدار`,
+  },
+
   home: {
     target: "الهدف:",
     yearComplete: (year: number, pct: string) => `اكتمل ${pct}% من ${year}`,
@@ -133,7 +135,8 @@ export const ar: Dictionary = {
     deniedTitle: "للإدارة فقط",
     deniedBlurb: "اطلب من المالك ترقية مدارك.",
     title: "الإدارة",
-    subtitle: "الخلفية والضبابية والزجاج. تبدأ القيم من 0px. الزجاج التلقائي يعاين الصورة المرفوعة.",
+    subtitle:
+      "الخلفية والضبابية والزجاج. تبدأ القيم من 0px. الزجاج التلقائي يعاين الصورة المرفوعة.",
     background: "الخلفية",
     uploadImage: "رفع صورة",
     clear: "مسح",

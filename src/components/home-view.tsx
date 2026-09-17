@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AppChrome } from "@/components/chrome/app-chrome";
 import { CountdownClock } from "@/components/space/countdown-clock";
+import { EventCountdown } from "@/components/space/event-countdown";
 import { Fireworks } from "@/components/space/fireworks";
-import { SolarSystem } from "@/components/space/solar-system";
 import { SpaceStage } from "@/components/space/space-stage";
 import {
   formatMetaParts,
@@ -25,9 +25,7 @@ export function HomeView() {
   const lastSecond = useRef<number | null>(null);
 
   const [parts, setParts] = useState(() => splitRange(new Date(), targetRef.current));
-  const [targetLabel, setTargetLabel] = useState(() =>
-    formatTarget(targetRef.current, locale),
-  );
+  const [targetLabel, setTargetLabel] = useState(() => formatTarget(targetRef.current, locale));
   const [meta, setMeta] = useState(() => {
     const { when, timeZone } = formatMetaParts(targetRef.current, locale);
     return t.home.ringsIn(when, timeZone);
@@ -150,12 +148,6 @@ export function HomeView() {
         </p>
 
         <div
-          className={`w-full transition-opacity duration-300 ${party ? "pointer-events-none opacity-0" : "opacity-100"}`}
-        >
-          <SolarSystem />
-        </div>
-
-        <div
           className={`mt-6 w-full transition-opacity duration-300 ${party ? "pointer-events-none opacity-0" : "opacity-100"}`}
         >
           <CountdownClock parts={parts} />
@@ -175,6 +167,10 @@ export function HomeView() {
               />
             </div>
             <p className="mt-3 text-xs tracking-wide text-muted">{progressLabel}</p>
+          </div>
+
+          <div className="mt-6">
+            <EventCountdown />
           </div>
 
           <div className="mt-6 space-y-2 text-xs tracking-wide text-muted">
