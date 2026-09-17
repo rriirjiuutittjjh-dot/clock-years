@@ -6,8 +6,6 @@
 export const en = {
   chrome: {
     music: "Music",
-    muteMusic: "Mute music",
-    playMusic: "Play music",
     dashboard: "Dashboard",
     logIn: "Log in",
     register: "Register",
@@ -46,6 +44,15 @@ export const en = {
     timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
       `${years} years, ${months} months, ${days} days, ${hours} hours and ${minutes} minutes until the release`,
   },
+  playlist: {
+    title: "Playlist",
+    play: "Play",
+    pause: "Pause",
+    live: "System ambience · live",
+    failed: "Could not load this track",
+    count: (n: number) => `${n} tracks`,
+  },
+
   home: {
     target: "Target:",
     yearComplete: (year: number, pct: string) => `${year} is ${pct}% complete`,

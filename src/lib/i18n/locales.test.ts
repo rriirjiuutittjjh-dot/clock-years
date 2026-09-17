@@ -76,6 +76,7 @@ describe("locales", () => {
       "countdown.ariaLabel": [110, "20", "37", "54"],
       "event.releases": ["November 19, 2026"],
       "event.more": [7],
+      "playlist.count": [100],
       "event.timerAria": [0, 2, 1, 11, 11],
       "home.yearComplete": [2026, "69.63"],
       "home.ringsIn": ["when", "tz"],

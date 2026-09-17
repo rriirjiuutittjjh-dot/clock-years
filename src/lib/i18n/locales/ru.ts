@@ -4,8 +4,6 @@ import type { Dictionary } from "../index";
 export const ru: Dictionary = {
   chrome: {
     music: "Музыка",
-    muteMusic: "Выключить музыку",
-    playMusic: "Включить музыку",
     dashboard: "Панель",
     logIn: "Войти",
     register: "Регистрация",
@@ -43,6 +41,15 @@ export const ru: Dictionary = {
     less: "Показать меньше",
     timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
       `До релиза осталось ${years} г. ${months} мес. ${days} д. ${hours} ч. ${minutes} мин.`,
+  },
+
+  playlist: {
+    title: "Плейлист",
+    play: "Играть",
+    pause: "Пауза",
+    live: "Эмбиент системы · вживую",
+    failed: "Не удалось загрузить этот трек",
+    count: (n: number) => `треков: ${n}`,
   },
 
   home: {

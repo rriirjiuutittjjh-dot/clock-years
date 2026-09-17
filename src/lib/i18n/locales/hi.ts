@@ -4,8 +4,6 @@ import type { Dictionary } from "../index";
 export const hi: Dictionary = {
   chrome: {
     music: "संगीत",
-    muteMusic: "संगीत बंद करें",
-    playMusic: "संगीत चलाएँ",
     dashboard: "डैशबोर्ड",
     logIn: "लॉग इन",
     register: "रजिस्टर",
@@ -42,6 +40,15 @@ export const hi: Dictionary = {
     less: "कम दिखाएँ",
     timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
       `रिलीज़ से पहले ${years} वर्ष, ${months} महीने, ${days} दिन, ${hours} घंटे और ${minutes} मिनट शेष`,
+  },
+
+  playlist: {
+    title: "प्लेलिस्ट",
+    play: "चलाएँ",
+    pause: "रोकें",
+    live: "सिस्टम एम्बिएंस · लाइव",
+    failed: "यह ट्रैक लोड नहीं हो सका",
+    count: (n: number) => `${n} ट्रैक`,
   },
 
   home: {

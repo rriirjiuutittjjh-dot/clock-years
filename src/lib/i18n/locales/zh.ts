@@ -4,8 +4,6 @@ import type { Dictionary } from "../index";
 export const zh: Dictionary = {
   chrome: {
     music: "音乐",
-    muteMusic: "静音",
-    playMusic: "播放音乐",
     dashboard: "仪表盘",
     logIn: "登录",
     register: "注册",
@@ -42,6 +40,15 @@ export const zh: Dictionary = {
     less: "收起",
     timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
       `距离发售还有 ${years} 年 ${months} 个月 ${days} 天 ${hours} 小时 ${minutes} 分钟`,
+  },
+
+  playlist: {
+    title: "播放列表",
+    play: "播放",
+    pause: "暂停",
+    live: "系统氛围 · 实时",
+    failed: "无法加载此曲目",
+    count: (n: number) => `${n} 首曲目`,
   },
 
   home: {

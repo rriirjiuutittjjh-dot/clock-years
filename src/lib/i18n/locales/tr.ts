@@ -4,8 +4,6 @@ import type { Dictionary } from "../index";
 export const tr: Dictionary = {
   chrome: {
     music: "Müzik",
-    muteMusic: "Müziği kapat",
-    playMusic: "Müziği aç",
     dashboard: "Panel",
     logIn: "Giriş yap",
     register: "Kaydol",
@@ -42,6 +40,15 @@ export const tr: Dictionary = {
     less: "Daha az göster",
     timerAria: (years: number, months: number, days: number, hours: number, minutes: number) =>
       `Yayına ${years} yıl, ${months} ay, ${days} gün, ${hours} saat ve ${minutes} dakika kaldı`,
+  },
+
+  playlist: {
+    title: "Çalma listesi",
+    play: "Oynat",
+    pause: "Duraklat",
+    live: "Sistem ambiyansı · canlı",
+    failed: "Bu parça yüklenemedi",
+    count: (n: number) => `${n} parça`,
   },
 
   home: {
