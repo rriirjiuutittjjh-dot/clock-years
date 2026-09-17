@@ -51,6 +51,15 @@ window open. For always-on (start at logon + restart on crash), run
 **`windows\install-service.ps1`** once as Administrator. Details in
 **[WINDOWS.md](./docs/WINDOWS.md)** (needs Node.js 22 LTS).
 
+## Install as an app (PWA)
+
+On PC (Chrome/Edge: install icon in the address bar, or the **Install app**
+button in the header) and Android (Chrome menu → *Install app*), the site
+installs to your home screen / desktop with its own window and icon, and
+keeps working offline: the app shell is precached and every playlist track
+you have played is available without a network. iOS: Share → *Add to Home
+Screen*.
+
 ## Roles & admin
 
 Three roles: `member`, `admin`, `owner`. Staff (`admin`/`owner`) open `/admin`

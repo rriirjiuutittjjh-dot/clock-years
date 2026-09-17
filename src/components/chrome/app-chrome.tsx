@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Moon, Sun } from "lucide-react";
 import { LanguagePicker } from "@/components/chrome/language-picker";
+import { InstallPrompt } from "@/components/chrome/install-prompt";
 import { MusicPicker } from "@/components/chrome/music-picker";
 import { useTheme } from "@/components/theme-provider";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
@@ -34,6 +35,8 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
             {theme === "dark" ? t.chrome.dark : t.chrome.white}
           </span>
         </button>
+
+        <InstallPrompt />
 
         <MusicPicker />
 

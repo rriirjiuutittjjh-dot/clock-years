@@ -10,6 +10,7 @@ export const en = {
     logIn: "Log in",
     register: "Register",
     language: "Language",
+    install: "Install app",
     dark: "Dark",
     white: "White",
     useDark: "Use dark theme",

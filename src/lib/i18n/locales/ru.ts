@@ -8,6 +8,7 @@ export const ru: Dictionary = {
     logIn: "Войти",
     register: "Регистрация",
     language: "Язык",
+    install: "Установить приложение",
     dark: "Тёмная",
     white: "Белая",
     useDark: "Использовать тёмную тему",

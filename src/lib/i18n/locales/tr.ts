@@ -8,6 +8,7 @@ export const tr: Dictionary = {
     logIn: "Giriş yap",
     register: "Kaydol",
     language: "Dil",
+    install: "Uygulamayı yükle",
     dark: "Koyu",
     white: "Beyaz",
     useDark: "Koyu temayı kullan",

@@ -8,6 +8,7 @@ export const it: Dictionary = {
     logIn: "Accedi",
     register: "Registrati",
     language: "Lingua",
+    install: "Installa app",
     dark: "Scuro",
     white: "Bianco",
     useDark: "Usa il tema scuro",
