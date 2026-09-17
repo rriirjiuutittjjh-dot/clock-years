@@ -5,6 +5,7 @@ import { LanguagePicker } from "@/components/chrome/language-picker";
 import { useTheme } from "@/components/theme-provider";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { useLocale } from "@/lib/i18n";
+import { playSfx } from "@/lib/sfx";
 
 export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
   const { theme, setTheme } = useTheme();
@@ -34,6 +35,7 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
   }, []);
 
   const toggleTheme = () => {
+    playSfx("click");
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
@@ -41,6 +43,7 @@ export function AppChrome({ hideAuth = false }: { hideAuth?: boolean }) {
     // Flip the user's intent — never key off audio.paused, which can be
     // false-sounded while autoplay is still blocked.
     const next = !musicOn;
+    playSfx("click");
     musicIntentRef.current = next;
     setMusicOn(next);
     localStorage.setItem("system-space-music", String(next));

@@ -14,6 +14,7 @@ import {
   yearProgress,
 } from "@/lib/countdown";
 import { useLocale } from "@/lib/i18n";
+import { playSfx } from "@/lib/sfx";
 
 export function HomeView() {
   const { t, locale } = useLocale();
@@ -52,6 +53,7 @@ export function HomeView() {
 
   const startParty = useCallback(
     (year: number) => {
+      playSfx("chime");
       setParty(true);
       setFx(true);
       setTrueMidnight(true);
@@ -109,6 +111,7 @@ export function HomeView() {
   }, [describe, startParty, locale, t]);
 
   const onPreview = () => {
+    playSfx("chime");
     setParty(true);
     setFx(true);
     setTrueMidnight(false);
@@ -122,6 +125,7 @@ export function HomeView() {
   };
 
   const onNext = () => {
+    playSfx("click");
     if (partyTimer.current) window.clearInterval(partyTimer.current);
     partyStarted.current = false;
     targetRef.current = nextNewYear(new Date());

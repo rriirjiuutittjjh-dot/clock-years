@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import { formatTarget, pad2, splitRange } from "@/lib/countdown";
 import { currentEvent, liveGames, type ScheduledEvent } from "@/lib/events";
 import { useLocale } from "@/lib/i18n";
+import { playSfx } from "@/lib/sfx";
 
 type Snap = {
   parts: ReturnType<typeof splitRange>;
@@ -119,7 +120,10 @@ export function EventCountdown({ variant = "card" }: { variant?: "card" | "inlin
             type="button"
             className="mt-3 text-xs font-semibold tracking-wide text-muted underline-offset-4 hover:text-ink hover:underline"
             aria-expanded={open}
-            onClick={() => setOpen((next) => !next)}
+            onClick={() => {
+              playSfx(open ? "close" : "open");
+              setOpen((next) => !next);
+            }}
           >
             {open ? t.event.less : t.event.more(allGames.length)}
           </button>
@@ -133,7 +137,10 @@ export function EventCountdown({ variant = "card" }: { variant?: "card" | "inlin
                       type="button"
                       className="flex w-full items-baseline justify-between gap-x-4 rounded-xl px-2.5 py-1.5 text-left transition-colors hover:bg-white/5"
                       aria-current={current ? "true" : undefined}
-                      onClick={() => setSelectedId(game.event.id)}
+                      onClick={() => {
+                        if (!current) playSfx("pop");
+                        setSelectedId(game.event.id);
+                      }}
                     >
                       <span className="min-w-0">
                         <span className="block truncate text-sm font-medium text-ink">
