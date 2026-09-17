@@ -49,6 +49,7 @@ export const fr: Dictionary = {
     pause: "Pause",
     live: "Ambiance du système · en direct",
     failed: "Impossible de charger ce titre",
+    seek: "Avancer",
     count: (n: number) => `${n} titres`,
   },
 

@@ -49,6 +49,7 @@ export const ar: Dictionary = {
     pause: "إيقاف مؤقت",
     live: "أجواء النظام · مباشر",
     failed: "تعذّر تحميل هذا المقطع",
+    seek: "التمرير",
     count: (n: number) => `${n} مقطعًا`,
   },
 

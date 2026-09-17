@@ -514,6 +514,34 @@ html[data-theme="light"] .music-option.current {
   white-space: nowrap;
 }
 
+/* Now-playing strip: title, elapsed/total time and a seek bar. */
+.now-playing {
+  padding: 0.5rem 0.75rem 0.4rem;
+}
+
+.now-bar {
+  height: 4px;
+  margin-top: 0.45rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.12);
+  cursor: pointer;
+}
+
+.now-bar-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-ice), var(--color-sun));
+}
+
+.now-bar:focus-visible {
+  outline: 2px solid var(--color-sun);
+  outline-offset: 3px;
+}
+
+html[data-theme="light"] .now-bar {
+  background: rgb(36 29 78 / 0.15);
+}
+
 /* Now-playing equalizer bars. */
 .eq {
   display: inline-flex;

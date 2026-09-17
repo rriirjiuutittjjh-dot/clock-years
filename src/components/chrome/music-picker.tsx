@@ -23,10 +23,14 @@ export function MusicPicker() {
   /** null = the live generative ambience. */
   const [currentId, setCurrentId] = useState<string | null>(null);
   const [failedId, setFailedId] = useState<string | null>(null);
+  /** Playback position of the current file track (live ambience has none). */
+  const [elapsed, setElapsed] = useState(0);
+  const [duration, setDuration] = useState(0);
   const intentRef = useRef(true);
   const currentRef = useRef<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const playRef = useRef<(id: string | null) => void>(() => undefined);
 
   useEffect(() => {
     const intent = localStorage.getItem("system-space-music") !== "false";
@@ -45,6 +49,21 @@ export function MusicPicker() {
       currentRef.current = null;
       // Keep the music alive: fall back to the live ambience.
       if (intentRef.current) startAmbient();
+    });
+    audio.addEventListener("timeupdate", () => {
+      setElapsed(audio.currentTime);
+      if (Number.isFinite(audio.duration) && audio.duration > 0) setDuration(audio.duration);
+    });
+    audio.addEventListener("loadedmetadata", () => {
+      if (Number.isFinite(audio.duration) && audio.duration > 0) setDuration(audio.duration);
+    });
+    // A finished track advances to the next one (wrapping around the list).
+    audio.addEventListener("ended", () => {
+      const id = currentRef.current;
+      if (id === null) return;
+      const i = PLAYLIST_TRACKS.findIndex((track) => track.id === id);
+      const next = PLAYLIST_TRACKS[(i + 1) % PLAYLIST_TRACKS.length];
+      playRef.current(next.id);
     });
     audioRef.current = audio;
     return () => {
@@ -75,6 +94,9 @@ export function MusicPicker() {
     setFailedId((prev) => (prev === id ? null : prev));
     setCurrentId(id);
     currentRef.current = id;
+    setElapsed(0);
+    const track = PLAYLIST_TRACKS.find((item) => item.id === id);
+    setDuration(track?.seconds ?? 0);
     if (!intentRef.current) {
       intentRef.current = true;
       setMusicOn(true);
@@ -88,10 +110,39 @@ export function MusicPicker() {
       return;
     }
     stopAmbient();
-    const track = PLAYLIST_TRACKS.find((item) => item.id === id);
     if (!track || !audio) return;
     audio.src = `/music/${track.file}`;
     void audio.play().catch(() => undefined);
+  };
+  playRef.current = play;
+
+  /** Click / tap on the seek bar jumps to that position. */
+  const seekTo = (clientX: number, bar: HTMLElement) => {
+    const audio = audioRef.current;
+    if (!audio || !Number.isFinite(audio.duration) || audio.duration <= 0) return;
+    const rect = bar.getBoundingClientRect();
+    const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+    audio.currentTime = ratio * audio.duration;
+    setElapsed(audio.currentTime);
+  };
+
+  const onSeekKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const total = Number.isFinite(audio.duration) ? audio.duration : duration;
+    if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+      e.preventDefault();
+      audio.currentTime = Math.min(total, audio.currentTime + 2);
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+      e.preventDefault();
+      audio.currentTime = Math.max(0, audio.currentTime - 2);
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      audio.currentTime = 0;
+    } else if (e.key === "End") {
+      e.preventDefault();
+      audio.currentTime = total;
+    }
   };
 
   /** Pause/resume whatever is current — the shared audio intent. */
@@ -150,6 +201,37 @@ export function MusicPicker() {
               </button>
             </div>
           </div>
+
+          {currentId ? (
+            <div className="now-playing">
+              <div className="flex items-baseline justify-between gap-2">
+                <p className="music-title text-xs font-medium text-ink">
+                  {PLAYLIST_TRACKS.find((track) => track.id === currentId)?.title}
+                </p>
+                <p className="flex-none text-[0.65rem] tabular-nums text-muted">
+                  {fmt(Math.min(elapsed, duration))} / {fmt(duration)}
+                </p>
+              </div>
+              <div
+                className="now-bar"
+                role="slider"
+                tabIndex={0}
+                aria-label={t.playlist.seek}
+                aria-valuemin={0}
+                aria-valuemax={Math.round(duration)}
+                aria-valuenow={Math.round(Math.min(elapsed, duration))}
+                onClick={(e) => seekTo(e.clientX, e.currentTarget)}
+                onKeyDown={onSeekKey}
+              >
+                <div
+                  className="now-bar-fill"
+                  style={{
+                    width: `${duration > 0 ? Math.min(100, (elapsed / duration) * 100) : 0}%`,
+                  }}
+                />
+              </div>
+            </div>
+          ) : null}
 
           <ul className="m-0 max-h-[56vh] list-none overflow-y-auto p-1.5">
             <li>

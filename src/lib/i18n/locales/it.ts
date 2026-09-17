@@ -49,6 +49,7 @@ export const it: Dictionary = {
     pause: "Pausa",
     live: "Ambiente di sistema · live",
     failed: "Impossibile caricare questo brano",
+    seek: "Avanza",
     count: (n: number) => `${n} brani`,
   },
 
