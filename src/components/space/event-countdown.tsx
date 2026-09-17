@@ -5,6 +5,8 @@ import { useLocale } from "@/lib/i18n";
 
 type Snap = {
   parts: ReturnType<typeof splitRange>;
+  /** Total days left — the display uses this, not calendar months. */
+  totalDays: number;
   released: boolean;
 };
 
@@ -21,25 +23,23 @@ type Snapshot = {
 function snapshot(now: Date): Snapshot | null {
   const defaultEvent = currentEvent(now);
   if (!defaultEvent) return null;
-  const snapOf = (target: Date): Snap => ({
-    parts: splitRange(now, target),
-    released: target.getTime() <= now.getTime(),
-  });
+  const snapOf = (target: Date): Snap => {
+    const ms = target.getTime() - now.getTime();
+    return {
+      parts: splitRange(now, target),
+      totalDays: Math.max(0, Math.floor(ms / 86_400_000)),
+      released: ms <= 0,
+    };
+  };
   return {
     games: liveGames(now).map((event) => ({ event, snap: snapOf(event.target) })),
     defaultEvent,
   };
 }
 
-/** `2mo 14d` — calendar-aware, zero units hidden. */
-function spanText(parts: ReturnType<typeof splitRange>) {
-  return [
-    parts.years > 0 ? `${parts.years}y` : null,
-    parts.months > 0 ? `${parts.months}mo` : null,
-    `${parts.days}d`,
-  ]
-    .filter(Boolean)
-    .join(" ");
+/** `62d` — total days left, no month/year units. */
+function daysLeft(totalDays: number) {
+  return `${totalDays}d`;
 }
 
 /**
@@ -107,7 +107,7 @@ export function EventCountdown({ variant = "card" }: { variant?: "card" | "inlin
             )}
             suppressHydrationWarning
           >
-            {spanText(main.parts)} {pad2(main.parts.hours)}:{pad2(main.parts.minutes)}:
+            {daysLeft(main.totalDays)} {pad2(main.parts.hours)}:{pad2(main.parts.minutes)}:
             {pad2(main.parts.seconds)}
           </p>
         )}
@@ -149,7 +149,7 @@ export function EventCountdown({ variant = "card" }: { variant?: "card" | "inlin
                         </span>
                       ) : (
                         <span className="flex-none text-xs tabular-nums text-muted">
-                          {spanText(game.snap.parts)}
+                          {daysLeft(game.snap.totalDays)}
                         </span>
                       )}
                     </button>
